@@ -11,6 +11,10 @@ public class Cell extends Rectangle {
 	private int state;
 	private int nextState;
 	
+	public int getState(){
+		return state;
+	}
+	
 	public Cell(double x, double y, double height, double width, int stateIn, Rule ruleIn) {
 		// TODO:  x, y, h, w, state(including initial), rule
 		super();
