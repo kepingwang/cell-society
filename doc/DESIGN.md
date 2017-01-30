@@ -19,6 +19,9 @@ The relationships are displayed as following:
 
 The user will have the ability to interact with the program before the start of every simulation. Additionally, the user will be able to return to the options menu to interact with the program at any point during the program by clicking a button to return to the options menu. The user will be able to control generally how many of each cell is in each simulation by entering a percentage, the size of the screen by entering a number for ‘Y’ in a Y x Y screen where Y is a cell, the number of empty cells in the simulation and the delay for each step in the simulation. The user will input data by means of keyboard input in response to Java FX prompt text. Limitations to user input (what constitutes bad date, empty data, etc.) will be made clear in the prompt text, and, should the user input erroneous data, the options screen will request new data to be input rather than transitioning to the specified simulation. Bad input data includes data that is out of range, empty data fields and wrong-type data (e.g. a String value in the place of an int). If all input data is valid, then the simulations will commence. The pictures below indicate what the options menu will look like:
  
+![ui1](./images/InterfaceCellSociety1.JPG)
+
+![ui2](./images/InterfaceCellSociety2.JPG)
 
 Additionally, at any point during the simulation, the user may exit and return to the options menu, where he/she will have the ability to adjust the parameters for simulations.  
 
