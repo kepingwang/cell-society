@@ -6,7 +6,6 @@ import javafx.scene.shape.Rectangle;
 
 public class RectCell extends Cell {
 
-	@Override
 	protected void changeAppearance() {
 		// TODO Auto-generated method stub
 

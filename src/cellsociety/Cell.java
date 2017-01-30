@@ -5,7 +5,7 @@ import java.util.List;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public abstract class Cell extends Rectangle {
+public class Cell extends Rectangle {
 	
 	private Rule rule;
 	private int state;
@@ -30,11 +30,11 @@ public abstract class Cell extends Rectangle {
 		nextState = rule.update(this, neighbors);
 	}
 	
-	protected abstract void changeAppearance();
+//	protected abstract void changeAppearance();
 	
 	public void syncState() {
 		if (state != nextState) {
-			changeAppearance();
+//			changeAppearance();
 			state = nextState;
 		}
 	}
