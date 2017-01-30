@@ -13,7 +13,7 @@ Moving on, after a user selects a simulation through choosing a button, the Scen
 Finally, the SocietySettings will have methods to navigate back to SceneController or move on to the SocietySimulator class. Here is where, the program will visually present the society simulation with all the parameters that the user selected. This is where we will also have most of our backend classes and functions. This includes a Cell class which handles the state of every cell; a Rules class that defines certain specifics and calculations of cell status; a HUD class that will handle all pertinent information of the current simulation.The SocietySimulator itself, will serve as the central location of all the other classes used in the simulation; however it will delegate calculations and changes to the objects themselves. This is where, we implement JavaFX timeline objects in order to create an animation of the simulation. By having a timeline, this means that our SocietySimulator will need methods that calls to every cell to check and update its status. SocietySimulator then will have to be able to graphically update changes.
 
 The relationships are displayed as following:
-
+![overview-img](./images/overview.jpg)
 
 ### User Interface
 
