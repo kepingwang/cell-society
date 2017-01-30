@@ -1,12 +1,12 @@
 package cellsociety;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -52,13 +52,15 @@ public class SceneController extends Application {
 	 * To be changed if we want to add new cell society games.
 	 */
 	private void initButtons() {
+		buttons = new ArrayList<Button>();
+		
 		Button button1 = new Button("Society 1");
 		button1.setOnMouseClicked(e -> playSociety1());
-		buttons.add(new Button("Society 1"));
+		buttons.add(button1);
 		
 		Button button2 = new Button("Society 2");
 		button2.setOnMouseClicked(e -> playSociety2());
-		buttons.add(new Button("Society 2"));
+		buttons.add(button2);
 		
 		vBox.getChildren().addAll(buttons);
 	}

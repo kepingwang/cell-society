@@ -17,11 +17,11 @@ public class SettingsScreen {
 	
 	// configuration variables
 	// To be displayed to the user
-	private int rows;
-	private int cols;
-	private double width;
-	private double height;
-	private double stepDelay;
+	private int rows = 10;
+	private int cols = 10;
+	private double width = 100;
+	private double height = 100;
+	private double stepDelay; // TODO: add it to society
 
 	// Buttons and texts for display
 	Button buttonMain;
@@ -46,10 +46,7 @@ public class SettingsScreen {
 
 	private void initEventHandlers() {
 		buttonMain.setOnMouseClicked(e -> controller.backToMain());
-		buttonPlay.setOnMouseClicked(e -> {
-			Society society = new Society(controller, this);
-			society.show();
-		});
+		buttonPlay.setOnMouseClicked(e -> playSociety());
 	}
 
 	private void playSociety() {
@@ -59,13 +56,13 @@ public class SettingsScreen {
 	
 	private Cell[][] cells() {
 		Cell[][] cells = new Cell[rows][cols];
-
+		Rule rule = new GameOfLifeRules();
 		double wCell = width / cols;
 		double hCell = height / rows;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				cells[i][j] = new Cell(
-						j*wCell, i*hCell, wCell*0.95, hCell*0.95, rule  
+						j*wCell, i*hCell, wCell*0.95, hCell*0.95, i % 2, rule
 				);
 			}
 		}
