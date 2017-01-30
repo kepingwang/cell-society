@@ -17,11 +17,7 @@ public class Cell extends Rectangle {
 	
 	public Cell(double x, double y, double height, double width, int stateIn, Rule ruleIn) {
 		// TODO:  x, y, h, w, state(including initial), rule
-		super();
-		this.setX(x);
-		this.setY(y);
-		this.setHeight(height);
-		this.setWidth(width);
+		super(x, y, height, width);
 		state = stateIn;
 		rule = ruleIn;
 	}
