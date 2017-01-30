@@ -1,5 +1,7 @@
 package cellsociety;
 
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -11,12 +13,11 @@ import javafx.stage.Stage;
 public class SceneController extends Application {
 	public static final double WIDTH = 400;
 	public static final double HEIGHT = 500;
-	public static final int SOCIETY_NUM = 4;
-	
 	
 	private Stage stage;
 	private Scene scene;
-	private Button[] buttons;
+	private List<Button> buttons;
+	private VBox vBox;
 	
 	
 	public void setScene(Scene scene) {
@@ -34,26 +35,32 @@ public class SceneController extends Application {
 		Group root = new Group();
 		scene = new Scene(root, WIDTH, HEIGHT);
 		// TODO: Add buttons text for the main Screen
-		VBox vBox = new VBox();
-		buttons = new Button[SOCIETY_NUM];
-		for (int i = 0; i < buttons.length; i++) {
-			buttons[i] = new Button("Society " + i);
-			buttons[i].setId("society-"+i); // like the css id
-			buttons[i].setOnMouseClicked(
-					e -> goToSociety(((Control) e.getSource()).getId())
-			);
-		}
+		vBox = new VBox();
 		root.getChildren().add(vBox);
-		vBox.getChildren().addAll(buttons);
+		initButtons();
+	}
+	
+	private void playSociety1() {
+		(new SettingsScreen(this)).show();
+	}
+	
+	private void playSociety2() {
+		// TODO
 	}
 	
 	/**
-	 * Go to the setting screen of society #societyID.
-	 * @param societyID
+	 * To be changed if we want to add new cell society games.
 	 */
-	private void goToSociety(String societyID) {
-		SettingsScreen settings = new SettingsScreen(this, societyID);
-		settings.show();
+	private void initButtons() {
+		Button button1 = new Button("Society 1");
+		button1.setOnMouseClicked(e -> playSociety1());
+		buttons.add(new Button("Society 1"));
+		
+		Button button2 = new Button("Society 2");
+		button2.setOnMouseClicked(e -> playSociety2());
+		buttons.add(new Button("Society 2"));
+		
+		vBox.getChildren().addAll(buttons);
 	}
 	
 	@Override

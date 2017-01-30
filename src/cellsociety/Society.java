@@ -27,6 +27,10 @@ public class Society {
 	private int cols;
 	private Cell[][] cells;
 
+	public Society(SceneController controller, SettingsScreen settings, Cell[][] cells) {
+		
+	}
+	
 	public Society(SceneController controller, SettingsScreen settings) {
 		this.controller = controller;
 		this.settings = settings;

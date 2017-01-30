@@ -17,28 +17,18 @@ public class SettingsScreen {
 	
 	// configuration variables
 	// To be displayed to the user
-	private String societyID;
 	private int rows;
 	private int cols;
 	private double width;
 	private double height;
 	private double stepDelay;
-	
-	public String getSocietyID() { return societyID; }
-	public int getRows() { return rows; }
-	public int getCols() { return cols; }
-	public double getWidth() { return width; }
-	public double getHeight() { return height; }
-	public double getStepDelay() { return stepDelay; }
-	
 
 	// Buttons and texts for display
 	Button buttonMain;
 	Button buttonPlay;
 	
-	public SettingsScreen(SceneController controller, String societyID) {
+	public SettingsScreen(SceneController controller) {
 		this.controller = controller;
-		this.societyID = societyID;
 		initScene();
 	}
 	
@@ -62,6 +52,26 @@ public class SettingsScreen {
 		});
 	}
 
+	private void playSociety() {
+		Society society = new Society(controller, this, cells());
+		society.show();
+	}
+	
+	private Cell[][] cells() {
+		Cell[][] cells = new Cell[rows][cols];
+
+		double wCell = width / cols;
+		double hCell = height / rows;
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				cells[i][j] = new Cell(
+						j*wCell, i*hCell, wCell*0.95, hCell*0.95, rule  
+				);
+			}
+		}
+		return cells;
+	}
+	
 	public void show() {
 		controller.setScene(scene);
 	}
