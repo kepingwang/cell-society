@@ -2,18 +2,24 @@ package cellsociety;
 
 import java.util.List;
 
+import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public abstract class Cell extends Shape {
+public abstract class Cell extends Rectangle {
 	
 	private Rule rule;
 	private int state;
 	private int nextState;
 	
-	public Cell(double x, double y, double height, double width, int state, Rule ruleIn) {
+	public Cell(double x, double y, double height, double width, int stateIn, Rule ruleIn) {
 		// TODO:  x, y, h, w, state(including initial), rule
-		this.setLayoutX(x);
-		this.setLayoutY(y);
+		super();
+		this.setX(x);
+		this.setY(y);
+		this.setHeight(height);
+		this.setWidth(width);
+		state = stateIn;
+		rule = ruleIn;
 	}
 	
 	public Cell(){

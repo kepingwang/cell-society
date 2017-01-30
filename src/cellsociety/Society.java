@@ -128,7 +128,10 @@ public class Society {
 
 	/**
 	 * Generate list of neighbors surrounding target cell List indices correlate
-	 * to neighbors as follows: 0 1 2 3 X 4 5 6 7
+	 * to neighbors as follows:
+	 * 0 1 2
+	 * 3 X 4
+	 * 5 6 7
 	 */
 	private Cell[] getNeighbors(int x, int y) {
 		Cell[] retArray = new Cell[8];
@@ -162,6 +165,4 @@ public class Society {
 	public void show() {
 		controller.setScene(scene);
 	}
-
-
 }
