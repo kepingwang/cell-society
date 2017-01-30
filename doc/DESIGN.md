@@ -71,7 +71,7 @@ Keping agreed and we decided to have a separate scene allowing for configuration
 
 
 
-### Team Responsibilites
+### Team Responsibilities
 After setting up some basic classes and important methods together, we decided to divide the work for the next stage as follows:
 
 * Keping: Switcing between scenes and the flow of the app.
