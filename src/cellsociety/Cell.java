@@ -15,7 +15,7 @@ public abstract class Cell extends Shape {
 
 	}
 	
-	public final void update(List<Cell> neighbors) {
+	public final void update(Cell[] neighbors) {
 		nextState = rule.update(this, neighbors);
 	}
 	

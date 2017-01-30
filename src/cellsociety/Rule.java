@@ -8,6 +8,6 @@ public interface Rule {
 	 * Return the new state.
 	 * @return
 	 */
-	public int update(Cell cell, List<Cell> neighbors);
+	public int update(Cell cell, Cell[] neighbors);
 	
 }
