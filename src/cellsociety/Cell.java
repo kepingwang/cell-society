@@ -10,9 +10,14 @@ public abstract class Cell extends Shape {
 	private int state;
 	private int nextState;
 	
-	public Cell() {
+	public Cell(double x, double y, double height, double width, int state, Rule ruleIn) {
 		// TODO:  x, y, h, w, state(including initial), rule
-
+		this.setLayoutX(x);
+		this.setLayoutY(y);
+	}
+	
+	public Cell(){
+		
 	}
 	
 	public final void update(Cell[] neighbors) {
