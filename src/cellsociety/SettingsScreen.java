@@ -61,7 +61,7 @@ public class SettingsScreen {
 		double hCell = height / rows;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				cells[i][j] = new Cell(
+				cells[i][j] = new GameOfLifeCell(
 						j*wCell, i*hCell, wCell*0.95, hCell*0.95, i % 2, rule
 				);
 			}

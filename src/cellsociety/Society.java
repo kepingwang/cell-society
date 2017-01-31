@@ -231,7 +231,7 @@ public class Society {
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[0].length; j++) {
 				// TODO: initialize cell state
-				cells[i][j] = new Cell(i*50, j*50, 50, 50, states[i][j], rule);
+				cells[i][j] = new GameOfLifeCell(i*50, j*50, 50, 50, states[i][j], rule);
 				root.getChildren().add(cells[i][j]);
 			}
 		}

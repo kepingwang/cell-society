@@ -1,9 +1,8 @@
 package cellsociety;
 
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Cell extends Rectangle {
+public abstract class Cell extends Rectangle {
 	private Rule rule;
 	private int state = Integer.MIN_VALUE;
 	private int nextState;
@@ -18,28 +17,21 @@ public class Cell extends Rectangle {
 		rule = ruleIn;
 		syncState();
 	}
-	
-	public Cell(){
-		
-	}
 
 	public int getState(){
 		return state;
 	}
-	
-	public final void update(Cell[] neighbors) {
-		nextState = rule.update(this, neighbors);
-	}
-	
-	protected void changeAppearanceTo(int state) {
-		if (state == 0) { super.setFill(Color.ALICEBLUE); }
-		else if (state == 1) { super.setFill(Color.BLACK); }
-	}
+
+	protected abstract void changeAppearanceTo(int state);
 	
 	public void syncState() {
 		if (state != nextState) {
 			changeAppearanceTo(nextState);
 			state = nextState;
 		}
+	}
+	
+	public final void update(Cell[] neighbors) {
+		nextState = rule.update(this, neighbors);
 	}
 }
