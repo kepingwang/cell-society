@@ -98,7 +98,9 @@ public class Society {
 		buttonSettings = new Button("Back to Settings");
 		buttonPlay = new Button("PLAY");
 		buttonPause = new Button("Pause");
+		buttonPause.setDisable(true);
 		buttonResume = new Button("Resume");
+		buttonResume.setDisable(true);
 		buttonFastForward = new Button("Speed Up");
 		buttonSlowForward = new Button("Slow Down");
 		buttonAdvanceFrame = new Button("Forward Frame");
@@ -171,6 +173,8 @@ public class Society {
 		timeline = new Timeline();
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.getKeyFrames().add(frame);
+		buttonPause.setDisable(false);
+		buttonResume.setDisable(false);
 		timeline.play();
 	}
 	
