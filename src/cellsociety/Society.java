@@ -53,7 +53,6 @@ public class Society {
 		return scene;
 	}
 	
-	
 	Button button;
 	
 }
