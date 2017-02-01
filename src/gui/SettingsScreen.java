@@ -1,9 +1,14 @@
-package cellsociety;
+package gui;
 
+
+import core.Cell;
+import core.Society;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import utils.CellsParser;
 
 /**
  * The screen where users can make some settings.
@@ -12,7 +17,7 @@ import javafx.scene.layout.VBox;
  */
 public class SettingsScreen {
 
-	private SceneController controller;
+	private App controller;
 	private Scene scene;
 	
 	// configuration variables
@@ -21,13 +26,13 @@ public class SettingsScreen {
 	private int cols = 10;
 	private double width = 100;
 	private double height = 100;
-	private double stepDelay; // TODO: add it to society
+
 
 	// Buttons and texts for display
 	Button buttonMain;
 	Button buttonPlay;
 	
-	public SettingsScreen(SceneController controller) {
+	public SettingsScreen(App controller) {
 		this.controller = controller;
 		initScene();
 	}
@@ -35,7 +40,7 @@ public class SettingsScreen {
 	private void initScene() {
 		// TODO: add buttons and text fields for settings
 		Group root = new Group();
-		scene = new Scene(root, SceneController.WIDTH, SceneController.HEIGHT);
+		scene = new Scene(root, App.WIDTH, App.HEIGHT);
 		VBox vBox = new VBox();
 		root.getChildren().add(vBox);
 		buttonMain = new Button("Back");
@@ -50,19 +55,31 @@ public class SettingsScreen {
 	}
 
 	private void playSociety() {
-		Society society = new Society(controller, this, cells());
-		society.show();
+		CellsParser parser = new CellsParser();
+		try {
+			SocietyScreen societyScreen;
+			societyScreen = new SocietyScreen(
+					controller, this, new Society(parser.parse("data/game_of_life1.xml"))
+			);
+			societyScreen.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
+	/**
+	 * Only for testing.
+	 * @return
+	 */
 	private Cell[][] cells() {
 		Cell[][] cells = new Cell[rows][cols];
-		Rule rule = new GameOfLifeRules();
 		double wCell = width / cols;
 		double hCell = height / rows;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				cells[i][j] = new GameOfLifeCell(
-						j*wCell, i*hCell, wCell*0.95, hCell*0.95, i % 2, rule
+				cells[i][j] = new Cell(
+						"game-of-life", new Color[] {Color.WHITE, Color.BLACK},
+						j*wCell, i*hCell, wCell*0.95, hCell*0.95, i % 2
 				);
 			}
 		}

@@ -1,10 +1,11 @@
-package cellsociety;
+package core.rules;
 
-public class GameOfLifeRules implements Rule {
+import core.Cell;
+
+public class GameOfLifeRule implements Rule {
 
 	@Override
 	public int update(Cell cell, Cell[] neighbors) {
-		// TODO Auto-generated method stub
 		int cellState = cell.getState();
 		int numLiving = 0;
 		for(int i = 0; i < neighbors.length; i++){
