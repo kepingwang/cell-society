@@ -7,8 +7,10 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import utils.SocietyXMLParser;
 
 public class SocietyScreen {
 	private final int FRAMES_PER_SECOND = 2;
@@ -28,6 +30,8 @@ public class SocietyScreen {
 	private Button buttonFastForward;
 	private Button buttonSlowForward;
 	private Button buttonAdvanceFrame;
+	private TextField textSavedName;
+	private Button buttonSave;
 
 	/**
 	 * The Society Group.
@@ -48,6 +52,7 @@ public class SocietyScreen {
 	}
 
 	private void initEventHandlers() {
+		// TODO: button logics. Some cannot be pressed while not playing. eg. forward.
 		buttonMain.setOnMouseClicked(e -> controller.backToMain());
 		buttonSettings.setOnMouseClicked(e -> settings.show());
 		buttonPlay.setOnMouseClicked(e -> startSimulation());
@@ -56,6 +61,13 @@ public class SocietyScreen {
 		buttonFastForward.setOnMouseClicked(e -> this.fastForward());
 		buttonSlowForward.setOnMouseClicked(e -> this.slowForward());
 		buttonAdvanceFrame.setOnMouseClicked(e -> this.advanceFrame());
+		buttonSave.setOnMouseClicked(e -> {
+			try {
+				new SocietyXMLParser().saveAsXML(society, textSavedName.getText(), "default-id");
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
 	}
 
 	/**
@@ -79,6 +91,9 @@ public class SocietyScreen {
 		buttonAdvanceFrame = new Button("Forward Frame");
 		vBox.getChildren().addAll(buttonMain, buttonSettings, buttonPlay, buttonPause, buttonResume, buttonFastForward,
 				buttonSlowForward, buttonAdvanceFrame);
+		textSavedName = new TextField("data/saved-cell-society.xml");
+		buttonSave = new Button("Save XML");
+		vBox.getChildren().addAll(textSavedName, buttonSave);
 		vBox.getChildren().add(society);
 	}
 

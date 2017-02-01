@@ -1,14 +1,11 @@
 package gui;
 
 
-import core.Cell;
-import core.Society;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import utils.CellsParser;
+import utils.SocietyXMLParser;
 
 /**
  * The screen where users can make some settings.
@@ -55,35 +52,16 @@ public class SettingsScreen {
 	}
 
 	private void playSociety() {
-		CellsParser parser = new CellsParser();
+		SocietyXMLParser parser = new SocietyXMLParser();
 		try {
 			SocietyScreen societyScreen;
 			societyScreen = new SocietyScreen(
-					controller, this, new Society(parser.parse("data/game_of_life1.xml"))
+					controller, this, parser.parse("data/saved-cell-society.xml")
 			);
 			societyScreen.show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	/**
-	 * Only for testing.
-	 * @return
-	 */
-	private Cell[][] cells() {
-		Cell[][] cells = new Cell[rows][cols];
-		double wCell = width / cols;
-		double hCell = height / rows;
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				cells[i][j] = new Cell(
-						"game-of-life", new Color[] {Color.WHITE, Color.BLACK},
-						j*wCell, i*hCell, wCell*0.95, hCell*0.95, i % 2
-				);
-			}
-		}
-		return cells;
 	}
 	
 	public void show() {

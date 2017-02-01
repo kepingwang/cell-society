@@ -1,7 +1,6 @@
 package core;
 
 import core.rules.Rule;
-import core.rules.RuleGenerator;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -11,59 +10,36 @@ import javafx.scene.shape.Rectangle;
  * @author keping
  */
 public class Cell extends Rectangle {
-	private String gameName;
-	private Rule rule;
-	/**
-	 * colors array contain the hex color string of the corresponding state.
-	 */
-	private Color[] colors;
 	/**
 	 * states are integers starting from 0.
 	 */
 	private int state = -1;
 	private int nextState = -1;
 
+
 	/**
-	 * Construct a cell.
-	 * @param gameName
-	 * @param colors
+	 * Construct a (rectangle) cell
 	 * @param x
 	 * @param y
 	 * @param w
 	 * @param h
 	 * @param state
 	 */
-	public Cell(String gameName, Color[] colors, double x, double y, 
-			double w, double h, int state) {
+	public Cell(double x, double y, double w, double h, int state) {
 		super(x, y, w, h);
-		this.gameName = gameName;
-		this.rule = RuleGenerator.genRule(this.gameName);
-		this.colors = colors;
 		this.state = state;
-		syncColor();
 	}
-	
-	public String getGameName() {
-		return gameName; 
-	}
-	public Color[] getColors() {
-		Color[] ans = new Color[colors.length];
-		for (int i = 0; i < ans.length; i++) {
-			ans[i] = colors[i];
-		}
-		return ans;
-	}
+
 	public int getState() {
 		return state; 
 	}
 	
-	private void syncColor() {
-		setFill(colors[state]);
+	public void syncColor(Color[] colors) {
+ 		setFill(colors[state]);
 	}
 	public void syncState() {
 		if (state != nextState) {
 			state = nextState;
-			syncColor();
 		}
 	}
 	/**
@@ -78,7 +54,7 @@ public class Cell extends Rectangle {
 	 * </pre>
 	 * @param neighbors
 	 */
-	public void updateNextState(Cell[] neighbors) {
+	public void updateNextState(Rule rule, Cell[] neighbors) {
 		nextState = rule.update(this, neighbors);
 	}
 	

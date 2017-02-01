@@ -6,12 +6,19 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import core.Cell;
+import core.Society;
 import core.rules.RuleGenerator;
 import javafx.scene.paint.Color;
 
@@ -22,10 +29,11 @@ import javafx.scene.paint.Color;
  * @author keping
  *
  */
-public class CellsParser {
+public class SocietyXMLParser {
 	static final String outputEncoding = "UTF-8";
+
 	private String name = null;
-	private String id = null; // TODO: unique name for config
+	private String id = null;
 	private Color[] colors = null;
 	private double width = -1;
 	private double height = -1;
@@ -33,7 +41,7 @@ public class CellsParser {
 	private int cols = -1;
 	private int[][] layout = null;
 	
-	public CellsParser() { }
+	public SocietyXMLParser() { }
 	
 	// Parse XML to Cell[][]
 	private void wrongColor() throws Exception {
@@ -112,7 +120,7 @@ public class CellsParser {
 		Cell[][] cells = new Cell[rows][cols];
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				cells[i][j] = new Cell(name, colors, w*j, h*i, w, h, layout[i][j]);
+				cells[i][j] = new Cell(w*j, h*i, w, h, layout[i][j]);
 			}
 		}
 		return cells;
@@ -125,10 +133,10 @@ public class CellsParser {
 	/**
 	 * Parse a given xml file to {@link Cell}[][]
 	 * @param filename
-	 * @return 2d array of {@link Cell}s
+	 * @return the {@link Society}
 	 * @throws Exception
 	 */
-	public Cell[][] parse(String filename) throws Exception {
+	public Society parse(String filename) throws Exception {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document doc = db.parse(new File(filename));
@@ -156,19 +164,79 @@ public class CellsParser {
 				} else { }
 			}
 		}
-		return createCells();
+		return new Society(name, colors, createCells());
 	}
 	
 	
 	// Save Cell[][] to XML
+	private String colorToString(Color color) {
+		return "#" + color.toString().substring(2, 8);
+	}
+	private void readSociety(Society society) {
+		name = society.getGameName();
+		colors = society.getColors();
+		width = society.getWidth();
+		height = society.getHeight();
+		rows = society.getRows();
+		cols = society.getCols();
+		layout = society.getLayout();
+	}
+	private void add(Document doc, Node parent, String elemName, String elemValue) {
+		Element elem = doc.createElement(elemName);
+		elem.appendChild(doc.createTextNode(elemValue));
+		parent.appendChild(elem);
+	}	
+	private Element rowElem(Document doc, int i) {
+		Element rowElem = doc.createElement("row");
+		for (int j = 0; j < layout[i].length; j++) {
+			add(doc, rowElem, "col", Integer.toString(layout[i][j]));
+		}
+		return rowElem;
+	}
+	private Element layoutElem(Document doc) {
+		Element layoutElem = doc.createElement("layout");
+		for (int i = 0; i < layout.length; i++) {
+			layoutElem.appendChild(rowElem(doc, i));
+		}
+		return layoutElem;
+	}
 	/**
 	 * Save {@link Cell}[][] to an xml file.
 	 * @param cells
 	 * @param filename the file to save to.
 	 * @param id an identifier of the configuration.
+	 * @throws Exception 
 	 */
-	public void saveAsXML(Cell[][] cells, String filename, String id) {
-		// TODO;
+	public void saveAsXML(Society society, String filename, String id) throws Exception {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilder db = dbf.newDocumentBuilder();
+		readSociety(society);
+		
+		Document doc = db.newDocument();
+		Element root = doc.createElement("config");
+		doc.appendChild(root);
+		
+		add(doc, root, "name", name);
+		add(doc, root, "id", id);
+		Element colorElem = doc.createElement("color");
+		for (Color color : colors) {
+			add(doc, colorElem, "val", colorToString(color));
+		}
+		root.appendChild(colorElem);
+		add(doc, root, "width", Double.toString(width));
+		add(doc, root, "height", Double.toString(height));
+		add(doc, root, "rows", Integer.toString(rows));
+		add(doc, root, "cols", Integer.toString(cols));
+		root.appendChild(layoutElem(doc));
+		
+		// write the content into xml file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(doc);
+		StreamResult result = new StreamResult(new File(filename));
+		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "cell-society.dtd");
+		transformer.transform(source, result);
+		System.out.println("Society saved to XML: "+filename);
 	}
 	
 	
@@ -177,16 +245,16 @@ public class CellsParser {
 		return "configuration: " + id;
 	}
 	
-	
 	/**
 	 * For testing
 	 * @param args
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		CellsParser parser = new CellsParser();
-		Cell[][] cells = parser.parse("data/game_of_life1.xml");
-		System.out.println(cells[2][2]);
+		SocietyXMLParser parser = new SocietyXMLParser();
+		Society society = parser.parse("data/game_of_life1.xml");
+		parser.saveAsXML(society, "data/saved-from-society.xml", "saved-file");
+		
 	}
 
 	
