@@ -47,7 +47,10 @@ public class OptionsScreen extends Application {
 		Application.launch(args);
 	}
 	
+<<<<<<< HEAD
 	@Override
+=======
+>>>>>>> 86c0ba288ee5eb88f7b10402934c38609296f1a8
 	public void start(Stage primaryStage){
 		Scene scene = new Scene(root, SIZE, SIZE, BACKGROUND);
 		

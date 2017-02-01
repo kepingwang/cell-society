@@ -101,6 +101,7 @@ public class Society {
 		buttonPause.setDisable(true);
 		buttonResume = new Button("Resume");
 		buttonResume.setDisable(true);
+		buttonResume = new Button("Resume");
 		buttonFastForward = new Button("Speed Up");
 		buttonSlowForward = new Button("Slow Down");
 		buttonAdvanceFrame = new Button("Forward Frame");
@@ -245,9 +246,6 @@ public class Society {
 	 * testing constructor
 	 * @param statesIn
 	 */
-	public void Society(int[][] statesIn){
-		states = statesIn;
-	}
 	
 	/**
 	 * testing method to update states due to neighbors
@@ -261,9 +259,7 @@ public class Society {
 		}
 	}
 	
-<<<<<<< HEAD
 	Button button;
-=======
 	/**
 	 * testing method to get current states
 	 * @return
@@ -271,6 +267,22 @@ public class Society {
 	public int[][] getStates(){
 		return states;
 	}
+	
+	/**
+	 * testing constructor
+	 * @param statesIn
+	 */
+	public void Society(int[][] statesIn){
+		states = statesIn;
+	}
+	
+	/**
+	 * testing method to update states due to neighbors
+	 */	
+	/**
+	 * testing method to get current states
+	 * @return
+	 */
 	
 	private int[] getStateNeighbors(int x, int y){
 		int rows = states.length;
@@ -303,7 +315,6 @@ public class Society {
 		return retArray;
 	}
 	
->>>>>>> 0953df336ce54a7e036baf013d55695d0606aa4c
 	
 	/**
 	 * testing method to update states based on game of life

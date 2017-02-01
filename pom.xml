@@ -33,7 +33,10 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 86c0ba288ee5eb88f7b10402934c38609296f1a8
 	</dependencies>
 
 </project>
