@@ -1,30 +1,37 @@
 package cellsociety;
 
-import java.util.List;
+import javafx.scene.shape.Rectangle;
 
-import javafx.scene.shape.Shape;
-
-public abstract class Cell extends Shape {
-	
+public abstract class Cell extends Rectangle {
 	private Rule rule;
-	private int state;
+	private int state = Integer.MIN_VALUE;
 	private int nextState;
-	
-	public Cell() {
-		// TODO:  x, y, h, w, state(including initial), rule
 
+	public Cell(double x, double y, double h, double w, Rule rule) {
+		this(x, y, h, w, 0, rule);
 	}
-	
-	public final void update(List<Cell> neighbors) {
-		nextState = rule.update(this, neighbors);
+	public Cell(double x, double y, double height, double width, int stateIn, Rule ruleIn) {
+		// TODO:  x, y, h, w, state(including initial), rule
+		super(x, y, height, width);
+		nextState = stateIn;
+		rule = ruleIn;
+		syncState();
 	}
-	
-	protected abstract void changeAppearance();
+
+	public int getState(){
+		return state;
+	}
+
+	protected abstract void changeAppearanceTo(int state);
 	
 	public void syncState() {
 		if (state != nextState) {
-			changeAppearance();
+			changeAppearanceTo(nextState);
 			state = nextState;
 		}
+	}
+	
+	public final void update(Cell[] neighbors) {
+		nextState = rule.update(this, neighbors);
 	}
 }
