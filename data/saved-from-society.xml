@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE config SYSTEM "cell-society.dtd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE config SYSTEM "cell-society.dtd">
 <config>
 	<name>game-of-life</name>
-	<id>keping001</id>
+	<id>saved-file</id>
 	<color>
-		<val>#F0F8FF</val>
+		<val>#f0f8ff</val>
 		<val>#000000</val>
 	</color>
-	<width>100</width>
-	<height>100</height>
+	<width>100.0</width>
+	<height>100.0</height>
 	<rows>5</rows>
 	<cols>5</cols>
 	<layout>
