@@ -1,4 +1,4 @@
-package cellsociety;
+package gui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,12 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class SceneController extends Application {
+/**
+ * The entrance of the Cell Society Application.
+ * @author keping
+ *
+ */
+public class App extends Application {
 	public static final double WIDTH = 400;
 	public static final double HEIGHT = 500;
 	
