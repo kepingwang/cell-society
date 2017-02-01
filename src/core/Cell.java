@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * A Cell, also a JavaFX node. Can be visualized when added to JavaFX Group
  * ({@link Society}).
- * @author keping
+ * @author keping, Gordon
  */
 public class Cell extends Rectangle {
 	/**

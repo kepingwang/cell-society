@@ -2,6 +2,12 @@ package core.rules;
 
 import core.Cell;
 
+/**
+ * Rules for cells in Game Of Life
+ * @author Gordon
+ *
+ */
+
 public class GameOfLifeRule implements Rule {
 
 	@Override

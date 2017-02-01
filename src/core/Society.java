@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 /**
  * A JavaFX {@link Group} of Society, containing a 2d array of {@link Cell}s (Nodes).
  * Responsible for the update and visualization of the cells.
- * @author keping
+ * @author keping, Gordon
  *
  */
 public class Society extends Group {
@@ -37,6 +37,7 @@ public class Society extends Group {
 	public String getGameName() {
 		return gameName; 
 	}
+	
 	/**
 	 * Get a deep copy of the colors array.
 	 * @return
@@ -47,7 +48,8 @@ public class Society extends Group {
 			res[i] = colors[i];
 		}
 		return res;
-	}	
+	}
+	
 	public double getWidth() {
 		return cells[0][0].getWidth() * cells[0].length;
 	}
