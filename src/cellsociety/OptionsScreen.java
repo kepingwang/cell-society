@@ -24,10 +24,10 @@ public class OptionsScreen{
 	private Paint BACKGROUND = Color.WHITE;
 	BorderPane root = new BorderPane();
 	private String sim_type;
-	private int agent_amount;
-	private int empty_amount;
-	private int grid_size;
-	private int sim_delay;
+	private static int agent_amount;
+	private static int empty_amount;
+	private static int grid_size;
+	private static int sim_delay;
 	private Text error_agent_amount=new Text("");
 	private Text error_empty_amount=new Text("");
 	private Text error_grid_size=new Text("");
@@ -191,6 +191,22 @@ public class OptionsScreen{
 	
 	private void backClicked(ActionEvent e){
 		(new MainMenu(controller)).show();
+	}
+	
+	public static int getAgentAmount(){
+		return agent_amount;
+	}
+	
+	public static int getEmptyAmount(){
+		return empty_amount;
+	}
+	
+	public static int getGridSize(){
+		return grid_size;
+	}
+	
+	public static int getSimDelay(){
+		return sim_delay;
 	}
 	
 	public void show() {
