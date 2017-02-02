@@ -50,11 +50,13 @@ public class GameOfLifeRule implements Rule {
 		return cellState;
 	}
 
+	@Override
 	public Color[] getColor() {
 		// TODO Auto-generated method stub
 		return colors;
 	}
 
+	@Override
 	public Color updateColor(Cell cell) {
 		return colors[cell.getState()];
 	}

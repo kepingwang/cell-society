@@ -16,6 +16,7 @@ public class FireRule implements Rule{
 	private Random fireRNG = new Random();
 	private Color[] colors;
 	
+	// TODO: accept other parameters that affect chance of catching on fire
 	public FireRule(Color[] colorIn){
 		colors = colorIn;
 	}
