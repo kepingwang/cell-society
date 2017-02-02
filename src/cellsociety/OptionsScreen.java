@@ -23,11 +23,14 @@ public class OptionsScreen{
 	private int SIZE=600;
 	private Paint BACKGROUND = Color.WHITE;
 	BorderPane root = new BorderPane();
+	
 	private String sim_type;
 	private static int agent_amount;
 	private static int empty_amount;
 	private static int grid_size;
 	private static int sim_delay;
+	
+	
 	private Text error_agent_amount=new Text("");
 	private Text error_empty_amount=new Text("");
 	private Text error_grid_size=new Text("");
@@ -41,6 +44,14 @@ public class OptionsScreen{
 	private boolean valid_empty=false;
 	private boolean valid_size=false; 
 	private boolean valid_delay=false;
+	
+	// configuration variables
+		// To be displayed to the user
+	private int rows;
+	private int cols;
+	private double width = 100;
+	private double height = 100;
+	private double stepDelay; // TODO: add it to society
 	
 	private static Scene scene;
 	private SceneController controller;
@@ -178,7 +189,8 @@ public class OptionsScreen{
 		handleBadInput();
 		
 		if(allValid){
-			//ADVANCE
+			//(new SettingsScreen(controller)).show();
+			playSociety();
 		}
 	}
 	
@@ -207,6 +219,26 @@ public class OptionsScreen{
 	
 	public static int getSimDelay(){
 		return sim_delay;
+	}
+	
+	private void playSociety() {
+		Society society = new Society(controller, this, cells());
+		society.show();
+	}
+	
+	private Cell[][] cells() {
+		rows=getGridSize();
+		cols=getGridSize();
+		Cell[][] cells = new Cell[rows][cols];
+		Rule rule = new GameOfLifeRules();
+		double wCell = width / cols;
+		double hCell = height / rows;
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				cells[i][j] = new GameOfLifeCell(j*wCell, i*hCell, wCell*0.95, hCell*0.95, i % 2, rule);
+			}
+		}
+		return cells;
 	}
 	
 	public void show() {

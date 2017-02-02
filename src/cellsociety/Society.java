@@ -16,7 +16,7 @@ public class Society {
 	private final int FRAMES_PER_SECOND = 2;
 	private final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	private SceneController controller;
-	private SettingsScreen settings;
+	private OptionsScreen options;
 	private Scene scene;
 	private Group root;
 	private Timeline timeline;
@@ -40,9 +40,9 @@ public class Society {
 		return scene;
 	}
 	
-	public Society(SceneController controller, SettingsScreen settings, Cell[][] cells) {
+	public Society(SceneController controller, OptionsScreen options, Cell[][] cells) {
 		this.controller = controller;
-		this.settings = settings;
+		this.options = options;
 		this.cells = cells;
 		setUpScene();
 		setUpHUD();
@@ -51,7 +51,7 @@ public class Society {
 	
 	private void initEventHandlers() {
 		buttonMain.setOnMouseClicked(e -> controller.backToMain());
-		buttonSettings.setOnMouseClicked(e -> settings.show());
+		buttonSettings.setOnMouseClicked(e -> options.show());
 		buttonPlay.setOnMouseClicked(e -> startSimulation());
 		buttonPause.setOnMouseClicked(e -> this.pauseSimulation());
 		buttonResume.setOnMouseClicked(e -> this.resumeSimulation());

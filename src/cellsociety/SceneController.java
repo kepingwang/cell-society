@@ -54,7 +54,7 @@ public class SceneController extends Application {
 		credit.setX(100);
 		credit.setY(80);
 		
-		//MAYBE INPUT IMAGE
+		//MAYBE IMAGE
 		
 		// TODO: Add button text for the main Screen
 		vBox = new VBox();
