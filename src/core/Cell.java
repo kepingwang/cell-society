@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * A Cell, also a JavaFX node. Can be visualized when added to JavaFX Group
  * ({@link Society}).
- * @author keping, Gordon
+ * @author keping
  */
 public class Cell extends Rectangle {
 	/**
@@ -34,8 +34,12 @@ public class Cell extends Rectangle {
 		return state; 
 	}
 	
+	public void setNState(int i){
+		nextState = i;
+	}
+	
 	public void syncColor(Color[] colors) {
- 		setFill(colors[state]);
+		setFill(colors[state]);
 	}
 	public void syncState() {
 		if (state != nextState) {
