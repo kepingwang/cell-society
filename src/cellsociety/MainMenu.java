@@ -15,26 +15,27 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class MainMenu extends Application {
+public class MainMenu {
 	private int SIZE=500;
 	private Paint BACKGROUND = Color.WHITE;
-	private String sim_type;
+	private static String sim_type;
 	private Stage primaryStage;
-	BorderPane root = new BorderPane();
-	Stage theStage;
+	//private BorderPane root = new BorderPane();
+	private Stage theStage;
+	private static Scene scene;
+	private SceneController controller;
 	
 	
-	public static void main(String[] args){
-		Application.launch(args);
+	public MainMenu(SceneController controller) {
+		this.controller = controller;
+		setUpMainMenu();
 	}
 	
 	
 	
-	@Override
-	public void start(Stage primaryStage) {
-		theStage=primaryStage;
-		
-		Scene scene = new Scene(root, SIZE, SIZE, BACKGROUND);
+	private void setUpMainMenu(){
+		BorderPane root = new BorderPane();
+		scene = new Scene(root, SIZE, SIZE, BACKGROUND);
 		
 		GridPane grid = new GridPane();
 		grid.setVgap(10);
@@ -67,8 +68,6 @@ public class MainMenu extends Application {
 		grid.getChildren().addAll(game_of_life, spreading_of_fire, segregation, predator_prey);
 		
 		root.setCenter(grid);
-		primaryStage.setScene(scene);
-		primaryStage.show();
 		
 	}
 
@@ -76,27 +75,40 @@ public class MainMenu extends Application {
 
 	private void predator_preyClicked(ActionEvent e) {
 		sim_type="Predator-Prey";
-		//ADVANCE
+		playOptionsScreen();
 	}
 
 
 
 	private void segregationClicked(ActionEvent e) {
 		sim_type="Segregation";
-		//ADVANCE
+		playOptionsScreen();
 	}
 
 
 
 	private void spreading_of_fireClicked(ActionEvent e) {
 		sim_type="Spreading of Fire";
-		//ADVANCE
+		playOptionsScreen();
 	}
 
 
 
 	private void game_of_lifeClicked(ActionEvent e) {
 		sim_type="Game of Life";
-		//ADVANCE
+		playOptionsScreen();
 	}
+	
+	private void playOptionsScreen() {
+		(new OptionsScreen(controller)).show();
+	}
+	
+	public static String getSim(){
+		return sim_type;
+	}
+	
+	public void show() {
+		controller.setScene(scene);
+	}
+	
 }
