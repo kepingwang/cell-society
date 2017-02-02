@@ -38,6 +38,7 @@ public class Cell extends Rectangle {
 		nextState = i;
 	}
 	
+
 	public void syncColor(Color[] colors) {
 		setFill(colors[state]);
 	}
