@@ -1,6 +1,4 @@
-package cellsociety;
-
-import java.awt.Insets;
+package gui;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -21,7 +19,7 @@ import javafx.stage.Stage;
  * The screen where users can make some settings.
  *
  */
-public class SettingsScreen extends Application {
+public class OptionsScreen extends Application {
 	private int SIZE=500;
 	private Paint BACKGROUND = Color.WHITE;
 	BorderPane root = new BorderPane();
