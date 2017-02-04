@@ -15,8 +15,8 @@ import utils.SocietyXMLParser;
 public class SocietyScreen {
 	private final int FRAMES_PER_SECOND = 2;
 	private final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-	private App controller;
-	private SettingsScreen settings;
+	private SceneController controller;
+	private OptionsScreen settings;
 	private Scene scene;
 	private Timeline timeline;
 	private KeyFrame frame;
@@ -42,7 +42,7 @@ public class SocietyScreen {
 		return scene;
 	}
 
-	public SocietyScreen(App controller, SettingsScreen settings, Society society) {
+	public SocietyScreen(SceneController controller, OptionsScreen settings, Society society) {
 		this.controller = controller;
 		this.settings = settings;
 		this.society = society;
@@ -76,7 +76,7 @@ public class SocietyScreen {
 	// TODO: scene setup
 	private void setUpScene() {
 		Group root = new Group();
-		scene = new Scene(root, App.WIDTH, App.HEIGHT);
+		scene = new Scene(root, SceneController.WIDTH, SceneController.HEIGHT);
 		VBox vBox = new VBox();
 		root.getChildren().add(vBox);
 		buttonMain = new Button("Back to Main");

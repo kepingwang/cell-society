@@ -8,6 +8,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -15,9 +18,10 @@ import javafx.stage.Stage;
  * @author keping
  *
  */
-public class App extends Application {
+public class SceneController extends Application {
 	public static final double WIDTH = 400;
 	public static final double HEIGHT = 500;
+	//private Paint BACKGROUND = Color.WHITE;
 	
 	private Stage stage;
 	private Scene scene;
@@ -39,18 +43,29 @@ public class App extends Application {
 	private void initScene() {
 		Group root = new Group();
 		scene = new Scene(root, WIDTH, HEIGHT);
-		// TODO: Add buttons text for the main Screen
+		
+		Text title = new Text("Cell Society");
+		title.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
+		title.setX(180);
+		title.setY(50);
+		
+		Text credit = new Text("By Keping Hang, Gordon Hyunh and Jacob Weiss");
+		credit.setX(100);
+		credit.setY(80);
+		
+		//MAYBE IMAGE
+		
+		// TODO: Add button text for the main Screen
 		vBox = new VBox();
+		vBox.setLayoutX(210);
+		vBox.setLayoutY(400);
+		root.getChildren().addAll(title, credit);
 		root.getChildren().add(vBox);
 		initButtons();
 	}
 	
-	private void playSociety1() {
-		(new SettingsScreen(this)).show();
-	}
-	
-	private void playSociety2() {
-		// TODO
+	private void playMainMenu() {
+		(new MainMenu(this)).show();
 	}
 	
 	/**
@@ -59,13 +74,9 @@ public class App extends Application {
 	private void initButtons() {
 		buttons = new ArrayList<Button>();
 		
-		Button button1 = new Button("Society 1");
-		button1.setOnMouseClicked(e -> playSociety1());
-		buttons.add(button1);
-		
-		Button button2 = new Button("Society 2");
-		button2.setOnMouseClicked(e -> playSociety2());
-		buttons.add(button2);
+		Button main_menu = new Button("Main Menu");
+		main_menu.setOnMouseClicked(e -> playMainMenu());
+		buttons.add(main_menu);
 		
 		vBox.getChildren().addAll(buttons);
 	}
