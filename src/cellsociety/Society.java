@@ -1,7 +1,6 @@
 package cellsociety;
 
 
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -14,7 +13,7 @@ import javafx.util.Duration;
 
 public class Society {
 	private final int FRAMES_PER_SECOND = 2;
-	private final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+	private final int MILLISECOND_DELAY = (int)(OptionsScreen.getSimDelay() / FRAMES_PER_SECOND);
 	private SceneController controller;
 	private OptionsScreen options;
 	private Scene scene;
@@ -112,7 +111,10 @@ public class Society {
 				cellGroup.getChildren().add(cell);
 			}
 		}
+		cellGroup.prefWidth(5);
+		cellGroup.prefHeight(5);
 		vBox.getChildren().add(cellGroup);
+		
 	}
 
 	/**

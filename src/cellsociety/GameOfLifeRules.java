@@ -1,5 +1,7 @@
 package cellsociety;
 
+import core.rules.Rule;
+
 public class GameOfLifeRules implements Rule {
 
 	@Override

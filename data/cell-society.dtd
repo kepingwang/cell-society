@@ -1,0 +1,12 @@
+<!ELEMENT config (name,id,color,width,height,rows,cols,layout)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT color (val+)>
+<!ELEMENT val (#PCDATA)>
+<!ELEMENT height (#PCDATA)>
+<!ELEMENT width (#PCDATA)>
+<!ELEMENT rows (#PCDATA)>
+<!ELEMENT cols (#PCDATA)>
+<!ELEMENT layout (row+)>
+<!ELEMENT row (col+)>
+<!ELEMENT col (#PCDATA)>

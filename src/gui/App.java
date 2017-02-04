@@ -1,6 +1,8 @@
-package cellsociety;
+package gui;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,10 +17,19 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 public class SceneController extends Application {
 	public static final int WIDTH = 500;
 	public static final int HEIGHT = 500;
 	//private Paint BACKGROUND = Color.WHITE;
+/**
+ * The entrance of the Cell Society Application.
+ * @author keping
+ *
+ */
+public class App extends Application {
+	public static final double WIDTH = 400;
+	public static final double HEIGHT = 500;
 	
 	private Stage stage;
 	private Scene scene;
