@@ -28,6 +28,7 @@ public class Cell extends Rectangle {
 	public Cell(double x, double y, double w, double h, int state) {
 		super(x, y, w, h);
 		this.state = state;
+		this.nextState = state;
 	}
 
 	public int getState() {
@@ -36,6 +37,10 @@ public class Cell extends Rectangle {
 	
 	public void setNState(int i){
 		nextState = i;
+	}
+	
+	public int getNState(){
+		return nextState;
 	}
 	
 
