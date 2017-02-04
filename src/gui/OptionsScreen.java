@@ -1,6 +1,5 @@
 package gui;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,26 +7,29 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Paint;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import utils.SocietyXMLParser;
 
 /**
  * The screen where users can make some settings.
  *
  */
-public class OptionsScreen extends Application {
-	private int SIZE=500;
+public class OptionsScreen{
+	private int SIZE=600;
 	private Paint BACKGROUND = Color.WHITE;
 	BorderPane root = new BorderPane();
+	
 	private String sim_type;
-	private int agent_amount;
-	private int empty_amount;
-	private int grid_size;
-	private int sim_delay;
+	private static int agent_amount;
+	private static int empty_amount;
+	private static int grid_size;
+	private static int sim_delay;
+	
+	
 	private Text error_agent_amount=new Text("");
 	private Text error_empty_amount=new Text("");
 	private Text error_grid_size=new Text("");
@@ -42,18 +44,31 @@ public class OptionsScreen extends Application {
 	private boolean valid_size=false; 
 	private boolean valid_delay=false;
 	
-	public static void main(String[] args){
-		//for testing
-		Application.launch(args);
+	// configuration variables
+		// To be displayed to the user
+	private int rows;
+	private int cols;
+	private double width = 100;
+	private double height = 100;
+	private double stepDelay; // TODO: add it to society
+	
+	private static Scene scene;
+	private SceneController controller;
+	
+	public OptionsScreen(SceneController controller) {
+		this.controller = controller;
+		setUpOptionsScreen();
 	}
 	
-	public void start(Stage primaryStage){
-		Scene scene = new Scene(root, SIZE, SIZE, BACKGROUND);
+	private void setUpOptionsScreen(){
 		
 		GridPane grid = new GridPane();
 		grid.setVgap(10);
 		grid.setHgap(5);
 		
+		scene = new Scene(root, SIZE, SIZE, BACKGROUND);
+		
+		sim_type=MainMenu.getSim();
 		Text simulation = new Text("Simulation: " + sim_type);
 		simulation.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 		GridPane.setConstraints(simulation, 5, 5);
@@ -92,23 +107,25 @@ public class OptionsScreen extends Application {
 		
 		
 		Button start = new Button("START");
-		GridPane.setConstraints(start, 7, 20);
+		GridPane.setConstraints(start, 4, 20);
 		
 		Button clear = new Button("CLEAR");
-		GridPane.setConstraints(clear, 6, 20);
+		GridPane.setConstraints(clear, 5, 20);
+		
+		Button back = new Button("BACK");
+		GridPane.setConstraints(back, 6, 20);
 		
 		start.setOnAction(e->startClicked(e));
 		clear.setOnAction(e->clearClicked(e));
+		back.setOnAction(e->backClicked(e));
 		
 		//STUFF
 		grid.getChildren().addAll(simulation, agent_proportion, empty_cells, num_cells, delay);
 		grid.getChildren().addAll(ap, ec, nc, del);
 		grid.getChildren().addAll(error_agent_amount, error_empty_amount, error_grid_size, error_sim_delay);
-		grid.getChildren().addAll(start, clear);
+		grid.getChildren().addAll(start, clear, back);
 		
 		root.setCenter(grid);
-		primaryStage.setScene(scene);
-		primaryStage.show();
 	}
 	
 	private void handleBadInput(){
@@ -171,7 +188,8 @@ public class OptionsScreen extends Application {
 		handleBadInput();
 		
 		if(allValid){
-			//ADVANCE
+			//(new SettingsScreen(controller)).show();
+			playSociety();
 		}
 	}
 	
@@ -180,6 +198,43 @@ public class OptionsScreen extends Application {
 		ec.clear();
 		nc.clear();
 		del.clear();
+	}
+	
+	private void backClicked(ActionEvent e){
+		(new MainMenu(controller)).show();
+	}
+	
+	public static int getAgentAmount(){
+		return agent_amount;
+	}
+	
+	public static int getEmptyAmount(){
+		return empty_amount;
+	}
+	
+	public static int getGridSize(){
+		return grid_size;
+	}
+	
+	public static int getSimDelay(){
+		return sim_delay;
+	}
+	
+	private void playSociety() {
+		SocietyXMLParser parser = new SocietyXMLParser();
+		try {
+			SocietyScreen societyScreen;
+			societyScreen = new SocietyScreen(
+					controller, this, parser.parse("data/saved-cell-society.xml")
+			);
+			societyScreen.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void show() {
+		controller.setScene(scene);
 	}
 	
 }
