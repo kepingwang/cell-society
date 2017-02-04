@@ -1,6 +1,5 @@
-package cellsociety;
+package gui;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,12 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Paint;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import utils.SocietyXMLParser;
 
 /**
  * The screen where users can make some settings.
@@ -222,23 +221,16 @@ public class OptionsScreen{
 	}
 	
 	private void playSociety() {
-		Society society = new Society(controller, this, cells());
-		society.show();
-	}
-	
-	private Cell[][] cells() {
-		rows=getGridSize();
-		cols=getGridSize();
-		Cell[][] cells = new Cell[rows][cols];
-		Rule rule = new GameOfLifeRules();
-		double wCell = width / cols;
-		double hCell = height / rows;
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				cells[i][j] = new GameOfLifeCell(j*wCell, i*hCell, wCell*0.95, hCell*0.95, i % 2, rule);
-			}
+		SocietyXMLParser parser = new SocietyXMLParser();
+		try {
+			SocietyScreen societyScreen;
+			societyScreen = new SocietyScreen(
+					controller, this, parser.parse("data/saved-cell-society.xml")
+			);
+			societyScreen.show();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return cells;
 	}
 	
 	public void show() {
