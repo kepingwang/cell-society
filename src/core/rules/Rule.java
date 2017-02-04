@@ -1,5 +1,7 @@
 package core.rules;
 
+import java.util.List;
+
 import core.Cell;
 
 public interface Rule {
@@ -18,6 +20,6 @@ public interface Rule {
 	 * @param neighbors
 	 * @return nextState
 	 */
-	public int update(Cell cell, Cell[] neighbors);
+	public int update(Cell cell, List<Cell> neighbors);
 	
 }

@@ -1,6 +1,7 @@
 package core.rules;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import core.Cell;
@@ -8,9 +9,10 @@ import core.WaTorCell;
 import javafx.scene.paint.Color;
 
 public class WaTorRule implements Rule{
-	public static final int WATER = 0;
+	private final int WATER = 0;
 	private final int FISH = 1;
 	private final int SHARK = 2;
+	
 	private final int fishBirth;
 	private final int sharkDeath;
 	private final int sharkBirth;
@@ -30,12 +32,13 @@ public class WaTorRule implements Rule{
 	}
 
 	@Override
-	public int update(Cell cell, Cell[] neighbors) {
+	public int update(Cell cell, List<Cell> neighbors) {
 		// TODO Auto-generated method stub
 		if(cell.getState() == WATER){
 			return cell.getNState();
 		}
-		Cell[] adjNeighbors = {neighbors[1], neighbors[3], neighbors[4], neighbors[6]};
+		ArrayList<Cell> neighborsIn = (ArrayList<Cell>) neighbors;
+		Cell[] adjNeighbors = {neighborsIn.get(0), neighborsIn.get(3), neighbors.get(4), neighbors.get(6)};
 		
 		ArrayList<WaTorCell> openNeighbors = new ArrayList<WaTorCell>();
 		ArrayList<WaTorCell> fishNeighbors = new ArrayList<WaTorCell>();
@@ -47,22 +50,64 @@ public class WaTorRule implements Rule{
 				fishNeighbors.add((WaTorCell) c);
 			}
 		}
+		
 		int openSpaces = openNeighbors.size();
+		int fishSpaces = fishNeighbors.size();
 		WaTorCell watorCell = (WaTorCell) cell;
-		watorCell.getEnergy(1);
 		if(watorCell.getState() == FISH){
+			watorCell.getEnergy(1);
 			if(openSpaces > 0){
 				WaTorCell target = openNeighbors.get(watorRNG.nextInt(openSpaces));
-				watorCell.moveToOpen(target);
+				moveToOpen(watorCell, target);
 				WaTorCell old = watorCell;
 				watorCell = target;
 				if(watorCell.getEnergy() >= fishBirth){
-					watorCell.giveBirth(old);
+					giveBirth(watorCell, old);
 				}
+				return old.getNState();
 			}
-			
 		}
-		return 0;
+		else if(watorCell.getState() == SHARK){
+			watorCell.loseEnergy();
+			if(fishSpaces > 0){
+				WaTorCell target = fishNeighbors.get(watorRNG.nextInt(fishSpaces));
+				eat(watorCell, target);
+			}
+		}
+		return watorCell.getState();
+	}
+	
+	/**
+	 * One WaTorCell "moving" to open WaTorCell
+	 * This assumes that the target cell is an
+	 * unoccupied cell
+	 * @param target
+	 */
+	public void moveToOpen(WaTorCell current, WaTorCell target){
+		target.setNState(current.getState());
+		target.setEnergy(current.getEnergy());
+		current.setNState(WATER);
+		current.setEnergy(0);
+	}
+	
+	/**
+	 * Assumes target is known open WaTorCell
+	 * Sets target to become new fish/shark
+	 * Resets energy to 0 for both WaTorCells
+	 * @param target
+	 */
+	public void giveBirth(WaTorCell parent, WaTorCell target){
+		target.setNState(parent.getState());
+		target.setEnergy(0);
+		parent.setEnergy(0);
+	}
+	
+	public void eat(WaTorCell predator, WaTorCell target){
+		target.setState(WATER);
+		target.setNState(WATER);
+		target.setEnergy(0);
+		predator.getEnergy(eatEnergy);
+		
 	}
 
 	public Color[] getColor() {

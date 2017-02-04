@@ -1,6 +1,7 @@
 package core.rules;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import core.Cell;
@@ -29,17 +30,17 @@ public class SegregationRule implements Rule{
  * @param satisfactionIn
  * @param openCellsIn
  */
-	public SegregationRule(Color[] colorIn, double satisfactionIn, ArrayList<Cell> openCellsIn){
+	public SegregationRule(Color[] colorIn, double satisfactionIn, List<Cell> openCellsIn){
 		colors = colorIn;
 		satisfaction = satisfactionIn;
-		openCells = openCellsIn;
+		openCells = (ArrayList<Cell>) openCellsIn;
 	}
 	
 	public SegregationRule(){
 		this(new Color[] {Color.WHITE, Color.RED, Color.BLUE}, 50, null);
 	}
 	
-	public SegregationRule(double satisfactionIn, ArrayList<Cell> openCellsIn){
+	public SegregationRule(double satisfactionIn, List<Cell> openCellsIn){
 		this(new Color[] {Color.WHITE, Color.RED, Color.BLUE}, satisfactionIn, openCellsIn);
 	}
 	
@@ -50,9 +51,9 @@ public class SegregationRule implements Rule{
 	 * otherwise remains the same
 	 */
 	@Override
-	public int update(Cell cell, Cell[] neighbors) {
+	public int update(Cell cell, List<Cell> neighbors) {
 		if(cell.getState() == EMPTY){
-			return cell.getState();
+			return cell.getNState();
 		}
 		double total = 0;
 		double same = 0;

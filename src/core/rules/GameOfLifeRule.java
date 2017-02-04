@@ -1,5 +1,7 @@
 package core.rules;
 
+import java.util.List;
+
 import core.Cell;
 import javafx.scene.paint.Color;
 
@@ -33,12 +35,12 @@ public class GameOfLifeRule implements Rule {
 	 * Cells can be born if exactly 3 cells are nearby
 	 */
 	@Override
-	public int update(Cell cell, Cell[] neighbors) {
+	public int update(Cell cell, List<Cell> neighbors) {
 		int cellState = cell.getState();
 		int numLiving = 0;
-		for(int i = 0; i < neighbors.length; i++){
-			if (neighbors[i] != null) {
-				numLiving += neighbors[i].getState(); 
+		for(Cell c : neighbors){
+			if(c != null){
+				numLiving += c.getState();
 			}
 		}
 		if(cellState == ALIVE && (numLiving < UNDER_POP_LIMIT || numLiving > OVER_POP_LIMIT)){

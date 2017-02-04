@@ -31,29 +31,5 @@ public class WaTorCell extends Cell {
 		energy+=energyIn;
 	}
 	
-	/**
-	 * One WaTorCell "moving" to open WaTorCell
-	 * This assumes that the target cell is an
-	 * unoccupied cell
-	 * @param target
-	 */
-	public void moveToOpen(WaTorCell target){
-		target.setNState(this.getState());
-		target.setEnergy(this.getEnergy());
-		this.setNState(WaTorRule.WATER);
-		this.setEnergy(0);
-	}
-	
-	/**
-	 * Assumes target is known open WaTorCell
-	 * Sets target to become new fish/shark
-	 * Resets energy to 0 for both WaTorCells
-	 * @param target
-	 */
-	public void giveBirth(WaTorCell target){
-		target.setNState(this.getState());
-		target.setEnergy(0);
-		this.setEnergy(0);
-	}
 
 }

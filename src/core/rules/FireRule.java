@@ -1,5 +1,7 @@
 package core.rules;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import core.Cell;
@@ -12,6 +14,9 @@ import javafx.scene.paint.Color;
  */
 
 public class FireRule implements Rule{
+	private final int EMPTY = 0;
+	private final int TREE = 1;
+	private final int FIRE = 2;
 	private final double CHANCE_FOR_FIRE = .5;
 	private Random fireRNG = new Random();
 	private Color[] colors;
@@ -40,17 +45,19 @@ public class FireRule implements Rule{
 	 * @param neighbors
 	 */
 	@Override
-	public int update(Cell cell, Cell[] neighbors) {
-		if(cell.getState() == 0 || cell.getState() == 2){
+	public int update(Cell cell, List<Cell> neighbors) {
+		if(cell.getState() == EMPTY || cell.getState() == FIRE){
 			return 0;
 		}
-		Cell[] adjNeighbors = {neighbors[1], neighbors[3], neighbors[4], neighbors[6]};
+		
+		ArrayList<Cell> neighborsIn = (ArrayList<Cell>) neighbors;
+		Cell[] adjNeighbors = {neighborsIn.get(1), neighborsIn.get(3), neighborsIn.get(4), neighbors.get(6)};
 		for(Cell c : adjNeighbors){
 			if(!c.equals(null) && c.getState() == 2 && fireRNG.nextDouble() < probCatch()){
-				return 2;
+				return FIRE;
 			}
 		}
-		return 1;
+		return TREE;
 	}
 	
 	/**

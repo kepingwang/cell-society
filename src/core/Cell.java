@@ -32,6 +32,10 @@ public class Cell extends Rectangle {
 		this.nextState = state;
 	}
 
+	public void setState(int i){
+		state = i;
+	}
+	
 	public int getState() {
 		return state; 
 	}
