@@ -1,5 +1,7 @@
 package core;
 
+import java.util.List;
+
 import core.rules.Rule;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -15,7 +17,6 @@ public class Cell extends Rectangle {
 	 */
 	private int state = -1;
 	private int nextState = -1;
-
 
 	/**
 	 * Construct a (rectangle) cell
@@ -64,7 +65,7 @@ public class Cell extends Rectangle {
 	 * </pre>
 	 * @param neighbors
 	 */
-	public void updateNextState(Rule rule, Cell[] neighbors) {
+	public void updateNextState(Rule rule, List<Cell> neighbors) {
 		nextState = rule.update(this, neighbors);
 	}
 	
