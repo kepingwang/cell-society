@@ -1,6 +1,5 @@
 package core.rules;
 
-
 import core.Cell;
 import javafx.scene.paint.Color;
 
