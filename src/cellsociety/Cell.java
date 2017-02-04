@@ -4,14 +4,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Cell extends Rectangle {
-	private Rule rule;
+	private GameOfLifeRules rule;
 	private int state = Integer.MIN_VALUE;
 	private int nextState;
 
-	public Cell(double x, double y, double h, double w, Rule rule) {
+	public Cell(double x, double y, double h, double w, GameOfLifeRules rule) {
 		this(x, y, h, w, 0, rule);
 	}
-	public Cell(double x, double y, double height, double width, int stateIn, Rule ruleIn) {
+	public Cell(double x, double y, double height, double width, int stateIn, GameOfLifeRules ruleIn) {
 		// TODO:  x, y, h, w, state(including initial), rule
 		super(x, y, height, width);
 		nextState = stateIn;

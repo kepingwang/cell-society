@@ -1,8 +1,5 @@
 package cellsociety;
 
-import core.rules.FireRule;
-import core.rules.GameOfLifeRule;
-import core.rules.Rule;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -233,21 +230,25 @@ public class OptionsScreen{
 		rows=getGridSize();
 		cols=getGridSize();
 		Cell[][] cells = new Cell[rows][cols];
-		Rule rule;
-		if(sim_type.equals("Game of Life")){
+		GameOfLifeRules rule = new GameOfLifeRules();
+		/*if(sim_type.equals("Game of Life")){
 			rule = new GameOfLifeRule();
 		}
 		else if(sim_type.equals("Spreading of Fire")){
 			rule = new FireRule();
 		}
+		else if(sim_type.equals("Segregation")){
+			rule = new SegregationRule();
+		}
 		else{
 			rule = new GameOfLifeRule();
-		}
+			//rule = new WaTorRule();
+		}*/
 		double wCell = width / cols;
 		double hCell = height / rows;
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				cells[i][j] = new GameOfLifeCell(j*wCell, i*hCell, wCell*0.95, hCell*0.95, i % 2, rule);
+				cells[i][j] = new Cell(j*wCell, i*hCell, wCell*0.95, hCell*0.95, i % 2, rule);
 			}
 		}
 		return cells;

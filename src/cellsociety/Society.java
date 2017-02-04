@@ -1,6 +1,7 @@
 package cellsociety;
 
 
+import core.rules.*;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -92,6 +93,8 @@ public class Society {
 		Group root = new Group();
 		scene = new Scene(root, SceneController.WIDTH, SceneController.HEIGHT);
 		VBox vBox = new VBox();
+		vBox.setPrefWidth(200);
+		vBox.setPrefHeight(200);
 		root.getChildren().add(vBox);
 		buttonMain = new Button("Back to Main");
 		buttonSettings = new Button("Back to Settings");
@@ -111,8 +114,6 @@ public class Society {
 				cellGroup.getChildren().add(cell);
 			}
 		}
-		cellGroup.prefWidth(5);
-		cellGroup.prefHeight(5);
 		vBox.getChildren().add(cellGroup);
 		
 	}
@@ -235,6 +236,7 @@ public class Society {
 	 */
 	public void setUpCells(int[][] states){
 		cells = new Cell[states.length][states[0].length];
+		//rule = new GameOfLifeRule();
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[0].length; j++) {
 				// TODO: initialize cell state
