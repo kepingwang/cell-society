@@ -18,17 +18,17 @@ public class Society extends Group {
 	 * colors array contain the hex color string of the corresponding state.
 	 */
 	private Color[] colors;
-	private Cell[][] cells;
+	private Grid<Cell> cells;
 
-	public Society(String gameName, Color[] colors, Cell[][] cells) {
+	public Society(String gameName, Color[] colors, Cell[][] cellsArr) {
 		super();
 		this.gameName = gameName;
 		this.rule = RuleGenerator.genRule(this.gameName);
 		this.colors = colors;
-		this.cells = cells;
-		for (int i = 0; i < cells.length; i++) {
-			for (int j = 0; j < cells[0].length; j++) {
-				getChildren().add(cells[i][j]);
+		this.cells = new Grid<Cell>(cellsArr);
+		for (int i = 0; i < cells.rows(); i++) {
+			for (int j = 0; j < cells.cols(); j++) {
+				getChildren().add(cells.get(i, j));
 			}
 		}
 		syncColors();
@@ -51,90 +51,39 @@ public class Society extends Group {
 	}
 	
 	public double getWidth() {
-		return cells[0][0].getWidth() * cells[0].length;
+		return cells.get(0,0).getWidth() * cells.cols();
 	}
 	public double getHeight() {
-		return cells[0][0].getHeight() * cells.length;
+		return cells.get(0,0).getHeight() * cells.rows();
 	}
 	public int getRows() { 
-		return cells.length;
+		return cells.rows();
 	}
 	public int getCols() {
-		return cells[0].length;
+		return cells.cols();
 	}
 	public int[][] getLayout() {
 		int[][] res = new int[getRows()][getCols()];
 		for (int i = 0; i < getRows(); i++) {
 			for (int j = 0; j < getCols(); j++) {
-				res[i][j] = cells[i][j].getState();
+				res[i][j] = cells.get(i, j).getState();
 			}
 		}
 		return res;
 	}
-	
-	/**
-	 * Generate array of neighbors surrounding target cell. Indices correspond
-	 * to neighbors as follows:
-	 * <pre>
-	 * 0 1 2
-	 * 3 * 4
-	 * 5 6 7
-	 * </pre>
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	private Cell[] getNeighbors(int x, int y) {
-		int rows = cells.length;
-		int cols = cells[0].length;
-		Cell[] retArray = new Cell[8];
-		if (x > 0) {
-			retArray[1] = cells[x - 1][y];
-			if (y > 0) {
-				retArray[0] = cells[x - 1][y - 1];
-			}
-			if (y < cols - 1) {
-				retArray[2] = cells[x - 1][y + 1];
-			}
-		}
-		if (x < rows - 1) {
-			retArray[6] = cells[x + 1][y];
-			if (y > 0) {
-				retArray[5] = cells[x + 1][y - 1];
-			}
-			if (y < cols - 1) {
-				retArray[7] = cells[x + 1][y + 1];
-			}
-		}
-		if (y > 0) {
-			retArray[3] = cells[x][y - 1];
-		}
-		if (y < cols - 1) {
-			retArray[4] = cells[x][y + 1];
-		}
-		return retArray;
-	}
+
 	private void updateNextStates() {
-		for (int i = 0; i < cells.length; i++) {
-			for (int j = 0; j < cells[0].length; j++) {
-				Cell[] neighbors = getNeighbors(i, j);
-				cells[i][j].updateNextState(rule, neighbors);
+		for (int i = 0; i < cells.rows(); i++) {
+			for (int j = 0; j < cells.cols(); j++) {
+				cells.get(i, j).updateNextState(rule, cells.getNeighbors(i, j));
 			}
 		}
 	}
 	private void syncStates() {
-		for (int i = 0; i < cells.length; i++) {
-			for (int j = 0; j < cells[0].length; j++) {
-				cells[i][j].syncState();
-			}
-		}
+		for (Cell cell : cells) { cell.syncState(); }
 	}
 	private void syncColors() {
-		for (int i = 0; i < cells.length; i++) {
-			for (int j = 0; j < cells[0].length; j++) {
-				cells[i][j].syncColor(colors);
-			}
-		}		
+		for (Cell cell : cells) { cell.syncColor(colors); }
 	}
 	/**
 	 * Update the cell states in one round.
