@@ -55,8 +55,9 @@ public class OptionsScreen{
 	private static Scene scene;
 	private SceneController controller;
 	
-	public OptionsScreen(SceneController controller) {
+	public OptionsScreen(SceneController controller, String gameName) {
 		this.controller = controller;
+		sim_type = gameName;
 		setUpOptionsScreen();
 	}
 	
@@ -68,7 +69,6 @@ public class OptionsScreen{
 		
 		scene = new Scene(root, SIZE, SIZE, BACKGROUND);
 		
-		sim_type=MainMenu.getSim();
 		Text simulation = new Text("Simulation: " + sim_type);
 		simulation.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 		GridPane.setConstraints(simulation, 5, 5);
