@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 
 /**
  * Rules for WaTor Simulation
- * @author gordo
+ * @author gordon
  *
  */
 public class WaTorRule extends Rule{
@@ -27,6 +27,17 @@ public class WaTorRule extends Rule{
 	
 	
 
+	/**
+	 * Only constructor for WaTorRule
+	 * @param fishBirthIn
+	 * 	Required amount of turns in order for fish to give birth
+	 * @param sharkDeathIn
+	 * 	Amount of negative energy that will kill the shark
+	 * @param sharkBirthIn
+	 * 	Amount of energy needed for the shark to give birth
+	 * @param eatEnergyIn
+	 * 	Amount of energy shark gains for eating a fish
+	 */
 	public WaTorRule(int fishBirthIn, int sharkDeathIn, int sharkBirthIn, int eatEnergyIn){
 		super(WATOR_COLORS);
 		fishBirth = fishBirthIn;
@@ -71,6 +82,7 @@ public class WaTorRule extends Rule{
 				return old.getNState();
 			}
 		}
+		
 		else if(watorCell.getState() == SHARK){
 			watorCell.loseEnergy();
 			if(watorCell.getEnergy() <= sharkDeath){
@@ -117,18 +129,26 @@ public class WaTorRule extends Rule{
 	 * Assumes target is known open WaTorCell
 	 * Sets target to become new fish/shark
 	 * Resets energy to 0 for both WaTorCells
-	 * @param target
+	 * @param parent
+	 * @param child
 	 */
-	public void giveBirth(WaTorCell parent, WaTorCell target){
-		target.setNState(parent.getState());
-		target.setEnergy(0);
+	public void giveBirth(WaTorCell parent, WaTorCell child){
+		child.setNState(parent.getState());
+		child.setEnergy(0);
 		parent.setEnergy(0);
 	}
 	
-	public void eat(WaTorCell predator, WaTorCell target){
-		target.setState(WATER);
-		target.setNState(WATER);
-		target.setEnergy(0);
-		predator.receiveEnergy(eatEnergy);
+	/**
+	 * Shark eating a current fish
+	 * WaTorCell of fish is set to water
+	 * shark gains energy
+	 * @param shark
+	 * @param fish
+	 */
+	public void eat(WaTorCell shark, WaTorCell fish){
+		fish.setState(WATER);
+		fish.setNState(WATER);
+		fish.setEnergy(0);
+		shark.receiveEnergy(eatEnergy);
 	}
 }

@@ -8,6 +8,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import utils.SocietyXMLParser;
@@ -77,24 +78,37 @@ public class SocietyScreen {
 	private void setUpScene() {
 		Group root = new Group();
 		scene = new Scene(root, SceneController.WIDTH, SceneController.HEIGHT);
-		VBox vBox = new VBox();
-		root.getChildren().add(vBox);
+		VBox screen = new VBox();
+		HBox transitionHBox = new HBox();
+		HBox timeline1HBox = new HBox();
+		HBox timeline2HBox = new HBox();
+		root.getChildren().add(screen);
+		screen.getChildren().add(transitionHBox);
+		screen.getChildren().add(timeline1HBox);
+		screen.getChildren().add(timeline2HBox);
+		
 		buttonMain = new Button("Back to Main");
 		buttonSettings = new Button("Back to Settings");
+		textSavedName = new TextField("data/saved-cell-society.xml");
+		buttonSave = new Button("Save XML");
+		transitionHBox.getChildren().addAll(buttonMain, buttonSettings, textSavedName, buttonSave);
+		
 		buttonPlay = new Button("PLAY");
 		buttonPause = new Button("Pause");
 		buttonPause.setDisable(true);
 		buttonResume = new Button("Resume");
 		buttonResume.setDisable(true);
+		timeline1HBox.getChildren().addAll(buttonPlay, buttonPause, buttonResume);
+		
 		buttonFastForward = new Button("Speed Up");
+		buttonFastForward.setDisable(true);
 		buttonSlowForward = new Button("Slow Down");
+		buttonSlowForward.setDisable(true);
 		buttonAdvanceFrame = new Button("Forward Frame");
-		vBox.getChildren().addAll(buttonMain, buttonSettings, buttonPlay, buttonPause, buttonResume, buttonFastForward,
-				buttonSlowForward, buttonAdvanceFrame);
-		textSavedName = new TextField("data/saved-cell-society.xml");
-		buttonSave = new Button("Save XML");
-		vBox.getChildren().addAll(textSavedName, buttonSave);
-		vBox.getChildren().add(society);
+		buttonAdvanceFrame.setDisable(true);
+		timeline2HBox.getChildren().addAll(buttonFastForward, buttonSlowForward, buttonAdvanceFrame);
+		
+		screen.getChildren().add(society);
 	}
 
 	/**
@@ -121,7 +135,9 @@ public class SocietyScreen {
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.getKeyFrames().add(frame);
 		buttonPause.setDisable(false);
-		buttonResume.setDisable(false);
+		buttonFastForward.setDisable(false);
+		buttonSlowForward.setDisable(false);
+		buttonAdvanceFrame.setDisable(false);
 		timeline.play();
 	}
 
@@ -130,6 +146,8 @@ public class SocietyScreen {
 	 */
 	private void pauseSimulation() {
 		timeline.pause();
+		buttonPause.setDisable(true);
+		buttonResume.setDisable(false);
 	}
 
 	/**
@@ -137,6 +155,8 @@ public class SocietyScreen {
 	 */
 	private void resumeSimulation() {
 		timeline.play();
+		buttonPause.setDisable(false);
+		buttonResume.setDisable(true);
 	}
 
 	/**
@@ -153,6 +173,8 @@ public class SocietyScreen {
 		});
 		timeline.getKeyFrames().add(frame);
 		timeline.play();
+		buttonPause.setDisable(false);
+		buttonResume.setDisable(true);
 	}
 
 	/**
@@ -167,6 +189,8 @@ public class SocietyScreen {
 		});
 		timeline.getKeyFrames().add(frame);
 		timeline.play();
+		buttonPause.setDisable(false);
+		buttonResume.setDisable(true);
 	}
 
 	/**
