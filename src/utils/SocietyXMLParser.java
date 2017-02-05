@@ -131,6 +131,13 @@ public class SocietyXMLParser {
 		}
 		return cells;
 	}
+	private int[][] getLayout() {
+		if (layout != null) {
+			return layout;
+		} else {
+			return LayoutGenerator.generateRandomLayout(rows, cols, probs);
+		}
+	}
 	private void checkGameName(String name) throws Exception {
 		if (RuleGenerator.genRule(name) == null) {
 			throw new Exception("I don't know this game name :P");
@@ -196,8 +203,7 @@ public class SocietyXMLParser {
 		return "#" + color.toString().substring(2, 8);
 	}
 	private void readSociety(Society society) {
-		name = society.getGameName();
-		colors = society.getColors();
+		// TODO
 		width = society.getWidth();
 		height = society.getHeight();
 		rows = society.getRows();
