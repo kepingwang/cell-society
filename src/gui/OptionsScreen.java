@@ -1,6 +1,9 @@
 package gui;
 
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,9 +22,21 @@ import utils.SocietyXMLParser;
  *
  */
 public class OptionsScreen{
-	private int SIZE=600;
+	private static int SIZE=600;
 	private Paint BACKGROUND = Color.WHITE;
 	BorderPane root = new BorderPane();
+	private static int VGAP=10;
+	private static int HGAP=5;
+	private static int LABELLOCX=5;
+	private static int LABELLOCY=8;
+	private static final int TEXTLOCX=6;
+	private static final int TEXTLOCY=8;
+	private static final int BTNLOCX=4;
+	private static final int BTNLOCY=20;
+	
+	private ArrayList<Label> labelList = new ArrayList<Label>();
+	private ArrayList<TextField> textfieldList = new ArrayList<TextField>();
+	private ArrayList<Button> buttonList = new ArrayList<Button>();
 	
 	private String sim_type;
 	private static int agent_amount;
@@ -34,10 +49,7 @@ public class OptionsScreen{
 	private Text error_empty_amount=new Text("");
 	private Text error_grid_size=new Text("");
 	private Text error_sim_delay=new Text("");
-	private TextField ap;
-	private TextField ec;
-	private TextField nc;
-	private TextField del;
+
 	private boolean allValid=false;
 	private boolean valid_agent=false;
 	private boolean valid_empty=false;
@@ -59,13 +71,14 @@ public class OptionsScreen{
 		this.controller = controller;
 		sim_type = gameName;
 		setUpOptionsScreen();
+		//controller.getResource("GameOfLifeLabel");
 	}
 	
 	private void setUpOptionsScreen(){
 		
 		GridPane grid = new GridPane();
-		grid.setVgap(10);
-		grid.setHgap(5);
+		grid.setVgap(VGAP);
+		grid.setHgap(HGAP);
 		
 		scene = new Scene(root, SIZE, SIZE, BACKGROUND);
 		
@@ -75,59 +88,73 @@ public class OptionsScreen{
 		
 		
 		//adjust later
-		Label agent_proportion = new Label("Percent primary agent: ");
-		GridPane.setConstraints(agent_proportion, 5, 8);
-		ap = new TextField();
-		GridPane.setConstraints(ap, 6, 8);
-		ap.setPromptText("0-100");
+		labelList.add(makeLabel("Percent primary agent: "));
+		textfieldList.add(makeTextField("0-100"));
 		
+		labelList.add(makeLabel("Percent empty cells: "));
+		textfieldList.add(makeTextField("0-100"));
 		
-		Label empty_cells = new Label("Percent empty cells: ");
-		GridPane.setConstraints(empty_cells, 5, 11);
-		ec = new TextField();
-		GridPane.setConstraints(ec, 6, 11);
-		ec.setPromptText("0-100");
+		labelList.add(makeLabel("Size (NxN simulation): "));
+		textfieldList.add(makeTextField("Enter N; N<50"));
 		
+		labelList.add(makeLabel("Delay: "));
+		textfieldList.add(makeTextField("0-3000"));
 		
+		placeLabelAndTextField();
 		
-		Label num_cells = new Label("Size (NxN simulation): ");
-		GridPane.setConstraints(num_cells, 5, 14);
-		nc = new TextField();
-		GridPane.setConstraints(nc, 6, 14);
-		nc.setPromptText("Enter N; N<50");
+		buttonList.add(makeButton("START", e->startClicked(e)));
+		buttonList.add(makeButton("CLEAR", e->clearClicked(e)));		
+		buttonList.add(makeButton("BACK", e->backClicked(e)));
 		
-		
-		
-		Label delay = new Label("Delay: ");
-		GridPane.setConstraints(delay, 5, 17);
-		del = new TextField();
-		GridPane.setConstraints(del, 6, 17);
-		del.setPromptText("0-3000");
-		
-		
-		
-		Button start = new Button("START");
-		GridPane.setConstraints(start, 4, 20);
-		
-		Button clear = new Button("CLEAR");
-		GridPane.setConstraints(clear, 5, 20);
-		
-		Button back = new Button("BACK");
-		GridPane.setConstraints(back, 6, 20);
-		
-		start.setOnAction(e->startClicked(e));
-		clear.setOnAction(e->clearClicked(e));
-		back.setOnAction(e->backClicked(e));
+		placeButtons();
 		
 		//STUFF
-		grid.getChildren().addAll(simulation, agent_proportion, empty_cells, num_cells, delay);
-		grid.getChildren().addAll(ap, ec, nc, del);
+		grid.getChildren().add(simulation);
+		grid.getChildren().addAll(labelList);
+		grid.getChildren().addAll(textfieldList);
 		grid.getChildren().addAll(error_agent_amount, error_empty_amount, error_grid_size, error_sim_delay);
-		grid.getChildren().addAll(start, clear, back);
+		grid.getChildren().addAll(buttonList);
 		
 		root.setCenter(grid);
 	}
 	
+	private void placeLabelAndTextField(){
+		int i=0;
+		for(Label lbl : labelList){
+			GridPane.setConstraints(lbl, LABELLOCX, LABELLOCY + i);
+			i+=3;
+		}
+		int m=0;
+		for(TextField tf: textfieldList){
+			GridPane.setConstraints(tf, TEXTLOCX, TEXTLOCY + m);
+			m+=3;
+		}
+	}
+	
+	private void placeButtons(){
+		int i=0;
+		for(Button btn: buttonList){
+			GridPane.setConstraints(btn, BTNLOCX + i, BTNLOCY);
+		}
+	}
+	
+	private Button makeButton(String name, EventHandler<ActionEvent> handler){
+		Button btn = new Button(name);
+		btn.setOnAction(handler);
+		return btn;
+	}
+	
+	private TextField makeTextField(String prompt) {
+		TextField tf = new TextField();
+		tf.setPromptText(prompt);
+		return tf;
+	}
+
+	private Label makeLabel(String label) {
+		Label lbl = new Label(label);
+		return lbl;
+	}
+
 	private void handleBadInput(){
 		if(agent_amount<0 || agent_amount>100){
 			error_agent_amount.setText("Input valid percent primary agent value.");
@@ -180,10 +207,10 @@ public class OptionsScreen{
 	}
 	
 	private void startClicked(ActionEvent e){
-		agent_amount = stringToInt(ap.getText());
-		empty_amount = stringToInt(ec.getText());
-		grid_size = stringToInt(nc.getText());
-		sim_delay = stringToInt(del.getText());
+		agent_amount = stringToInt(textfieldList.get(1).getText());
+		empty_amount = stringToInt(textfieldList.get(2).getText());
+		grid_size = stringToInt(textfieldList.get(3).getText());
+		sim_delay = stringToInt(textfieldList.get(4).getText());
 		
 		handleBadInput();
 		
@@ -194,10 +221,10 @@ public class OptionsScreen{
 	}
 	
 	private void clearClicked(ActionEvent e){
-		ap.clear();
-		ec.clear();
-		nc.clear();
-		del.clear();
+		for(TextField tf: textfieldList){
+			tf.clear();
+		}
+		textfieldList.clear();
 	}
 	
 	private void backClicked(ActionEvent e){

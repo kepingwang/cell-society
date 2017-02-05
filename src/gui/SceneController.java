@@ -46,12 +46,7 @@ public class SceneController extends Application {
 	public void goToMainMenu() {
 		mainMenu.show();
 	}
-
-	/**
-	 * Get the String resource by key from the resource bundle.
-	 * @param key
-	 * @return
-	 */
+	
 	public String getResource(String key) {
 		return myResources.getString(key);
 	}

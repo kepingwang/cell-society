@@ -19,12 +19,13 @@ public class FireRule extends Rule{
 	private final static int TREE = 1;
 	private final static int FIRE = 2;
 	
-	private final double chanceOfFire = .5;
+	private final double chanceOfFire;
 	private Random fireRNG = new Random();
 	
 	
-	public FireRule(){
+	public FireRule(double fireChance){
 		super(FIRE_COLORS);
+		chanceOfFire = fireChance;
 	}
 
 	/**
