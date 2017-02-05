@@ -15,10 +15,11 @@ import javafx.scene.paint.Color;
 
 public class FireRule extends Rule{
 	private final static Color[] FIRE_COLORS = {Color.BROWN, Color.GREEN, Color.RED};
-	private final int EMPTY = 0;
-	private final int TREE = 1;
-	private final int FIRE = 2;
-	private final double CHANCE_FOR_FIRE = .5;
+	private final static int EMPTY = 0;
+	private final static int TREE = 1;
+	private final static int FIRE = 2;
+	
+	private final double chanceOfFire = .5;
 	private Random fireRNG = new Random();
 	
 	
@@ -49,21 +50,10 @@ public class FireRule extends Rule{
 		ArrayList<Cell> neighborsIn = (ArrayList<Cell>) neighbors;
 		Cell[] adjNeighbors = {neighborsIn.get(1), neighborsIn.get(3), neighborsIn.get(4), neighbors.get(6)};
 		for(Cell c : adjNeighbors){
-			if(!c.equals(null) && c.getState() == 2 && fireRNG.nextDouble() < probCatch()){
+			if(!c.equals(null) && c.getState() == 2 && fireRNG.nextDouble() < chanceOfFire){
 				return FIRE;
 			}
 		}
 		return TREE;
-	}
-	
-	/**
-	 * Calculates chance of catching fire for a tree
-	 * depends on initial parameters such as humidity/temperature etc
-	 * @return
-	 */
-	private double probCatch(){
-		double retDouble = CHANCE_FOR_FIRE;
-		// TODO add in other variables that affect chance of fire
-		return retDouble;
 	}
 }

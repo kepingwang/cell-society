@@ -53,6 +53,7 @@ public class SocietyScreen {
 	}
 
 	private void initEventHandlers() {
+
 		// TODO: button logics. Some cannot be pressed while not playing. eg. forward.
 		buttonMain.setOnMouseClicked(e -> controller.goToMainMenu());
 		buttonSettings.setOnMouseClicked(e -> settings.show());
