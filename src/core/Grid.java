@@ -75,7 +75,7 @@ public class Grid<T> implements Iterable<T> {
 		List<T> ans = new ArrayList<>();
 		for (int[] dp : dps) {
 			int x = i + dp[0];
-			int y = i + dp[1];
+			int y = j + dp[1];
 			if (x < 0 || x >= rows() || y < 0 || y >= cols()) {
 				ans.add(null);
 			} else {
@@ -96,7 +96,7 @@ public class Grid<T> implements Iterable<T> {
 		List<T> ans = new ArrayList<>();
 		for (int[] dp : dps) {
 			int x = i + dp[0];
-			int y = i + dp[1];
+			int y = j + dp[1];
 			if (x < 0) {
 				x = rows() - 1;
 			} else if (x == rows()) {
@@ -139,21 +139,48 @@ public class Grid<T> implements Iterable<T> {
 		return new GridIterator();
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[\n");
+		for (int i = 0; i < rows(); i++) {
+			sb.append("  [").append(get(i,0));
+			for (int j = 1; j < cols(); j++) {
+				sb.append(",").append(get(i,j));
+			}
+			sb.append("]").append("\n");
+		}
+		sb.append("]\n");
+		return sb.toString();
+	}
+	
+	
 	public static void main(String[] args) {
-		Integer[][] objMat = new Integer[2][];
+		Integer[][] objMat = new Integer[3][];
 		objMat[0] = new Integer[3];
 		objMat[0][0] = 1;
 		objMat[0][1] = 2;
-//		objMat[0][2] = 3;
+		objMat[0][2] = 3;
 		objMat[1] = new Integer[3];
 		objMat[1][0] = 4;
 		objMat[1][1] = 5;
 		objMat[1][2] = 6;
+		objMat[2] = new Integer[3];
+		objMat[2][0] = 7;
+		objMat[2][1] = 8;
+		objMat[2][2] = 9;
+		
 		Grid<Integer> grid = new Grid<>(objMat);
 		for (int num : grid) {
 			System.out.println(num);
 		}
+		System.out.println(grid);
 		
+		System.out.println(grid.getNeighbors(0,0));
+		System.out.println(grid.getNeighbors(1,0));
+		System.out.println(grid.getNeighbors(2,0));
+		System.out.println(grid.getNeighbors(0,1));
+		System.out.println(grid.getNeighbors(0,2));
 	}
 	
 }
