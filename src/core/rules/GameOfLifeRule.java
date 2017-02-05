@@ -10,22 +10,16 @@ import javafx.scene.paint.Color;
  * @author Gordon
  *
  */
-public class GameOfLifeRule implements Rule {
-	private final int UNDER_POP_LIMIT = 2;
-	private final int OVER_POP_LIMIT = 3;
-	private final int SPAWN_REQUIREMENT = 3;
-	
-	private final int DEAD = 0;
-	private final int ALIVE = 1;
-	
-	private Color[] colors;
-	
-	public GameOfLifeRule(Color[] colorIn){
-		colors = colorIn;
-	}
+public class GameOfLifeRule extends Rule {
+	private final static Color[] GOL_COLORS = {Color.WHITE, Color.BLACK};
+	private final static int UNDER_POP_LIMIT = 2;
+	private final static int OVER_POP_LIMIT = 3;
+	private final static int SPAWN_REQUIREMENT = 3;
+	private final static int DEAD = 0;
+	private final static int ALIVE = 1;
 	
 	public GameOfLifeRule(){
-		this(new Color[] {Color.WHITE, Color.BLACK});
+		super(GOL_COLORS);
 	}
 
 	/**
@@ -51,14 +45,4 @@ public class GameOfLifeRule implements Rule {
 		}
 		return cellState;
 	}
-
-	public Color[] getColor() {
-		// TODO Auto-generated method stub
-		return colors;
-	}
-
-	public Color updateColor(Cell cell) {
-		return colors[cell.getState()];
-	}
-
 }

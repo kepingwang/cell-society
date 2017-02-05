@@ -8,10 +8,16 @@ import core.Cell;
 import core.WaTorCell;
 import javafx.scene.paint.Color;
 
-public class WaTorRule implements Rule{
-	private final int WATER = 0;
-	private final int FISH = 1;
-	private final int SHARK = 2;
+/**
+ * Rules for WaTor Simulation
+ * @author gordo
+ *
+ */
+public class WaTorRule extends Rule{
+	private final static Color[] WATOR_COLORS = {Color.BLUE, Color.GREEN, Color.GOLD};
+	private final static int WATER = 0;
+	private final static int FISH = 1;
+	private final static int SHARK = 2;
 	
 	private final int fishBirth;
 	private final int sharkDeath;
@@ -20,17 +26,15 @@ public class WaTorRule implements Rule{
 	private Random watorRNG = new Random();
 	
 	
-	private Color[] colors;
-	
-	
-	public WaTorRule(Color[] colorsIn, int fishBirthIn, int sharkDeathIn, int sharkBirthIn, int eatEnergyIn){
-		colors = colorsIn;
+
+	public WaTorRule(int fishBirthIn, int sharkDeathIn, int sharkBirthIn, int eatEnergyIn){
+		super(WATOR_COLORS);
 		fishBirth = fishBirthIn;
 		sharkDeath = sharkDeathIn;
 		sharkBirth = sharkBirthIn;
 		eatEnergy = eatEnergyIn;
 	}
-
+	
 	@Override
 	public int update(Cell cell, List<Cell> neighbors) {
 		// TODO Auto-generated method stub
@@ -55,7 +59,7 @@ public class WaTorRule implements Rule{
 		int fishSpaces = fishNeighbors.size();
 		WaTorCell watorCell = (WaTorCell) cell;
 		if(watorCell.getState() == FISH){
-			watorCell.getEnergy(1);
+			watorCell.receiveEnergy(1);
 			if(openSpaces > 0){
 				WaTorCell target = openNeighbors.get(watorRNG.nextInt(openSpaces));
 				moveToOpen(watorCell, target);
@@ -69,9 +73,28 @@ public class WaTorRule implements Rule{
 		}
 		else if(watorCell.getState() == SHARK){
 			watorCell.loseEnergy();
+			if(watorCell.getEnergy() <= sharkDeath){
+				watorCell.setEnergy(0);
+				return WATER;
+			}
 			if(fishSpaces > 0){
 				WaTorCell target = fishNeighbors.get(watorRNG.nextInt(fishSpaces));
 				eat(watorCell, target);
+				if(watorCell.getEnergy() >= sharkBirth && openSpaces > 0){
+					target = openNeighbors.get(watorRNG.nextInt(openSpaces));
+					giveBirth(watorCell, target);
+				}
+				return target.getNState();
+			}
+			else if(openSpaces > 0){
+				WaTorCell target = openNeighbors.get(watorRNG.nextInt(openSpaces));
+				moveToOpen(watorCell, target);
+				WaTorCell old = watorCell;
+				watorCell = target;
+				if(watorCell.getEnergy() >= sharkBirth){
+					giveBirth(watorCell, old);
+				}
+				return old.getNState();
 			}
 		}
 		return watorCell.getState();
@@ -106,18 +129,6 @@ public class WaTorRule implements Rule{
 		target.setState(WATER);
 		target.setNState(WATER);
 		target.setEnergy(0);
-		predator.getEnergy(eatEnergy);
-		
+		predator.receiveEnergy(eatEnergy);
 	}
-
-	public Color[] getColor() {
-		// TODO Auto-generated method stub
-		return colors;
-	}
-
-	public Color updateColor(Cell cell) {
-		// TODO Auto-generated method stub
-		return colors[cell.getState()];
-	}
-
 }
