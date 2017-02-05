@@ -18,8 +18,8 @@ public class GameOfLifeRule extends Rule {
 	private final static int DEAD = 0;
 	private final static int ALIVE = 1;
 	
-	public GameOfLifeRule(){
-		super(GOL_COLORS);
+	public GameOfLifeRule(List<Double> parameters){
+		super(GOL_COLORS, parameters);
 	}
 
 	/**

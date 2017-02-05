@@ -1,7 +1,13 @@
 package core;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import core.rules.FireRule;
+import core.rules.GameOfLifeRule;
 import core.rules.Rule;
-import core.rules.RuleGenerator;
+import core.rules.SegregationRule;
+import core.rules.WaTorRule;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 
@@ -12,19 +18,60 @@ import javafx.scene.paint.Color;
  *
  */
 public class Society extends Group {
+	private static final String GAME_OF_LIFE = "game_of_life";
+	private static final String FIRE = "fire";
+	private static final String SEGREGATION = "segregation";
+	private static final String WATOR = "wator";
 	private Rule rule;
 	private Grid<Cell> cells;
+	private List<Cell> segList;
 
-	public Society(Rule ruleIn, Cell[][] cellsArr) {
+	public Society(String gameName, double width, double height, List<Double> parameters, int[][] layout) {
 		super();
-		rule = ruleIn;
-		this.cells = new Grid<Cell>(cellsArr);
-		for (int i = 0; i < cells.rows(); i++) {
-			for (int j = 0; j < cells.cols(); j++) {
-				getChildren().add(cells.get(i, j));
+		this.cells = generateCells(gameName, width, height, layout);
+		rule = generateRule(gameName, parameters);
+		for (Cell cell : cells) { getChildren().add(cell); }
+		syncColors();
+	}
+	
+	private Rule generateRule(String gameName, List<Double> parameters){
+		Rule retRule = new GameOfLifeRule(parameters);
+		if(gameName.equals(GAME_OF_LIFE)){
+			retRule = new GameOfLifeRule(parameters);
+		}
+		else if(gameName.equals(FIRE)){
+			retRule = new FireRule(parameters);
+		}
+		else if(gameName.equals(SEGREGATION)){
+			retRule = new SegregationRule(parameters, segList);
+		}
+		else if(gameName.equals(WATOR)){
+			retRule = new WaTorRule(parameters);
+		}
+		return retRule;
+	}
+	
+	private Grid<Cell> generateCells(String gameName, double width, double height, int[][] layout){
+		List<Cell> stateZeroCells = new ArrayList<Cell>();
+		int rows = layout.length;
+		int cols = layout[0].length;
+		double cWidth = width/cols;
+		double cHeight = height/rows;
+		Cell[][] temp = new Cell[rows][cols];
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < cols; j++){
+				Cell tempCell = new Cell(j*cWidth, i*cHeight, cWidth, cHeight, layout[i][j]);
+				if(gameName.equals(SEGREGATION) && layout[i][j] == 0){
+					stateZeroCells.add(tempCell);
+				}
+				if(gameName.equals(WATOR)){
+					tempCell = new WaTorCell(j*cWidth, i*cHeight, cWidth, cHeight, layout[i][j]);
+				}
+				temp[i][j] = tempCell;
 			}
 		}
-		syncColors();
+		segList = stateZeroCells;
+		return new Grid<Cell>(temp);
 	}
 	
 	public double getWidth() {

@@ -20,13 +20,20 @@ public class WaTorRule extends Rule{
 	private final static int SHARK = 2;
 	
 	private final int fishBirth;
-	private final int sharkDeath;
 	private final int sharkBirth;
+	private final int sharkDeath;
 	private final int eatEnergy;
 	private Random watorRNG = new Random();
 	
 	
-
+	public WaTorRule(List<Double> parameters){
+		super(WATOR_COLORS, parameters);
+		fishBirth = parameters.get(0).intValue();
+		sharkBirth = parameters.get(1).intValue();
+		sharkDeath = parameters.get(2).intValue();
+		eatEnergy = parameters.get(3).intValue();
+	}
+	
 	/**
 	 * Only constructor for WaTorRule
 	 * @param fishBirthIn
@@ -38,11 +45,11 @@ public class WaTorRule extends Rule{
 	 * @param eatEnergyIn
 	 * 	Amount of energy shark gains for eating a fish
 	 */
-	public WaTorRule(int fishBirthIn, int sharkDeathIn, int sharkBirthIn, int eatEnergyIn){
-		super(WATOR_COLORS);
+	public WaTorRule(List<Double> parameters, int fishBirthIn, int sharkDeathIn, int sharkBirthIn, int eatEnergyIn){
+		super(WATOR_COLORS, parameters);
 		fishBirth = fishBirthIn;
-		sharkDeath = sharkDeathIn;
 		sharkBirth = sharkBirthIn;
+		sharkDeath = sharkDeathIn;
 		eatEnergy = eatEnergyIn;
 	}
 	

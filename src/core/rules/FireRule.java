@@ -22,9 +22,13 @@ public class FireRule extends Rule{
 	private final double chanceOfFire;
 	private Random fireRNG = new Random();
 	
+	public FireRule(List<Double> parameters){
+		super(FIRE_COLORS, parameters);
+		chanceOfFire = parameters.get(0);
+	}
 	
-	public FireRule(double fireChance){
-		super(FIRE_COLORS);
+	public FireRule(List<Double> parameters, double fireChance){
+		super(FIRE_COLORS, parameters);
 		chanceOfFire = fireChance;
 	}
 

@@ -21,11 +21,21 @@ public class SegregationRule extends Rule{
 	
 	private Random segRNG = new Random();
 	private double satisfaction;
-	private ArrayList<Cell> openCells;
+	private List<Cell> openCells;
 	
+	public SegregationRule(List<Double> parameters){
+		super(SEG_COLORS, parameters);
+		satisfaction = parameters.get(0);
+	}
 	
-	public SegregationRule(double satisfactionIn, List<Cell> openCellsIn){
-		super(SEG_COLORS);
+	public SegregationRule(List<Double> parameters, List<Cell> openCellsIn){
+		super(SEG_COLORS, parameters);
+		satisfaction = parameters.get(0);
+		openCells = openCellsIn;
+	}
+	
+	public SegregationRule(List<Double> parameters, double satisfactionIn, List<Cell> openCellsIn){
+		super(SEG_COLORS, parameters);
 		satisfaction = satisfactionIn;
 		openCells = (ArrayList<Cell>) openCellsIn;
 	}

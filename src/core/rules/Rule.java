@@ -7,8 +7,10 @@ import javafx.scene.paint.Color;
 
 public abstract class Rule {
 	private Color[] colors;
+	protected List<Double> parameters;
 	
-	public Rule(Color[] colorIn){
+	public Rule(Color[] colorIn, List<Double> parametersIn){
+		parameters = parametersIn;
 		colors = colorIn;
 	}
 		
