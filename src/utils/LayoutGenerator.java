@@ -7,11 +7,13 @@ public class LayoutGenerator {
 	 * and an array of probabilities of different states (starting from state 0),
 	 * and generate an uniformly random layout of states on a 2d array. 
 	 * <b>The input probabilities have to sum up to 1! (Not necessarily precisely.)</b>
-	 * 
+	 * For example, for a two-state game (game of life),
+	 * the input probs can be [0.3, 0.7], which means that state 0 occurs with
+	 * probability 0.3 and state 1 occurs with probability 0.7;
 	 * @param rows
 	 * @param cols
 	 * @param probs
-	 * @return
+	 * @return a state layout
 	 */
 	public static int[][] generateRandomLayout(int rows, int cols, double[] probs) {
 		double[] sum = new double[probs.length];
@@ -46,7 +48,7 @@ public class LayoutGenerator {
 	}
 	
 	public static void main(String[] args) {
-		int[][] layout = generateRandomLayout(5, 4, new double[] {0.2, 0.8});
+		int[][] layout = generateRandomLayout(5, 4, new double[] {0.3, 0.7});
 		print(layout);
 	}
 	
