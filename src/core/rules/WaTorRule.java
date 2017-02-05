@@ -8,10 +8,16 @@ import core.Cell;
 import core.WaTorCell;
 import javafx.scene.paint.Color;
 
-public class WaTorRule implements Rule{
-	private final int WATER = 0;
-	private final int FISH = 1;
-	private final int SHARK = 2;
+/**
+ * Rules for WaTor Simulation
+ * @author gordon
+ *
+ */
+public class WaTorRule extends Rule{
+	private final static Color[] WATOR_COLORS = {Color.BLUE, Color.GREEN, Color.GOLD};
+	private final static int WATER = 0;
+	private final static int FISH = 1;
+	private final static int SHARK = 2;
 	
 	private final int fishBirth;
 	private final int sharkDeath;
@@ -20,17 +26,26 @@ public class WaTorRule implements Rule{
 	private Random watorRNG = new Random();
 	
 	
-	private Color[] colors;
-	
-	
-	public WaTorRule(Color[] colorsIn, int fishBirthIn, int sharkDeathIn, int sharkBirthIn, int eatEnergyIn){
-		colors = colorsIn;
+
+	/**
+	 * Only constructor for WaTorRule
+	 * @param fishBirthIn
+	 * 	Required amount of turns in order for fish to give birth
+	 * @param sharkDeathIn
+	 * 	Amount of negative energy that will kill the shark
+	 * @param sharkBirthIn
+	 * 	Amount of energy needed for the shark to give birth
+	 * @param eatEnergyIn
+	 * 	Amount of energy shark gains for eating a fish
+	 */
+	public WaTorRule(int fishBirthIn, int sharkDeathIn, int sharkBirthIn, int eatEnergyIn){
+		super(WATOR_COLORS);
 		fishBirth = fishBirthIn;
 		sharkDeath = sharkDeathIn;
 		sharkBirth = sharkBirthIn;
 		eatEnergy = eatEnergyIn;
 	}
-
+	
 	@Override
 	public int update(Cell cell, List<Cell> neighbors) {
 		// TODO Auto-generated method stub
@@ -55,7 +70,7 @@ public class WaTorRule implements Rule{
 		int fishSpaces = fishNeighbors.size();
 		WaTorCell watorCell = (WaTorCell) cell;
 		if(watorCell.getState() == FISH){
-			watorCell.getEnergy(1);
+			watorCell.receiveEnergy(1);
 			if(openSpaces > 0){
 				WaTorCell target = openNeighbors.get(watorRNG.nextInt(openSpaces));
 				moveToOpen(watorCell, target);
@@ -67,11 +82,31 @@ public class WaTorRule implements Rule{
 				return old.getNState();
 			}
 		}
+		
 		else if(watorCell.getState() == SHARK){
 			watorCell.loseEnergy();
+			if(watorCell.getEnergy() <= sharkDeath){
+				watorCell.setEnergy(0);
+				return WATER;
+			}
 			if(fishSpaces > 0){
 				WaTorCell target = fishNeighbors.get(watorRNG.nextInt(fishSpaces));
 				eat(watorCell, target);
+				if(watorCell.getEnergy() >= sharkBirth && openSpaces > 0){
+					target = openNeighbors.get(watorRNG.nextInt(openSpaces));
+					giveBirth(watorCell, target);
+				}
+				return target.getNState();
+			}
+			else if(openSpaces > 0){
+				WaTorCell target = openNeighbors.get(watorRNG.nextInt(openSpaces));
+				moveToOpen(watorCell, target);
+				WaTorCell old = watorCell;
+				watorCell = target;
+				if(watorCell.getEnergy() >= sharkBirth){
+					giveBirth(watorCell, old);
+				}
+				return old.getNState();
 			}
 		}
 		return watorCell.getState();
@@ -94,30 +129,26 @@ public class WaTorRule implements Rule{
 	 * Assumes target is known open WaTorCell
 	 * Sets target to become new fish/shark
 	 * Resets energy to 0 for both WaTorCells
-	 * @param target
+	 * @param parent
+	 * @param child
 	 */
-	public void giveBirth(WaTorCell parent, WaTorCell target){
-		target.setNState(parent.getState());
-		target.setEnergy(0);
+	public void giveBirth(WaTorCell parent, WaTorCell child){
+		child.setNState(parent.getState());
+		child.setEnergy(0);
 		parent.setEnergy(0);
 	}
 	
-	public void eat(WaTorCell predator, WaTorCell target){
-		target.setState(WATER);
-		target.setNState(WATER);
-		target.setEnergy(0);
-		predator.getEnergy(eatEnergy);
-		
+	/**
+	 * Shark eating a current fish
+	 * WaTorCell of fish is set to water
+	 * shark gains energy
+	 * @param shark
+	 * @param fish
+	 */
+	public void eat(WaTorCell shark, WaTorCell fish){
+		fish.setState(WATER);
+		fish.setNState(WATER);
+		fish.setEnergy(0);
+		shark.receiveEnergy(eatEnergy);
 	}
-
-	public Color[] getColor() {
-		// TODO Auto-generated method stub
-		return colors;
-	}
-
-	public Color updateColor(Cell cell) {
-		// TODO Auto-generated method stub
-		return colors[cell.getState()];
-	}
-
 }

@@ -83,7 +83,7 @@ public class Society extends Group {
 		for (Cell cell : cells) { cell.syncState(); }
 	}
 	private void syncColors() {
-		for (Cell cell : cells) { cell.syncColor(colors); }
+		for (Cell cell : cells) { cell.syncColor(rule.getColor()); }
 	}
 	/**
 	 * Update the cell states in one round.

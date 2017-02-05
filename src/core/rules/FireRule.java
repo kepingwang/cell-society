@@ -13,21 +13,17 @@ import javafx.scene.paint.Color;
  *
  */
 
-public class FireRule implements Rule{
+public class FireRule extends Rule{
+	private final static Color[] FIRE_COLORS = {Color.BROWN, Color.GREEN, Color.RED};
 	private final int EMPTY = 0;
 	private final int TREE = 1;
 	private final int FIRE = 2;
 	private final double CHANCE_FOR_FIRE = .5;
 	private Random fireRNG = new Random();
-	private Color[] colors;
 	
-	// TODO: accept other parameters that affect chance of catching on fire
-	public FireRule(Color[] colorIn){
-		colors = colorIn;
-	}
 	
 	public FireRule(){
-		this(new Color[] {Color.BROWN, Color.GREEN, Color.RED});
+		super(FIRE_COLORS);
 	}
 
 	/**
@@ -70,13 +66,4 @@ public class FireRule implements Rule{
 		// TODO add in other variables that affect chance of fire
 		return retDouble;
 	}
-
-	public Color[] getColor() {
-		return colors;
-	}
-
-	public Color updateColor(Cell cell) {
-		return colors[cell.getState()];
-	}
-
 }

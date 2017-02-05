@@ -27,7 +27,7 @@ public class WaTorCell extends Cell {
 		energy--;
 	}
 	
-	public void getEnergy(int energyIn){
+	public void receiveEnergy(int energyIn){
 		energy+=energyIn;
 	}
 	
