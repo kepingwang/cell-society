@@ -99,11 +99,14 @@ public class Grid<T> implements Iterable<T> {
 			int y = j + dp[1];
 			if (x < 0) {
 				x = rows() - 1;
-			} else if (x == rows()) {
+			} 
+			if (x == rows()) {
 				x = 0;
-			} else if (y < 0) {
+			} 
+			if (y < 0) {
 				y = cols() - 1;
-			} else if (y == cols()) {
+			} 
+			if (y == cols()) {
 				y = 0;
 			}
 			if (x == i && y == j) {

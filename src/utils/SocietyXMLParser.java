@@ -193,7 +193,7 @@ public class SocietyXMLParser {
 				} else { }
 			}
 		}
-		return new Society(name, width, height, params, layout);
+		return new Society(name, width, height, params, getLayout());
 	}
 	
 	
