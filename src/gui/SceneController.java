@@ -48,8 +48,9 @@ public class SceneController extends Application {
 		mainMenu.show();
 	}
 
-	public ResourceBundle getBundle(){
-		return myResources;
+	
+	public String getResource(String key) {
+		return myResources.getString(key);
 	}
 	
 	public static void main(String[] args) {

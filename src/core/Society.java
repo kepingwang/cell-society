@@ -12,19 +12,12 @@ import javafx.scene.paint.Color;
  *
  */
 public class Society extends Group {
-	private String gameName;
 	private Rule rule;
-	/**
-	 * colors array contain the hex color string of the corresponding state.
-	 */
-	private Color[] colors;
 	private Grid<Cell> cells;
 
-	public Society(String gameName, Color[] colors, Cell[][] cellsArr) {
+	public Society(Rule ruleIn, Cell[][] cellsArr) {
 		super();
-		this.gameName = gameName;
-		this.rule = RuleGenerator.genRule(this.gameName);
-		this.colors = colors;
+		rule = ruleIn;
 		this.cells = new Grid<Cell>(cellsArr);
 		for (int i = 0; i < cells.rows(); i++) {
 			for (int j = 0; j < cells.cols(); j++) {
@@ -32,22 +25,6 @@ public class Society extends Group {
 			}
 		}
 		syncColors();
-	}
-
-	public String getGameName() {
-		return gameName; 
-	}
-	
-	/**
-	 * Get a deep copy of the colors array.
-	 * @return
-	 */
-	public Color[] getColors() {
-		Color[] res = new Color[colors.length];
-		for (int i = 0; i < res.length; i++) {
-			res[i] = colors[i];
-		}
-		return res;
 	}
 	
 	public double getWidth() {
