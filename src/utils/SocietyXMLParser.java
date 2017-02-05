@@ -40,6 +40,10 @@ public class SocietyXMLParser {
 	private int rows = -1;
 	private int cols = -1;
 	private int[][] layout = null;
+	//ADDITIONS
+	private int pctprimary=-1;
+	private int pctempty=-1;
+	//ADDITIONS
 	
 	public SocietyXMLParser() { }
 	
@@ -161,6 +165,10 @@ public class SocietyXMLParser {
 					cols = Integer.parseInt(val(node));
 				} else if (node.getNodeName().equals("layout")) {
 					layout = getLayout(rows, cols, node);
+				} else if (node.getNodeName().equals("pctprimary")) { //ADDITION
+					pctprimary = Integer.parseInt(val(node));
+				} else if (node.getNodeName().equals("pctempty")) { //ADDITION
+					pctempty = Integer.parseInt(val(node));
 				} else { }
 			}
 		}
@@ -227,6 +235,10 @@ public class SocietyXMLParser {
 		add(doc, root, "height", Double.toString(height));
 		add(doc, root, "rows", Integer.toString(rows));
 		add(doc, root, "cols", Integer.toString(cols));
+		//Additions
+		add(doc, root, "pctprimary", Integer.toString(pctprimary));
+		add(doc, root, "pctempty", Integer.toString(pctempty));
+		//Additions
 		root.appendChild(layoutElem(doc));
 		
 		// write the content into xml file
