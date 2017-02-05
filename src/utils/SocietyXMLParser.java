@@ -19,7 +19,6 @@ import org.w3c.dom.NodeList;
 
 import core.Cell;
 import core.Society;
-import core.rules.RuleGenerator;
 import javafx.scene.paint.Color;
 
 /**
@@ -40,6 +39,8 @@ public class SocietyXMLParser {
 	private int rows = -1;
 	private int cols = -1;
 	private int[][] layout = null;
+	private List<Double> probs;
+	private List<Double> params;
 	//ADDITIONS
 	private int pctprimary=-1;
 	private int pctempty=-1;
@@ -129,10 +130,28 @@ public class SocietyXMLParser {
 		}
 		return cells;
 	}
-	private void checkGameName(String name) throws Exception {
-		if (RuleGenerator.genRule(name) == null) {
-			throw new Exception("I don't know this game name :P");
+	private int[][] getLayout() {
+		if (layout != null) {
+			return layout;
+		} else {
+			return LayoutGenerator.generateRandomLayout(rows, cols, probs);
 		}
+	}
+	private void checkGameName(String name) throws Exception {
+//		if (RuleGenerator.genRule(name) == null) {
+//			throw new Exception("I don't know this game name :P");
+//		}
+	}
+	private List<Double> getDoubleValues(Node node) {
+		List<Double> res = new ArrayList<>();
+		NodeList list = node.getChildNodes();
+		for (int i = 0; i < list.getLength(); i++) {
+			Node subNode = list.item(i);
+			if (subNode.getNodeName().equals("val")) {
+				res.add(Double.parseDouble(val(subNode)));
+			}
+		}
+		return res;
 	}
 	/**
 	 * Parse a given xml file to {@link Cell}[][]
@@ -165,14 +184,16 @@ public class SocietyXMLParser {
 					cols = Integer.parseInt(val(node));
 				} else if (node.getNodeName().equals("layout")) {
 					layout = getLayout(rows, cols, node);
-				} else if (node.getNodeName().equals("pctprimary")) { //ADDITION
-					pctprimary = Integer.parseInt(val(node));
-				} else if (node.getNodeName().equals("pctempty")) { //ADDITION
-					pctempty = Integer.parseInt(val(node));
+					probs = null;
+				} else if (node.getNodeName().equals("probs")) {
+					probs = getDoubleValues(node);
+					layout = null;
+				} else if (node.getNodeName().equals("params")) {
+					params = getDoubleValues(node);
 				} else { }
 			}
 		}
-		return new Society(name, colors, createCells());
+		return new Society(name, width, height, params, layout);
 	}
 	
 	
@@ -181,9 +202,7 @@ public class SocietyXMLParser {
 		return "#" + color.toString().substring(2, 8);
 	}
 	private void readSociety(Society society) {
-		// TODO: 
-//		name = society.getGameName();
-//		colors = society.getColors();
+		// TODO
 		width = society.getWidth();
 		height = society.getHeight();
 		rows = society.getRows();
@@ -241,6 +260,8 @@ public class SocietyXMLParser {
 		add(doc, root, "pctempty", Integer.toString(pctempty));
 		//Additions
 		root.appendChild(layoutElem(doc));
+		
+		// TODO: save params
 		
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();

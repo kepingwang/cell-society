@@ -1,7 +1,18 @@
 package utils;
 
+import java.util.List;
+
 public class LayoutGenerator {
 
+	
+	public static int[][] generateRandomLayout(int rows, int cols, List<Double> probs) {
+		double[] probsArr = new double[probs.size()];
+		for (int i = 0; i < probsArr.length; i++) {
+			probsArr[i] = probs.get(i);
+		}
+		return generateRandomLayout(rows, cols, probsArr);
+	}
+	
 	/**
 	 * Take rows, cols,
 	 * and an array of probabilities of different states (starting from state 0),

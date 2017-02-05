@@ -82,22 +82,22 @@ public class OptionsScreen{
 		
 		scene = new Scene(root, SIZE, SIZE, BACKGROUND);
 		
-		Text simulation = new Text("Simulation: " + sim_type);
+		Text simulation = new Text(controller.getBundle().getString("simulation") + sim_type);
 		simulation.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 		GridPane.setConstraints(simulation, 5, 5);
 		
 		
 		//adjust later
-		labelList.add(makeLabel("Percent primary agent: "));
+		labelList.add(makeLabel("pct_primary"));
 		textfieldList.add(makeTextField("0-100"));
 		
-		labelList.add(makeLabel("Percent empty cells: "));
+		labelList.add(makeLabel("pct_empty"));
 		textfieldList.add(makeTextField("0-100"));
 		
-		labelList.add(makeLabel("Size (NxN simulation): "));
+		labelList.add(makeLabel("size"));
 		textfieldList.add(makeTextField("Enter N; N<50"));
 		
-		labelList.add(makeLabel("Delay: "));
+		labelList.add(makeLabel("delay"));
 		textfieldList.add(makeTextField("0-3000"));
 		
 		placeLabelAndTextField();
@@ -151,13 +151,13 @@ public class OptionsScreen{
 	}
 
 	private Label makeLabel(String label) {
-		Label lbl = new Label(label);
+		Label lbl = new Label(controller.getBundle().getString(label));
 		return lbl;
 	}
 
 	private void handleBadInput(){
 		if(agent_amount<0 || agent_amount>100){
-			error_agent_amount.setText("Input valid percent primary agent value.");
+			error_agent_amount.setText(controller.getBundle().getString("error_agent_amount"));
 			error_agent_amount.setFill(Color.RED);
 			GridPane.setConstraints(error_agent_amount, 5, 23);
 		}
@@ -166,7 +166,7 @@ public class OptionsScreen{
 			valid_agent=true;
 		}
 		if(empty_amount<0 || empty_amount>100){
-			error_empty_amount.setText("Input valid percent empty cells value.");
+			error_empty_amount.setText(controller.getBundle().getString("error_empty_amount"));
 			error_empty_amount.setFill(Color.RED);
 			GridPane.setConstraints(error_empty_amount, 5, 24);
 		}
@@ -175,7 +175,7 @@ public class OptionsScreen{
 			valid_empty=true;
 		}
 		if(grid_size<10 || grid_size>50){
-			error_grid_size.setText("Input valid size value.");
+			error_grid_size.setText(controller.getBundle().getString("error_grid_size"));
 			error_grid_size.setFill(Color.RED);
 			GridPane.setConstraints(error_grid_size, 5, 25);
 		}
@@ -184,7 +184,7 @@ public class OptionsScreen{
 			valid_size=true;
 		}
 		if(sim_delay<0 || sim_delay>3000){
-			error_sim_delay.setText("Input valid delay value.");
+			error_sim_delay.setText(controller.getBundle().getString("error_sim_delay"));
 			error_sim_delay.setFill(Color.RED);
 			GridPane.setConstraints(error_sim_delay, 5, 26);
 		}
