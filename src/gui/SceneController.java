@@ -3,6 +3,8 @@ package gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.Cell;
+import core.Society;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import utils.LayoutGenerator;
 
 /**
  * The entrance of the Cell Society Application.
@@ -76,6 +79,7 @@ public class SceneController extends Application {
 		
 		Button main_menu = new Button("Main Menu");
 		main_menu.setOnMouseClicked(e -> playMainMenu());
+		
 		buttons.add(main_menu);
 		
 		vBox.getChildren().addAll(buttons);
