@@ -13,13 +13,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MainMenu {
-	private int SIZE=500;
-	private Paint BACKGROUND = Color.WHITE;
-	private static String sim_type;
-	private Stage primaryStage;
-	//private BorderPane root = new BorderPane();
-	private Stage theStage;
-	private static Scene scene;
+	private static final int SIZE = 500;	
+	private Scene scene;
 	private SceneController controller;
 	
 	
@@ -28,11 +23,9 @@ public class MainMenu {
 		setUpMainMenu();
 	}
 	
-	
-	
 	private void setUpMainMenu(){
 		BorderPane root = new BorderPane();
-		scene = new Scene(root, SIZE, SIZE, BACKGROUND);
+		scene = new Scene(root, SIZE, SIZE);
 		
 		GridPane grid = new GridPane();
 		grid.setVgap(10);
@@ -69,39 +62,8 @@ public class MainMenu {
 	}
 
 
-
-	private void predator_preyClicked(ActionEvent e) {
-		sim_type="Predator-Prey";
-		playOptionsScreen();
-	}
-
-
-
-	private void segregationClicked(ActionEvent e) {
-		sim_type="Segregation";
-		playOptionsScreen();
-	}
-
-
-
-	private void spreading_of_fireClicked(ActionEvent e) {
-		sim_type="Spreading of Fire";
-		playOptionsScreen();
-	}
-
-
-
-	private void game_of_lifeClicked(ActionEvent e) {
-		sim_type="Game of Life";
-		playOptionsScreen();
-	}
-	
 	private void playOptionsScreen() {
 		(new OptionsScreen(controller)).show();
-	}
-	
-	public static String getSim(){
-		return sim_type;
 	}
 	
 	public void show() {
