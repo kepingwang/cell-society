@@ -19,7 +19,7 @@ import utils.SocietyXMLParser;
 
 /**
  * The screen where users can make some settings.
- *
+ *@author jacob
  */
 public class OptionsScreen{
 	private static int SIZE=600;

@@ -12,6 +12,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+/**
+ * The screen where users can select simulation.
+ *@author jacob
+ */
+
 public class MainMenu {
 	private static final int SIZE = 500;
 	private static final int BTNXLOC = 1;
