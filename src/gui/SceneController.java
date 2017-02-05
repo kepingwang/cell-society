@@ -1,20 +1,10 @@
 package gui;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ResourceBundle;
 
-import core.Cell;
-import core.Society;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import utils.LayoutGenerator;
 
 /**
  * The entrance of the Cell Society Application.
@@ -22,77 +12,44 @@ import utils.LayoutGenerator;
  *
  */
 public class SceneController extends Application {
-	public static final double WIDTH = 400;
+	public static final double WIDTH = 500;
 	public static final double HEIGHT = 500;
-	//private Paint BACKGROUND = Color.WHITE;
-	
+    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+    public static final String STYLESHEET = "default.css";
+    private ResourceBundle myResources;
+    private String language = "English";
+    
 	private Stage stage;
-	private Scene scene;
-	private List<Button> buttons;
-	private VBox vBox;
-	
-	
-	public void setScene(Scene scene) {
-		stage.setScene(scene);
-	}
-	
-	/**
-	 * Go back to this main screen
-	 */
-	public void backToMain() {
-		stage.setScene(scene);
-	}
-	
-	private void initScene() {
-		Group root = new Group();
-		scene = new Scene(root, WIDTH, HEIGHT);
-		
-		Text title = new Text("Cell Society");
-		title.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-		title.setX(180);
-		title.setY(50);
-		
-		Text credit = new Text("By Keping Hang, Gordon Hyunh and Jacob Weiss");
-		credit.setX(100);
-		credit.setY(80);
-		
-		//MAYBE IMAGE
-		
-		// TODO: Add button text for the main Screen
-		vBox = new VBox();
-		vBox.setLayoutX(210);
-		vBox.setLayoutY(400);
-		root.getChildren().addAll(title, credit);
-		root.getChildren().add(vBox);
-		initButtons();
-	}
-	
-	private void playMainMenu() {
-		(new MainMenu(this)).show();
-	}
-	
-	/**
-	 * To be changed if we want to add new cell society games.
-	 */
-	private void initButtons() {
-		buttons = new ArrayList<Button>();
-		
-		Button main_menu = new Button("Main Menu");
-		main_menu.setOnMouseClicked(e -> playMainMenu());
-		
-		buttons.add(main_menu);
-		
-		vBox.getChildren().addAll(buttons);
+	private MainMenu mainMenu;
+
+	@Override
+	public void init() {
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
 	}
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		this.stage = stage;
-		initScene();
-		stage.setScene(scene);
+		mainMenu = new MainMenu(this);
+		goToMainMenu();
 		stage.show();
 	}
 	
+	/**
+	 * Set the scene of the stage to a given scene.
+	 * @param scene
+	 */
+	public void setScene(Scene scene) {
+		stage.setScene(scene);
+	}
+	
+	public void goToMainMenu() {
+		mainMenu.show();
+	}
+	
+	public String getResource(String key) {
+		return myResources.getString(key);
+	}
 	
 	public static void main(String[] args) {
 		Application.launch(args);

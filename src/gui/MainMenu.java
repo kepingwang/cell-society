@@ -14,8 +14,8 @@ import javafx.scene.text.Text;
 
 public class MainMenu {
 	private static final int SIZE = 500;
-	private static final int BTNXLOC = 5;
-	private static final int BTNYLOC = 5;
+	private static final int BTNXLOC = 1;
+	private static final int BTNYLOC = 2;
 	private static final int VGAP=50;
 	private static final int HGAP=5;
 	private Scene scene;
@@ -39,7 +39,7 @@ public class MainMenu {
 		Text welcome = new Text("Welcome to the Cell Society simulator,\n"
 				+ "please select a simulation.");
 		welcome.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
-		GridPane.setConstraints(welcome, 5, 5);
+		GridPane.setConstraints(welcome, 1, 1);
 		
 		button_list.add(makeButton("Game of Life", e -> playOptionsScreen("game-of-life")));
 		button_list.add(makeButton("Spreading of Fire", e -> playOptionsScreen("fire")));
@@ -56,7 +56,7 @@ public class MainMenu {
 	}
 
 	private void placeButtons() {
-		int i = BTNYLOC;
+		int i = 0;
 		for(Button btn: button_list){
 			GridPane.setConstraints(btn, BTNXLOC, BTNYLOC + i);
 			i++;
@@ -70,6 +70,7 @@ public class MainMenu {
 
 	private Button makeButton(String name, EventHandler<ActionEvent> handler){
 		Button btn = new Button(name);
+		btn.setOnAction(handler);
 		return btn;
 	}
 
