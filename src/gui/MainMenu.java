@@ -36,8 +36,7 @@ public class MainMenu {
 		grid.setVgap(VGAP);
 		grid.setHgap(HGAP);
 		
-		Text welcome = new Text("Welcome to the Cell Society simulator,\n"
-				+ "please select a simulation.");
+		Text welcome = new Text(controller.getResource("welcome"));
 		welcome.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 		GridPane.setConstraints(welcome, 1, 1);
 		
