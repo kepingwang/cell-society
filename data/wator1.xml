@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE config SYSTEM "cell-society.dtd">
 <config>
-	<name>game-of-life</name>
+	<name>wator</name>
 	<id>keping001</id>
 	<color>
 		<val>#F0F8FF</val>
@@ -18,8 +18,8 @@
 	</probs>
 	<params>
 		<val>3</val>
-		<val>10</val>
-		<val>-5</val>
+		<val>7</val>
+		<val>-10</val>
 		<val>2</val>
 	</params>
 </config>

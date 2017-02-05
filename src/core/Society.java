@@ -99,7 +99,7 @@ public class Society extends Group {
 	private void updateNextStates() {
 		for (int i = 0; i < cells.rows(); i++) {
 			for (int j = 0; j < cells.cols(); j++) {
-				cells.get(i, j).updateNextState(rule, cells.getNeighbors(i, j));
+				cells.get(i, j).updateNextState(rule, cells.getNeighborsWrap(i, j));
 			}
 		}
 	}

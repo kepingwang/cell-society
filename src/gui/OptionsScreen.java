@@ -135,6 +135,7 @@ public class OptionsScreen{
 		int i=0;
 		for(Button btn: buttonList){
 			GridPane.setConstraints(btn, BTNLOCX + i, BTNLOCY);
+			i++;
 		}
 	}
 	
@@ -213,7 +214,6 @@ public class OptionsScreen{
 		sim_delay = stringToInt(textfieldList.get(4).getText());
 		
 		handleBadInput();
-		
 		if(allValid){
 			//(new SettingsScreen(controller)).show();
 			playSociety();
@@ -252,7 +252,7 @@ public class OptionsScreen{
 		try {
 			SocietyScreen societyScreen;
 			societyScreen = new SocietyScreen(
-					controller, this, parser.parse("data/saved-cell-society.xml")
+					controller, this, parser.parse("data/wator1.xml")
 			);
 			societyScreen.show();
 		} catch (Exception e) {
