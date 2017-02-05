@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -47,13 +48,8 @@ public class SceneController extends Application {
 		mainMenu.show();
 	}
 
-	/**
-	 * Get the String resource by key from the resource bundle.
-	 * @param key
-	 * @return
-	 */
-	public String getResource(String key) {
-		return myResources.getString(key);
+	public ResourceBundle getBundle(){
+		return myResources;
 	}
 	
 	public static void main(String[] args) {
