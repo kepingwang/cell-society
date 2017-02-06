@@ -94,7 +94,7 @@ public class SocietyScreen extends Application {
 
 		buttonMain = new Button("Back to Main");
 		buttonSettings = new Button("Back to Settings");
-		textSavedName = new TextField("data/saved-cell-society.xml");
+		textSavedName = new TextField("saved-cell-society.xml");
 		buttonSave = new Button("Save XML");
 		transitionHBox.getChildren().addAll(buttonMain, buttonSettings, textSavedName, buttonSave);
 

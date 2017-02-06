@@ -1,5 +1,6 @@
 package core.rules;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import core.Cell;
@@ -30,6 +31,13 @@ public abstract class Rule {
 	 */
 	public abstract int update(Cell cell, List<Cell> neighbors);
 	
+	public List<Double> getParams() {
+		List<Double> res = new ArrayList<>();
+		for (double param : parameters) {
+			res.add(param);
+		}
+		return res;
+	}
 	public Color[] getColor(){
 		return colors;
 	}

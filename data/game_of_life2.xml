@@ -3,10 +3,6 @@
 <config>
 	<name>game_of_life</name>
 	<id>keping001</id>
-	<color>
-		<val>#F0F8FF</val>
-		<val>#000000</val>
-	</color>
 	<width>100</width>
 	<height>100</height>
 	<rows>5</rows>
