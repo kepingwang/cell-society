@@ -65,7 +65,7 @@ public class MainMenu {
 	}
 
 	private void playOptionsScreen(String gameName) {
-		(new OptionsScreen(controller, gameName)).show();
+		(new OptionsScreen(controller, this, gameName)).show();
 	}
 
 	private Button makeButton(String name, EventHandler<ActionEvent> handler){

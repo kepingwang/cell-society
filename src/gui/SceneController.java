@@ -1,5 +1,6 @@
 package gui;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
@@ -33,6 +34,7 @@ public class SceneController extends Application {
 		this.stage = stage;
 		mainMenu = new MainMenu(this);
 		goToMainMenu();
+		System.out.println(Locale.getDefault());
 		stage.show();
 	}
 	
