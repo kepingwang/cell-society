@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE config SYSTEM "cell-society.dtd">
 <config>
-	<name>game_of_life</name>
+	<name>segregation</name>
 	<id>keping001</id>
 	<color>
 		<val>#F0F8FF</val>
@@ -17,5 +17,6 @@
 		<val>0.4</val>
 	</probs>
 	<params>
+		<val>0.4</val>
 	</params>
 </config>

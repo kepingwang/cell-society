@@ -4,24 +4,28 @@ import core.Society;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import utils.SocietyXMLParser;
 
-public class SocietyScreen {
+public class SocietyScreen extends Application {
+	private static final double WIDTH = 600;
+	private static final double HEIGHT = 600;
+	
 	private final int FRAMES_PER_SECOND = 2;
 	private final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-	private SceneController controller;
-	private OptionsScreen settings;
 	private Scene scene;
 	private Timeline timeline;
 	private KeyFrame frame;
 
+	private TextField configField;
 	private double speedMultiplier;
 	private Button buttonMain;
 	private Button buttonSettings;
@@ -38,38 +42,31 @@ public class SocietyScreen {
 	 * The Society Group.
 	 */
 	private Society society;
+	/**
+	 * Where Society resides.
+	 */
+	private Group screen;
 
 	public Scene getScene() {
 		return scene;
 	}
 
-	public SocietyScreen(SceneController controller, OptionsScreen settings, Society society) {
-		this.controller = controller;
-		this.settings = settings;
-		this.society = society;
-		setUpScene();
-		setUpHUD();
-		initEventHandlers();
+	public SocietyScreen() {
+
 	}
-
+	
 	private void initEventHandlers() {
-
-		// TODO: button logics. Some cannot be pressed while not playing. eg. forward.
-		buttonMain.setOnMouseClicked(e -> controller.goToMainMenu());
-		buttonSettings.setOnMouseClicked(e -> settings.show());
+		// TODO: button logics. Some cannot be pressed while not playing. eg.
+		// forward.
+//		buttonMain.setOnMouseClicked(e -> controller.goToMainMenu());
+//		buttonSettings.setOnMouseClicked(e -> settings.show());
 		buttonPlay.setOnMouseClicked(e -> startSimulation());
-		buttonPause.setOnMouseClicked(e -> this.pauseSimulation());
-		buttonResume.setOnMouseClicked(e -> this.resumeSimulation());
-		buttonFastForward.setOnMouseClicked(e -> this.fastForward());
-		buttonSlowForward.setOnMouseClicked(e -> this.slowForward());
-		buttonAdvanceFrame.setOnMouseClicked(e -> this.advanceFrame());
-		buttonSave.setOnMouseClicked(e -> {
-			try {
-				new SocietyXMLParser().saveAsXML(society, textSavedName.getText(), "default-id");
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		});
+		buttonPause.setOnMouseClicked(e -> pauseSimulation());
+		buttonResume.setOnMouseClicked(e -> resumeSimulation());
+		buttonFastForward.setOnMouseClicked(e -> fastForward());
+		buttonSlowForward.setOnMouseClicked(e -> slowForward());
+		buttonAdvanceFrame.setOnMouseClicked(e -> advanceFrame());
+		buttonSave.setOnMouseClicked(e -> saveConfig());
 	}
 
 	/**
@@ -78,29 +75,36 @@ public class SocietyScreen {
 	// TODO: scene setup
 	private void setUpScene() {
 		Group root = new Group();
-		scene = new Scene(root, SceneController.WIDTH, SceneController.HEIGHT);
-		VBox screen = new VBox();
+		scene = new Scene(root, WIDTH, HEIGHT);
+		VBox container = new VBox();
+		root.getChildren().add(container);
+		HBox configBox = new HBox();
 		HBox transitionHBox = new HBox();
 		HBox timeline1HBox = new HBox();
 		HBox timeline2HBox = new HBox();
-		root.getChildren().add(screen);
-		screen.getChildren().add(transitionHBox);
-		screen.getChildren().add(timeline1HBox);
-		screen.getChildren().add(timeline2HBox);
-		
+		container.getChildren().add(configBox);
+		container.getChildren().add(transitionHBox);
+		container.getChildren().add(timeline1HBox);
+		container.getChildren().add(timeline2HBox);
+
+		Button buttonLoadConfig = new Button("Load Config");
+		buttonLoadConfig.setOnAction(e -> loadConfig());
+		configField = new TextField("fire1.xml");
+		configBox.getChildren().addAll(buttonLoadConfig, configField);
+
 		buttonMain = new Button("Back to Main");
 		buttonSettings = new Button("Back to Settings");
 		textSavedName = new TextField("data/saved-cell-society.xml");
 		buttonSave = new Button("Save XML");
 		transitionHBox.getChildren().addAll(buttonMain, buttonSettings, textSavedName, buttonSave);
-		
+
 		buttonPlay = new Button("PLAY");
 		buttonPause = new Button("Pause");
 		buttonPause.setDisable(true);
 		buttonResume = new Button("Resume");
 		buttonResume.setDisable(true);
 		timeline1HBox.getChildren().addAll(buttonPlay, buttonPause, buttonResume);
-		
+
 		buttonFastForward = new Button("Speed Up");
 		buttonFastForward.setDisable(true);
 		buttonSlowForward = new Button("Slow Down");
@@ -108,20 +112,16 @@ public class SocietyScreen {
 		buttonAdvanceFrame = new Button("Forward Frame");
 		buttonAdvanceFrame.setDisable(true);
 		timeline2HBox.getChildren().addAll(buttonFastForward, buttonSlowForward, buttonAdvanceFrame);
-		
-		screen.getChildren().add(society);
+
+		screen = new Group();
+		container.getChildren().add(screen);
 	}
 
 	/**
 	 * Create the HUD for the simulator
 	 */
-	// TODO: HUD setup
 	private void setUpHUD() {
-
-	}
-
-	public void show() {
-		controller.setScene(scene);
+		// TODO: HUD setup
 	}
 
 	/**
@@ -160,6 +160,7 @@ public class SocietyScreen {
 		buttonResume.setDisable(true);
 	}
 
+	// TODO: there is still bug with speed up and slow down.
 	/**
 	 * Method to fast forward simulation
 	 */
@@ -203,4 +204,42 @@ public class SocietyScreen {
 		society.update();
 	}
 
+	private void setSociety(Society society) {
+		this.society = society;
+		screen.getChildren().clear();
+		screen.getChildren().add(society);
+	}
+
+	private void loadConfig() {
+		loadConfig(configField.getText());
+	}
+
+	private void loadConfig(String configFile) {
+		SocietyXMLParser parser = new SocietyXMLParser();
+		try {
+			setSociety(parser.parse("data/" + configFile));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private void saveConfig() {
+		try {
+			new SocietyXMLParser().saveAsXML(society, "data/"+textSavedName.getText(), "default-id");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	@Override
+	public void start(Stage stage) throws Exception {
+		setUpScene();
+		setUpHUD();
+		initEventHandlers();
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	public static void main(String[] args) {
+		Application.launch(args);
+	}
 }

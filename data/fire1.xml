@@ -12,9 +12,9 @@
 	<rows>50</rows>
 	<cols>50</cols>
 	<probs>
-		<val>0.2</val>
-		<val>0.7</val>
 		<val>0.1</val>
+		<val>0.7</val>
+		<val>0.2</val>
 	</probs>
 	<params>
 		<val>0.4</val>

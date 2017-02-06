@@ -9,7 +9,6 @@ import core.rules.Rule;
 import core.rules.SegregationRule;
 import core.rules.WaTorRule;
 import javafx.scene.Group;
-import javafx.scene.paint.Color;
 
 /**
  * A JavaFX {@link Group} of Society, containing a 2d array of {@link Cell}s (Nodes).
