@@ -11,4 +11,4 @@
 <!ELEMENT row (col+)>
 <!ELEMENT col (#PCDATA)>
 <!ELEMENT probs (val+)>
-<!ELEMENT params (val+)>
+<!ELEMENT params (val*)>

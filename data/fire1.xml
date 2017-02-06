@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE config SYSTEM "cell-society.dtd">
+<config>
+	<name>fire</name>
+	<id>keping001</id>
+	<color>
+		<val>#F0F8FF</val>
+		<val>#000000</val>
+	</color>
+	<width>300</width>
+	<height>300</height>
+	<rows>50</rows>
+	<cols>50</cols>
+	<probs>
+		<val>0.2</val>
+		<val>0.7</val>
+		<val>0.1</val>
+	</probs>
+	<params>
+		<val>0.4</val>
+	</params>
+</config>

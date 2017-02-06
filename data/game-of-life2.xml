@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE config SYSTEM "cell-society.dtd">
 <config>
-	<name>game-of-life</name>
+	<name>game_of_life</name>
 	<id>keping001</id>
 	<color>
 		<val>#F0F8FF</val>
