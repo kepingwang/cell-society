@@ -19,7 +19,6 @@ import org.w3c.dom.NodeList;
 
 import core.Cell;
 import core.Society;
-import javafx.scene.paint.Color;
 
 /**
  * An XML Parser that (1) parse an XML config file and to a 2d array
@@ -33,7 +32,6 @@ public class SocietyXMLParser {
 
 	private String name = null;
 	private String id = null;
-	private Color[] colors = null;
 	private double width = -1;
 	private double height = -1;
 	private int rows = -1;
@@ -41,43 +39,10 @@ public class SocietyXMLParser {
 	private int[][] layout = null;
 	private List<Double> probs;
 	private List<Double> params;
-	//ADDITIONS
-	private int pctprimary=-1;
-	private int pctempty=-1;
-	//ADDITIONS
 	
 	public SocietyXMLParser() { }
 	
 	// Parse XML to Cell[][]
-	private void wrongColor() throws Exception {
-		throw new Exception("The color hex string should be like #0f0f0f");
-	}
-	private Color strToColor(String s) throws Exception {
-		if (s.length() != 7) { wrongColor(); }
-		if (s.charAt(0) != '#') { wrongColor(); }
-		int r = Integer.parseInt(s.substring(1, 3), 16);
-		int g = Integer.parseInt(s.substring(3, 5), 16);
-		int b = Integer.parseInt(s.substring(5, 7), 16);
-		if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255) {
-			wrongColor();
-		}
-		return new Color(r/255.0, g/255.0, b/255.0, 1);
-	}
-	private Color[] getColors(Node colorNode) throws Exception {
-		List<String> colorList = new ArrayList<>();
-		NodeList list = colorNode.getChildNodes();
-		for (int i = 0; i < list.getLength(); i++) {
-			Node node = list.item(i);
-			if (node.getNodeName().equals("val")) {
-				colorList.add(val(node));
-			}
-		}
-		Color[] colorArr = new Color[colorList.size()];
-		for (int i = 0; i < colorArr.length; i++) {
-			colorArr[i] = strToColor(colorList.get(i));
-		}
-		return colorArr;
-	}
 	private List<Integer> getLayoutRow(Node rowNode) {
 		List<Integer> rowList = new ArrayList<>();
 		NodeList list = rowNode.getChildNodes();
@@ -119,28 +84,12 @@ public class SocietyXMLParser {
 	private static String val(Node node) {
 		return node.getFirstChild().getNodeValue();
 	}
-	private Cell[][] createCells() {
-		double w = width / cols;
-		double h = height / rows;
-		Cell[][] cells = new Cell[rows][cols];
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				cells[i][j] = new Cell(w*j, h*i, w, h, layout[i][j]);
-			}
-		}
-		return cells;
-	}
 	private int[][] getLayout() {
 		if (layout != null) {
 			return layout;
 		} else {
 			return LayoutGenerator.generateRandomLayout(rows, cols, probs);
 		}
-	}
-	private void checkGameName(String name) throws Exception {
-//		if (RuleGenerator.genRule(name) == null) {
-//			throw new Exception("I don't know this game name :P");
-//		}
 	}
 	private List<Double> getDoubleValues(Node node) {
 		List<Double> res = new ArrayList<>();
@@ -169,11 +118,8 @@ public class SocietyXMLParser {
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
 				if (node.getNodeName().equals("name")) {
 					name = val(node);
-					checkGameName(name);
 				} else if (node.getNodeName().equals("id")) {
 					id = val(node);
-				} else if (node.getNodeName().equals("color")) {
-					colors = getColors(node);
 				} else if (node.getNodeName().equals("width")) {
 					width = Double.parseDouble(val(node));
 				} else if (node.getNodeName().equals("height")) {
@@ -198,21 +144,20 @@ public class SocietyXMLParser {
 	
 	
 	// Save Cell[][] to XML
-	private String colorToString(Color color) {
-		return "#" + color.toString().substring(2, 8);
-	}
 	private void readSociety(Society society) {
-		// TODO
+		name = society.getGameName();
 		width = society.getWidth();
 		height = society.getHeight();
 		rows = society.getRows();
 		cols = society.getCols();
 		layout = society.getLayout();
+		params = society.getParams();
 	}
 	private void add(Document doc, Node parent, String elemName, String elemValue) {
 		Element elem = doc.createElement(elemName);
 		elem.appendChild(doc.createTextNode(elemValue));
 		parent.appendChild(elem);
+		parent.appendChild(doc.createTextNode("\n"));
 	}	
 	private Element rowElem(Document doc, int i) {
 		Element rowElem = doc.createElement("row");
@@ -227,6 +172,14 @@ public class SocietyXMLParser {
 			layoutElem.appendChild(rowElem(doc, i));
 		}
 		return layoutElem;
+	}
+
+	private <T> Element elemList(Document doc, String tag, String childTag, List<T> list) {
+		Element listElem = doc.createElement(tag);
+		for (Object child : list) {
+			add(doc, listElem, childTag, child.toString());
+		}
+		return listElem;
 	}
 	/**
 	 * Save {@link Cell}[][] to an xml file.
@@ -246,22 +199,12 @@ public class SocietyXMLParser {
 		
 		add(doc, root, "name", name);
 		add(doc, root, "id", id);
-		Element colorElem = doc.createElement("color");
-		for (Color color : colors) {
-			add(doc, colorElem, "val", colorToString(color));
-		}
-		root.appendChild(colorElem);
 		add(doc, root, "width", Double.toString(width));
 		add(doc, root, "height", Double.toString(height));
 		add(doc, root, "rows", Integer.toString(rows));
 		add(doc, root, "cols", Integer.toString(cols));
-		//Additions
-		add(doc, root, "pctprimary", Integer.toString(pctprimary));
-		add(doc, root, "pctempty", Integer.toString(pctempty));
-		//Additions
 		root.appendChild(layoutElem(doc));
-		
-		// TODO: save params
+		root.appendChild(elemList(doc, "params", "val", params));
 		
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();

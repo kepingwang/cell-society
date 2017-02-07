@@ -21,12 +21,14 @@ public class Society extends Group {
 	private static final String FIRE = "fire";
 	private static final String SEGREGATION = "segregation";
 	private static final String WATOR = "wator";
+	private String gameName;
 	private Rule rule;
 	private Grid<Cell> cells;
 	private List<Cell> segList;
 
 	public Society(String gameName, double width, double height, List<Double> parameters, int[][] layout) {
 		super();
+		this.gameName = gameName;
 		this.cells = generateCells(gameName, width, height, layout);
 		rule = generateRule(gameName, parameters);
 		for (Cell cell : cells) { getChildren().add(cell); }
@@ -73,6 +75,9 @@ public class Society extends Group {
 		return new Grid<Cell>(temp);
 	}
 	
+	public String getGameName() {
+		return gameName;
+	}
 	public double getWidth() {
 		return cells.get(0,0).getWidth() * cells.cols();
 	}
@@ -93,6 +98,9 @@ public class Society extends Group {
 			}
 		}
 		return res;
+	}
+	public List<Double> getParams() {
+		return rule.getParams();
 	}
 
 	private void updateNextStates() {

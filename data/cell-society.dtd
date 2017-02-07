@@ -1,7 +1,6 @@
-<!ELEMENT config (name,id,color,width,height,rows,cols,layout?,probs?,params?)>
+<!ELEMENT config (name,id,width,height,rows,cols,layout?,probs?,params?)>
 <!ELEMENT name (#PCDATA)>
 <!ELEMENT id (#PCDATA)>
-<!ELEMENT color (val+)>
 <!ELEMENT val (#PCDATA)>
 <!ELEMENT height (#PCDATA)>
 <!ELEMENT width (#PCDATA)>

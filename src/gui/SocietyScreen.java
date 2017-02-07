@@ -1,10 +1,14 @@
 package gui;
 
+import java.util.ResourceBundle;
+
 import core.Society;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,27 +20,26 @@ import javafx.util.Duration;
 import utils.SocietyXMLParser;
 
 public class SocietyScreen extends Application {
+    private static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 	private static final double WIDTH = 600;
 	private static final double HEIGHT = 600;
-	
-	private final int FRAMES_PER_SECOND = 2;
-	private final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private ResourceBundle myResources;
+    private String language = "English";
+
+	private final int MILLISECOND_DELAY = 800;
+	private int delay;
 	private Scene scene;
 	private Timeline timeline;
-	private KeyFrame frame;
 
 	private TextField configField;
-	private double speedMultiplier;
-	private Button buttonMain;
-	private Button buttonSettings;
+	private TextField saveField;
+
+	private Button buttonSave;
 	private Button buttonPlay;
 	private Button buttonPause;
-	private Button buttonResume;
-	private Button buttonFastForward;
-	private Button buttonSlowForward;
-	private Button buttonAdvanceFrame;
-	private TextField textSavedName;
-	private Button buttonSave;
+	private Button buttonSpeedUp;
+	private Button buttonSlowDown;
+	private Button buttonNextFrame;
 
 	/**
 	 * The Society Group.
@@ -47,32 +50,9 @@ public class SocietyScreen extends Application {
 	 */
 	private Group screen;
 
-	public Scene getScene() {
-		return scene;
-	}
-
-	public SocietyScreen() {
-
-	}
-	
-	private void initEventHandlers() {
-		// TODO: button logics. Some cannot be pressed while not playing. eg.
-		// forward.
-//		buttonMain.setOnMouseClicked(e -> controller.goToMainMenu());
-//		buttonSettings.setOnMouseClicked(e -> settings.show());
-		buttonPlay.setOnMouseClicked(e -> startSimulation());
-		buttonPause.setOnMouseClicked(e -> pauseSimulation());
-		buttonResume.setOnMouseClicked(e -> resumeSimulation());
-		buttonFastForward.setOnMouseClicked(e -> fastForward());
-		buttonSlowForward.setOnMouseClicked(e -> slowForward());
-		buttonAdvanceFrame.setOnMouseClicked(e -> advanceFrame());
-		buttonSave.setOnMouseClicked(e -> saveConfig());
-	}
-
 	/**
 	 * Create the scene for simulator
 	 */
-	// TODO: scene setup
 	private void setUpScene() {
 		Group root = new Group();
 		scene = new Scene(root, WIDTH, HEIGHT);
@@ -87,133 +67,121 @@ public class SocietyScreen extends Application {
 		container.getChildren().add(timeline1HBox);
 		container.getChildren().add(timeline2HBox);
 
-		Button buttonLoadConfig = new Button("Load Config");
-		buttonLoadConfig.setOnAction(e -> loadConfig());
+		Button buttonLoad = makeButton("LoadConfig", true, e -> loadConfig());
 		configField = new TextField("fire1.xml");
-		configBox.getChildren().addAll(buttonLoadConfig, configField);
+		configBox.getChildren().addAll(buttonLoad, configField);
 
-		buttonMain = new Button("Back to Main");
-		buttonSettings = new Button("Back to Settings");
-		textSavedName = new TextField("data/saved-cell-society.xml");
-		buttonSave = new Button("Save XML");
-		transitionHBox.getChildren().addAll(buttonMain, buttonSettings, textSavedName, buttonSave);
+		buttonSave = makeButton("SaveXML", false, e -> saveConfig());
+		saveField = new TextField("saved-cell-society.xml");
+		transitionHBox.getChildren().addAll(buttonSave, saveField);
 
-		buttonPlay = new Button("PLAY");
-		buttonPause = new Button("Pause");
-		buttonPause.setDisable(true);
-		buttonResume = new Button("Resume");
-		buttonResume.setDisable(true);
-		timeline1HBox.getChildren().addAll(buttonPlay, buttonPause, buttonResume);
-
-		buttonFastForward = new Button("Speed Up");
-		buttonFastForward.setDisable(true);
-		buttonSlowForward = new Button("Slow Down");
-		buttonSlowForward.setDisable(true);
-		buttonAdvanceFrame = new Button("Forward Frame");
-		buttonAdvanceFrame.setDisable(true);
-		timeline2HBox.getChildren().addAll(buttonFastForward, buttonSlowForward, buttonAdvanceFrame);
+		buttonPlay = makeButton("Play", false, e -> startSimulation());
+		buttonPause = makeButton("Pause", false, e -> pauseSimulation());
+		timeline1HBox.getChildren().addAll(buttonPlay, buttonPause);
+		
+		buttonSpeedUp = makeButton("SpeedUp", false, e -> fastForward());
+		buttonSlowDown = makeButton("SlowDown", false, e -> slowForward());
+		buttonNextFrame = makeButton("NextFrame", false, e -> nextFrame());
+		timeline2HBox.getChildren().addAll(buttonSpeedUp, buttonSlowDown, buttonNextFrame);
 
 		screen = new Group();
 		container.getChildren().add(screen);
 	}
 
-	/**
-	 * Create the HUD for the simulator
-	 */
-	private void setUpHUD() {
-		// TODO: HUD setup
+	// view building helpers
+	private Button makeButton(String nameKey, boolean enabled, EventHandler<ActionEvent> handler){
+		Button btn = new Button(getResourceString(nameKey));
+		btn.setOnAction(handler);
+		btn.setDisable(!enabled);
+		return btn;
 	}
-
-	/**
-	 * Method to begin simulation Must be called in order to start a timeline
-	 */
-	public void startSimulation() {
-		speedMultiplier = 1;
-		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> {
-			society.update();
-		});
+	private void setButton(Button button, boolean enabled) {
+		button.setDisable(!enabled);
+	}
+	
+	// animation
+	private void setUpAnimation() {
+		delay = MILLISECOND_DELAY;
+		KeyFrame frame = new KeyFrame(
+				Duration.millis(delay), 
+				e -> society.update()
+			);
 		timeline = new Timeline();
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.getKeyFrames().add(frame);
-		buttonPause.setDisable(false);
-		buttonFastForward.setDisable(false);
-		buttonSlowForward.setDisable(false);
-		buttonAdvanceFrame.setDisable(false);
-		timeline.play();
 	}
-
-	/**
-	 * Method to pause simulation
-	 */
+	
+	// Button logics
+	public void startSimulation() {
+		timeline.play();
+		buttonsPlaying();
+	}
 	private void pauseSimulation() {
 		timeline.pause();
-		buttonPause.setDisable(true);
-		buttonResume.setDisable(false);
+		buttonsPaused();
 	}
-
-	/**
-	 * Method to resume simulation
-	 */
-	private void resumeSimulation() {
-		timeline.play();
-		buttonPause.setDisable(false);
-		buttonResume.setDisable(true);
-	}
-
-	// TODO: there is still bug with speed up and slow down.
-	/**
-	 * Method to fast forward simulation
-	 */
-	private void fastForward() {
-		timeline.stop();
-		if (speedMultiplier >= .25) {
-			speedMultiplier -= .25;
+	private void changeSpeed(double factor, boolean goOnAndPlay) {
+		if (delay / factor >= 100 && delay / factor <= 2000) {
+			delay = (int) (delay / factor);
 		}
-		timeline.getKeyFrames().clear();
-		frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY * speedMultiplier), e -> {
-			society.update();
-		});
-		timeline.getKeyFrames().add(frame);
-		timeline.play();
-		buttonPause.setDisable(false);
-		buttonResume.setDisable(true);
-	}
-
-	/**
-	 * Method to slow down simulation
-	 */
-	private void slowForward() {
+		KeyFrame frame = new KeyFrame(
+				Duration.millis(delay),
+				e -> society.update()
+			);
 		timeline.stop();
-		speedMultiplier += .25;
 		timeline.getKeyFrames().clear();
-		frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY * speedMultiplier), e -> {
-			society.update();
-		});
 		timeline.getKeyFrames().add(frame);
-		timeline.play();
-		buttonPause.setDisable(false);
-		buttonResume.setDisable(true);
+		if (goOnAndPlay) { timeline.play(); }
 	}
-
-	/**
-	 * Method to step forward a frame, will automatically pause timeline if not
-	 * pause already
-	 */
-	private void advanceFrame() {
+	private void fastForward() {
+		changeSpeed(1.5, isPlaying());
+	}
+	private void slowForward() {
+		changeSpeed(0.667, isPlaying());
+	}
+	private void nextFrame() {
 		timeline.pause();
 		society.update();
+		buttonsPaused();
 	}
-
+	/**
+	 * Set the buttons status when simulation is playing
+	 */
+	private void buttonsPlaying() {
+		setButton(buttonSave, true);
+		setButton(buttonPlay, false);
+		setButton(buttonPause, true);
+		setButton(buttonSpeedUp, true);
+		setButton(buttonSlowDown, true);
+		setButton(buttonNextFrame, true);
+	}
+	/**
+	 * Set the buttons status when simulation is paused (or not started)
+	 * but already loaded.
+	 */
+	private void buttonsPaused() {
+		setButton(buttonSave, true);
+		setButton(buttonPlay, true);
+		setButton(buttonPause, false);
+		setButton(buttonSpeedUp, true);
+		setButton(buttonSlowDown, true);
+		setButton(buttonNextFrame, true);
+	}
+	private boolean isPlaying() {
+		return buttonPlay.isDisabled();
+	}
+	
+	
 	private void setSociety(Society society) {
 		this.society = society;
 		screen.getChildren().clear();
 		screen.getChildren().add(society);
+		timeline.pause();
+		buttonsPaused();
 	}
-
 	private void loadConfig() {
 		loadConfig(configField.getText());
 	}
-
 	private void loadConfig(String configFile) {
 		SocietyXMLParser parser = new SocietyXMLParser();
 		try {
@@ -224,17 +192,22 @@ public class SocietyScreen extends Application {
 	}
 	private void saveConfig() {
 		try {
-			new SocietyXMLParser().saveAsXML(society, "data/"+textSavedName.getText(), "default-id");
+			new SocietyXMLParser().saveAsXML(society, "data/"+saveField.getText(), "default-id");
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 	}
 
+	private String getResourceString(String key) {
+		return myResources.getString(key);
+	}
+	
 	@Override
 	public void start(Stage stage) throws Exception {
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
 		setUpScene();
-		setUpHUD();
-		initEventHandlers();
+		setUpAnimation();
+		society = null;
 		stage.setScene(scene);
 		stage.show();
 	}

@@ -35,7 +35,7 @@ public class WaTorRule extends Rule{
 	}
 	
 	/**
-	 * Only constructor for WaTorRule
+	 * constructor for WaTorRule
 	 * @param fishBirthIn
 	 * 	Required amount of turns in order for fish to give birth
 	 * @param sharkDeathIn
@@ -55,12 +55,11 @@ public class WaTorRule extends Rule{
 	
 	@Override
 	public int update(Cell cell, List<Cell> neighbors) {
-		// TODO Auto-generated method stub
 		if(cell.getState() == WATER){
 			return cell.getNState();
 		}
 		ArrayList<Cell> neighborsIn = (ArrayList<Cell>) neighbors;
-		Cell[] adjNeighbors = {neighborsIn.get(0), neighborsIn.get(3), neighbors.get(4), neighbors.get(6)};
+		Cell[] adjNeighbors = {neighborsIn.get(1), neighborsIn.get(3), neighbors.get(4), neighbors.get(6)};
 		
 		ArrayList<WaTorCell> openNeighbors = new ArrayList<WaTorCell>();
 		ArrayList<WaTorCell> fishNeighbors = new ArrayList<WaTorCell>();
@@ -72,6 +71,7 @@ public class WaTorRule extends Rule{
 				fishNeighbors.add((WaTorCell) c);
 			}
 		}
+		
 		
 		int openSpaces = openNeighbors.size();
 		int fishSpaces = fishNeighbors.size();
@@ -98,6 +98,7 @@ public class WaTorRule extends Rule{
 			}
 			if(fishSpaces > 0){
 				WaTorCell target = fishNeighbors.get(watorRNG.nextInt(fishSpaces));
+				// TODO: bug. now shark disappears when it eats a fish.
 				eat(watorCell, target);
 				if(watorCell.getEnergy() >= sharkBirth && openSpaces > 0){
 					target = openNeighbors.get(watorRNG.nextInt(openSpaces));

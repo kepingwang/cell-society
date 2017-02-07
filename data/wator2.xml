@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE config SYSTEM "cell-society.dtd">
 <config>
-	<name>fire</name>
+	<name>wator</name>
 	<id>keping001</id>
 	<width>300</width>
 	<height>300</height>
 	<rows>50</rows>
 	<cols>50</cols>
 	<probs>
-		<val>0.1</val>
-		<val>0.7</val>
+		<val>0.5</val>
+		<val>0.3</val>
 		<val>0.2</val>
 	</probs>
 	<params>
-		<val>0.4</val>
+		<val>5</val>
+		<val>6</val>
+		<val>-10</val>
+		<val>2</val>
 	</params>
 </config>
