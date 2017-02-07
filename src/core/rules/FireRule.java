@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
  */
 
 public class FireRule extends Rule{
-	private final static Color[] FIRE_COLORS = {Color.BROWN, Color.GREEN, Color.RED};
+	private final static Color[] FIRE_COLORS = {Color.GOLD, Color.GREEN, Color.RED};
 	private final static int EMPTY = 0;
 	private final static int TREE = 1;
 	private final static int FIRE = 2;
