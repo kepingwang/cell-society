@@ -98,6 +98,7 @@ public class WaTorRule extends Rule{
 			}
 			if(fishSpaces > 0){
 				WaTorCell target = fishNeighbors.get(watorRNG.nextInt(fishSpaces));
+				// TODO: bug. now shark disappears when it eats a fish.
 				eat(watorCell, target);
 				if(watorCell.getEnergy() >= sharkBirth && openSpaces > 0){
 					target = openNeighbors.get(watorRNG.nextInt(openSpaces));

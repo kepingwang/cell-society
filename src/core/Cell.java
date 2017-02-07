@@ -40,10 +40,18 @@ public class Cell extends Rectangle {
 		return state; 
 	}
 	
+	/**
+	 * Set Next State
+	 * @param i
+	 */
 	public void setNState(int i){
 		nextState = i;
 	}
 	
+	/**
+	 * Get Next State
+	 * @return
+	 */
 	public int getNState(){
 		return nextState;
 	}
