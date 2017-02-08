@@ -3,8 +3,8 @@ package core.rules;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.Cell;
 import javafx.scene.paint.Color;
+import refactor.Cell;
 
 public abstract class Rule {
 	private Color[] colors;

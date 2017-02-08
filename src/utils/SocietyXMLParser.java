@@ -17,8 +17,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import core.Cell;
 import core.Society;
+import refactor.Cell;
 
 /**
  * An XML Parser that (1) parse an XML config file and to a 2d array
