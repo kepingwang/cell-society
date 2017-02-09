@@ -1,3 +1,13 @@
+### Proffesor Duvall's response to rule tables
+While I certainly encourage you to use the Internet as a resource, in the future I suggest that if you find yourself about to click on a GIT repository you strongly consider NOT following the link --- especially something that advertises itself as a general solution to the problem you are trying to solve.  As a reminder, you are welcome to borrow code that implements a small feature in your program but not large parts of the program and certainly not parts that implement a general design for your project.  
+ 
+In this case, why would you going looking for code to a specific simulation you need to implement when you should already have a general simulation hierarchy that supports a variety of simulations.  Anything you find on the Internet is not going to fit directly into the code that you have designed (I just about guarantee it).
+ 
+To address your dilemma specifically, you are certainly NOT allowed to take their code directly (presumably throwing out your current design).  If the entire team starts JUST from the README (and its documentation links) and decides to throw out the current version and implement their own version of the design from scratch (so you actually learn from the process), then you can use their ideas.  By the way this very issue is at the heart of the Google v. Oracle case over whether Java can be fairly used within the Android OS --- so you are not the only people having debates like this.
+ 
+If you choose not to use their design ideas, I do think it would be a useful exercise for you each to address it in your ANALYSIS: why you thought it was a better design than your own and if there were any concerns that you might have about it.
+
+
 ### Design Refactoring:
 
 1. The implementation of cell update should be inside each Cell subclass (like `WatorCell`). Because we want to "tell it to update", instead of letting someone else (the `WatorRule`) to update it. By writing the update implementation inside `WatorCell`, we have access to all the variables needed. If we implement update in `WatorRule`, then we have to `get` variables from `WatorCell` and `set` values to it.
