@@ -1,5 +1,7 @@
 # cellsociety
 
+A seemingly useful [git repo](https://github.com/GollyGang/ruletablerepository)
+
 CompSci 308 Cell Society Project
 
 The MVC pattern is mainly for web applications. Since the web pages have to get data through html request and response, it is necessary to have a Controller to routes the requests and send back the data. JavaFX can adopt the pure MVC design pattern, but that requires using FXML (a pure view without controlling method, see this [JavaFX Best Practices](http://docs.oracle.com/javafx/2/best_practices/jfxpub-best_practices.htm)). I don't think we have to pay the extra learning cost to use FXML, since it will definitely not be used in the final project (most fun part of the class).
