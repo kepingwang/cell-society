@@ -1,3 +1,25 @@
+### Design Refactoring:
+
+1. The implementation of cell update should be inside each Cell subclass (like `WatorCell`). Because we want to "tell it to update", instead of letting someone else (the `WatorRule`) to update it. By writing the update implementation inside `WatorCell`, we have access to all the variables needed. If we implement update in `WatorRule`, then we have to `get` variables from `WatorCell` and `set` values to it.
+
+2. When `WatorCell` updates, it has to have a list of neighbors. The neighbors should be generated from `Grid` and passed to the `udpate()` method (that's what we are doing), since only `Grid` knows who the neighbors are.
+
+3. When `WatorCell` receives this list of neighbors, they'd better be a list of `WatorCell`s, since during the `update()` the current `WatorCell` has to get and set the `WatorCell-specific` variables of its neighbors. If it receives a list of `Cell`s, then `Cell` doesn't have attributes like `energy`, and it's better to avoid casting. So the `getNeighbors()` method in `Grid` should return a list of `WatorCell`. We can achieve this by making `Grid` takes a generic type, which means it is `Grid<T>`. While we construct our `Grid<T>`, put in their the most specific type of cells, that is, `WatorCell` instead of `Cell`. 
+
+4. For different kinds of grids, square, triangle, or hexagon, we can make `SquareGrid<T>`, `TriangleGrid<T>`, `HexagonGrid<T>`. They'd better be different classes (instead of different methods) since many things are going to differ among the three kinds of shapes:
+  (1). `getNeighbors()`.
+  (2). Different shapes of cells... We still haven't made an agreement on how to do this, I'll talk about it just below.
+
+5. I think our `Cell` shouldn't extend JavaFX `Node` (and thus `Society` shouldn't extend a `Group`). I insist on "drawing" our `Cell` on the canvas, for the following reasons:
+  (1). Right now `Polygon` seems to be able to handle this, but what if we need to draw a circle. If to add some feature, we have to change the super class, then the code is definitely bad design, since changing the super class means changing all subclasses and sub-subclasses.
+  (2). Actually extending `Polygon` is not sufficient her e. The `sugar` simulation requires us to draw a circle on a square ground.
+  (3). We can let the `Cell` contain different `Shapes`, but it still is not flexible enough. If we want to add a circle on a square, we have to pass around a bunch of JavaFX `Node`s. And deleting `Node` from a `Group` doesn't seem an efficient way of updating the view. 
+  (4). Using `Canvas` to draw is good because it separates our backend `Cell` away from our frontend view. This way our `Cell` doesn't contain any information about positions, shapes, and colors, so we have cleaner constructors for cells.
+  (5). We can have `SquareGrid<T>`, `TriangleGrid<T>`, and `HexagonGird<T>` to handle the shapes of our cells, and the `Cell`s can get colors configuration from somewhere else. We pass a different list of colors and the color scheme of the cells can change on the run.
+
+6. Perhaps we can store all the view related configurations in a single class, just to make the code cleaner. It could be called `ViewConfig`, which contains total width and height of our society, a list of colors for different states, and a list of string mapping to different cell shapes (so that we can draw circle cells on a square grid), and perhaps more...
+
+
 # cellsociety
 
 A seemingly useful [git repo](https://github.com/GollyGang/ruletablerepository)
