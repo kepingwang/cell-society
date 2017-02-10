@@ -2,8 +2,8 @@ package core.rules;
 
 import java.util.List;
 
+import core.Cell;
 import javafx.scene.paint.Color;
-import refactor.Cell;
 
 /**
  * Rules for Game of Life simulation

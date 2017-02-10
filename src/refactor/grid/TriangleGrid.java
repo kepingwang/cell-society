@@ -2,13 +2,15 @@ package refactor.grid;
 
 import java.util.List;
 
-public class TriangleGrid<T> extends Grid<T> {
+import refactor.cell.Cell;
 
-	public TriangleGrid(T[][] arr) {
-		super(arr);
+public class TriangleGrid<C extends Cell> extends Grid<C> {
+
+	public TriangleGrid(C[][] arr) {
+		
 	}
 	
-	public List<T> getNeighbors(int i, int j, TriangleNeighbors neighborsType, boolean wrapping) {
+	public List<C> getNeighbors(int i, int j, TriangleNeighbors neighborsType, boolean wrapping) {
 		// TODO
 		return null;
 	}

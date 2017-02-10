@@ -3,10 +3,12 @@ package refactor.grid;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SquareGrid<T> extends Grid<T> {
+import refactor.cell.Cell;
 
-	public SquareGrid(T[][] arr) {
-		super(arr);
+public class SquareGrid<C extends Cell> extends Grid<C> {
+
+	public SquareGrid(C[][] arr) {
+
 	}
 	
 	private static final int[][] dps = new int[][] {
@@ -15,8 +17,8 @@ public class SquareGrid<T> extends Grid<T> {
 		{ 1,-1},{ 1, 0},{ 1, 1}
 	};
 
-	public List<T> getNeighbors(int i, int j, SquareNeighbors neighborsType, boolean wrapping) {
-		List<T> res = new ArrayList<>();
+	public List<C> getNeighbors(int i, int j, SquareNeighbors neighborsType, boolean wrapping) {
+		List<C> res = new ArrayList<>();
 		for (int[] dp : dps) {
 			int x = i + dp[0];
 			int y = j + dp[1];
@@ -39,7 +41,7 @@ public class SquareGrid<T> extends Grid<T> {
 			}
 		}
 		// filter the neighbors list with the neighborsType input.
-		List<T> filtered = new ArrayList<T>();
+		List<C> filtered = new ArrayList<C>();
 		for (int index : neighborsType) {
 			filtered.add(res.get(index));
 		}

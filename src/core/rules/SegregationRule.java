@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import core.Cell;
 import javafx.scene.paint.Color;
-import refactor.Cell;
 
 /**
  * Rules for Segregation simulator

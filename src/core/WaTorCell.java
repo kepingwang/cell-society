@@ -1,7 +1,5 @@
 package core;
 
-import refactor.Cell;
-
 /**
  * Cell for Wa-Tor simulation
  * @author gordon

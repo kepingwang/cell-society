@@ -1,18 +1,24 @@
-package refactor;
+package core;
 
 import java.util.List;
 
-import core.Society;
+import com.sun.javafx.geom.BaseBounds;
+import com.sun.javafx.geom.transform.BaseTransform;
+import com.sun.javafx.jmx.MXNodeAlgorithm;
+import com.sun.javafx.jmx.MXNodeAlgorithmContext;
+import com.sun.javafx.sg.prism.NGNode;
+
 import core.rules.Rule;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
+import javafx.scene.Node;
+
+
 
 /**
  * A Cell, also a JavaFX node. Can be visualized when added to JavaFX Group
  * ({@link Society}).
  * @author keping
  */
-public class Cell {
+public class Cell extends Node {
 	/**
 	 * states are integers starting from 0.
 	 */
@@ -90,4 +96,46 @@ public class Cell {
 	public void render(GraphicsContext gc, Color[] colors, String shape, List<Double> positions) {
 		// TODO
 	}
+
+	@Override
+	protected NGNode impl_createPeer() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BaseBounds impl_computeGeomBounds(BaseBounds bounds, BaseTransform tx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected boolean impl_computeContains(double localX, double localY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Object impl_processMXNode(MXNodeAlgorithm alg, MXNodeAlgorithmContext ctx) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+//	
+//	@Override
+//	public EventDispatchChain buildEventDispatchChain(EventDispatchChain tail) {
+//		return tail.append(new EventDispatcher() {
+//
+//			@Override
+//			public Event dispatchEvent(Event event, EventDispatchChain tail) {
+//				tail.dispatchEvent(event);
+//				return event;
+//			}
+//			
+//		});
+//	}
+//	
+//	public void haha() {
+//		Event.fireEvent(eventTarget, event);
+//	}
 }
