@@ -7,12 +7,13 @@ To address your dilemma specifically, you are certainly NOT allowed to take thei
  
 If you choose not to use their design ideas, I do think it would be a useful exercise for you each to address it in your ANALYSIS: why you thought it was a better design than your own and if there were any concerns that you might have about it.
 
+_Keping's reply: I'm not sure how you phrased the question. It seems to me as if we are asked to write a program to simulate Beethoven's Symphony No. 9 and a youtube link of a convert is given to us but we are not allowed to use the score we found online. I don't think I'm able to implement the Langton's Loop without using the rule tables. I suggest we just forget about that right now. It's enough to show our design by implementing 3 extra simulations._
 
 ### Design Refactoring:
 
 1. The implementation of cell update should be inside each Cell subclass (like `WatorCell`). Because we want to "tell it to update", instead of letting someone else (the `WatorRule`) to update it. By writing the update implementation inside `WatorCell`, we have access to all the variables needed. If we implement update in `WatorRule`, then we have to `get` variables from `WatorCell` and `set` values to it.
 
-**Are you saying that we now need to make a cell subclass for each simulation? Essentially what I suggested since the beginning?**
+**Are you saying that we now need to make a cell subclass for each simulation? Essentially what I suggested since the beginning?**_Yes. Demand changes. It seems ok for `Rule` to call `getState()`, but not ok for `Rule` to cast and call many `get**()` methods._
 
 2. When `WatorCell` updates, it has to have a list of neighbors. The neighbors should be generated from `Grid` and passed to the `udpate()` method (that's what we are doing), since only `Grid` knows who the neighbors are.
 
@@ -31,6 +32,7 @@ If you choose not to use their design ideas, I do think it would be a useful exe
 
 **(1)If you read the new implementations, we are only required to add in hexagonal and triangular shapes. These shapes are special since they have different arrangements of neighbors. For circles, it is arbitrary to accurately define a neighbor of circles since this would solely depend on the arrangement of the grid itself. This is why we SHOULD NOT have to worry about cells being circular. I took a cursory look at sugar scape and the circles only occupy the square-like tiles. Nowhere is it necessary for them to be circles. For example, look at Wa-Tor, in the examples they were circular shapes; however, you can still treat them like squares and the simulation is the same. In addition, if you really want it to be visually simular, we can always implement the JavaFX's circle class. Again, I do understand where you're coming from that we can simply just draw on the shapes; however, how would you be able to detect a user clicking on a shape in canvas? Would you have to create a listener event for every single point ont he canvas? On the other hand, every node in JavaFX automatically has the capabilities of calling a listener when clicked on. I still side with the choice of using JavaFX nodes to visually represent our cells.**
 **(2)I think I forgot to mention this before, but I do agree now that perhaps we shouldn't have cells extend directly from javafx classes. Instead I would prefer cells to have a private instance of a node such as rectangle or polygon**
+_You are right that it is hard to write an event dispatching for a custom class that is not a `Node`. I agree that we let `Cell` contain instance(s) of `Node`s._
 
 6. Perhaps we can store all the view related configurations in a single class, just to make the code cleaner. It could be called `ViewConfig`, which contains total width and height of our society, a list of colors for different states, and a list of string mapping to different cell shapes (so that we can draw circle cells on a square grid), and perhaps more...
 
