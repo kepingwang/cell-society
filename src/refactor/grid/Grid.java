@@ -1,7 +1,6 @@
-package refactor;
+package refactor.grid;
 
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * A wrapper class around a 2d array
@@ -10,6 +9,7 @@ import java.util.List;
  * @param <T>
  */
 public abstract class Grid<T> implements Iterable<T> {
+	
 	protected Object[][] grid;
 	
 	public Grid(T[][] arr) {
@@ -45,13 +45,6 @@ public abstract class Grid<T> implements Iterable<T> {
 	@SuppressWarnings("unchecked")
 	public T get(int i, int j) {
 		return (T) grid[i][j];
-	}
-
-	protected abstract List<T> getNeighborsWrapping(int i, int j);
-	protected abstract List<T> getNeighborsNoWrapping(int i, int j);
-	public List<T> getNeighbors(int i, int j, boolean wrapping) {
-		if (wrapping) { return getNeighborsWrapping(i, j); }
-		else { return getNeighborsNoWrapping(i, j); }
 	}
 	
 	private final class GridIterator implements Iterator<T> {
