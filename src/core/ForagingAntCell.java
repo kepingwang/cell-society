@@ -11,6 +11,8 @@ public class ForagingAntCell extends Cell{
 	public static final int NEUTRAL_CELL = 0;
 	public static final int NEST_CELL = 1;
 	public static final int FOOD_CELL = 2;
+	private static final int INIT_FOOD_AMOUNT = 50;
+	private static final double DECAY_RATE = .99;
 	
 	private List<Ant> occupyingAnts;
 	private boolean nestCell;
@@ -32,6 +34,9 @@ public class ForagingAntCell extends Cell{
 		// TODO Auto-generated constructor stub
 		nestCell = state == NEST_CELL;
 		foodCell = state == FOOD_CELL;
+		if(foodCell){
+			foodAmount = INIT_FOOD_AMOUNT;
+		}
 	}
 	
 	public void syncState(){
@@ -41,6 +46,11 @@ public class ForagingAntCell extends Cell{
 			nestCell = temp == NEST_CELL;
 			foodCell = temp == FOOD_CELL;
 		}
+	}
+	
+	public void decayScent(){
+		foodScent = foodScent * DECAY_RATE;
+		homeScent = homeScent * DECAY_RATE;
 	}
 	
 	public List<Ant> getAnts(){
@@ -63,12 +73,28 @@ public class ForagingAntCell extends Cell{
 		return foodCell;
 	}
 	
+	public void setFoodScent(double d){
+		foodScent = d;
+	}
+	
 	public double getFoodScent(){
 		return foodScent;
 	}
 	
+	public void setHomeScent(double d){
+		homeScent = d;
+	}
+	
 	public double getHomeScent(){
 		return homeScent;
+	}
+	
+	public void incrementFood(){
+		foodAmount++;
+	}
+	
+	public void decrementFood(){
+		foodAmount--;
 	}
 
 }

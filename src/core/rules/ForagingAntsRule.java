@@ -1,5 +1,6 @@
 package core.rules;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import core.Ant;
@@ -7,6 +8,11 @@ import core.Cell;
 import core.ForagingAntCell;
 import javafx.scene.paint.Color;
 
+/**
+ * Rules for Foraging Ant simulator
+ * @author Gordon
+ *
+ */
 public class ForagingAntsRule extends Rule {
 	private final static Color[] FORAGING_ANTS_COLORS = {};
 	private final static int ANT_SPAWN_RATE = 2;
@@ -21,6 +27,7 @@ public class ForagingAntsRule extends Rule {
 	 */
 	public int update(Cell cell, List<Cell> neighbors) {
 		ForagingAntCell antCell = (ForagingAntCell) cell;
+		antCell.decayScent();
 		if(antCell.getState() == ForagingAntCell.NEST_CELL){
 			return this.updateNest(antCell, neighbors);
 		}
@@ -74,10 +81,12 @@ public class ForagingAntsRule extends Rule {
 	 * @param neighbors
 	 */
 	private void moveAnts(List<Ant> ants, List<Cell> neighbors){
+		ArrayList<Ant> antsToRemove = new ArrayList<Ant>();
 		for(Ant a : ants){
 			if(a.forage(neighbors) == 1){
-				ants.remove(a);
+				antsToRemove.add(a);
 			}
 		}
+		ants.removeAll(antsToRemove);
 	}
 }
