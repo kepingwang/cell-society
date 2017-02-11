@@ -1,3 +1,39 @@
-VBox {
-	-fx-background: #0f0f0f;
+HBox {
+	-fx-background: #D3FFFF;
+	-fx-alignment: center;
+	-fx-font: 20.0px "Serif";
+	-fx-font-weight: 900;
+	-fx-spacing: 15px;
 }
+
+VBox {
+	-fx-alignment: center;
+	-fx-spacing: 10px;
+}
+
+.screen-container {
+	-fx-alignment: center;
+}
+
+.screen-region {
+	-fx-alignment: top-center;
+}
+
+
+
+.btn-toggle {
+
+}
+
+.btn-toggle-add {
+	-fx-text-fill: green;
+}
+
+.btn-toggle-remove {
+	-fx-text-fill: red;
+}
+
+#sliderHBox {
+	-fx-spacing: 0px;
+}
+

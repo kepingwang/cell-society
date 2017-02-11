@@ -11,6 +11,7 @@ import refactor.grid.GridType;
 import refactor.grid.NeighborsType;
 
 public class SocietyFactory {
+	public static double SIZE = 360;
 
 	public SocietyFactory() {
 	}
@@ -25,7 +26,7 @@ public class SocietyFactory {
 
 		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8, wrapping);
 		String cellShapeType = GridType.SQUARE;
-		SizeConfig sizeConfig = new SizeConfig(5, 5, 200, 200);
+		SizeConfig sizeConfig = new SizeConfig(5, 5, SIZE, SIZE);
 		int[][] layout = new int[][] { { 0, 1, 0, 0, 1 }, { 1, 1, 0, 1, 1 }, { 1, 0, 1, 0, 0 }, { 1, 1, 0, 0, 1 },
 				{ 0, 0, 1, 1, 1 } };
 				

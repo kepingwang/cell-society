@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!-- You have to import packages manually in FXML!!! -->
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -6,17 +7,28 @@
 <?import javafx.scene.layout.*?>
 
 
-<VBox layoutX="10.0" layoutY="10.0" prefHeight="250.0"
-	prefWidth="300.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1"
-	xmlns="http://javafx.com/javafx/8" fx:controller="refactor.control.Controller">
-
+<VBox xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/8"
+	fx:controller="refactor.control.Controller">
 	<children>
-		<Button onAction="#printOutput" alignment="CENTER_RIGHT" contentDisplay="CENTER"
-			mnemonicParsing="false" text="OK" textAlignment="CENTER" />
-		<Label alignment="CENTER_LEFT" cache="true"
-			cacheHint="SCALE" prefHeight="30.0" prefWidth="200.0" text="Your Input:"
-			textAlignment="LEFT" />
-		<TextArea prefHeight="100.0" prefWidth="200.0"
-			wrapText="true" />
+		<HBox fx:id="screens">
+
+		</HBox>
+<HBox fx:id="buttons">
+	<children>
+		<HBox id="sliderHBox" >
+			<children>
+				<Label text="%Slow" />
+				<Slider fx:id="speedSlider" />
+				<Label text="%Fast" />
+			</children>
+		</HBox>
+		<Button fx:id="btnPlay" text="%Play" onAction="#startSimulation" />
+		<Button fx:id="btnPause" text="%Pause" onAction="#pauseSimulation" />
+
+		<Button fx:id="btnNextFrame" text="%NextFrame" onAction="#nextFrame" />
+		<Button fx:id="btnToggleScreen" text="%Compare" onAction="#toggleScreen"
+			styleClass="btn-toggle, btn-toggle-add" />
+	</children>
+</HBox>
 	</children>
 </VBox>
