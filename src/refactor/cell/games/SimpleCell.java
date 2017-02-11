@@ -43,4 +43,9 @@ public abstract class SimpleCell extends Cell {
 		viewSynchronized = true;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Cell(curr:%d, next:%d)", currState, nextState);
+	}
+	
 }

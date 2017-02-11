@@ -88,4 +88,9 @@ public class CellPane<T extends Cell> extends Pane {
 		return grid;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Pane(%d, %d) %s", i, j);
+	}
+	
 }
