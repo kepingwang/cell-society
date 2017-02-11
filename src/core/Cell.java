@@ -2,14 +2,8 @@ package core;
 
 import java.util.List;
 
-import com.sun.javafx.geom.BaseBounds;
-import com.sun.javafx.geom.transform.BaseTransform;
-import com.sun.javafx.jmx.MXNodeAlgorithm;
-import com.sun.javafx.jmx.MXNodeAlgorithmContext;
-import com.sun.javafx.sg.prism.NGNode;
-
 import core.rules.Rule;
-import javafx.scene.Node;
+import javafx.scene.paint.Color;
 
 
 
@@ -18,7 +12,7 @@ import javafx.scene.Node;
  * ({@link Society}).
  * @author keping
  */
-public class Cell extends Node {
+public class Cell {
 	/**
 	 * states are integers starting from 0.
 	 */
@@ -83,59 +77,20 @@ public class Cell extends Node {
 	public void updateNextState(Rule rule, List<Cell> neighbors) {
 		nextState = rule.update(this, neighbors);
 	}
-	
-	private void renderSquare(GraphicsContext gc, List<Double> positions) {
+
+	public void syncColor(Color[] color) {
+		// TODO Auto-generated method stub
 		
 	}
-	private void renderTriangle(GraphicsContext gc, List<Double> positions) {
-		
-	}
-	private void renderHexagon(GraphicsContext gc, List<Double> positions) {
-		
-	}
-	public void render(GraphicsContext gc, Color[] colors, String shape, List<Double> positions) {
-		// TODO
-	}
 
-	@Override
-	protected NGNode impl_createPeer() {
+	public int width() {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
-	@Override
-	public BaseBounds impl_computeGeomBounds(BaseBounds bounds, BaseTransform tx) {
+	public int height() {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 
-	@Override
-	protected boolean impl_computeContains(double localX, double localY) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Object impl_processMXNode(MXNodeAlgorithm alg, MXNodeAlgorithmContext ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-//	
-//	@Override
-//	public EventDispatchChain buildEventDispatchChain(EventDispatchChain tail) {
-//		return tail.append(new EventDispatcher() {
-//
-//			@Override
-//			public Event dispatchEvent(Event event, EventDispatchChain tail) {
-//				tail.dispatchEvent(event);
-//				return event;
-//			}
-//			
-//		});
-//	}
-//	
-//	public void haha() {
-//		Event.fireEvent(eventTarget, event);
-//	}
 }

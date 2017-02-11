@@ -31,7 +31,7 @@ public class Society extends Group {
 		this.gameName = gameName;
 		this.cells = generateCells(gameName, width, height, layout);
 		rule = generateRule(gameName, parameters);
-		for (Cell cell : cells) { getChildren().add(cell); }
+		for (Cell cell : cells) { getChildren().add(null);} // TOOD
 		syncColors();
 	}
 	
@@ -79,10 +79,10 @@ public class Society extends Group {
 		return gameName;
 	}
 	public double getWidth() {
-		return cells.get(0,0).getWidth() * cells.cols();
+		return cells.get(0,0).width() * cells.cols();
 	}
 	public double getHeight() {
-		return cells.get(0,0).getHeight() * cells.rows();
+		return cells.get(0,0).height() * cells.rows();
 	}
 	public int getRows() { 
 		return cells.rows();
