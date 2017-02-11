@@ -1,14 +1,18 @@
 package refactor.society;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import refactor.cell.games.SimpleCell;
+import refactor.cell.games.SegregationCell;
 import refactor.config.GridConfig;
 import refactor.config.SizeConfig;
 import refactor.grid.GridType;
@@ -30,12 +34,12 @@ public class SocietyScreenExample extends Application {
 		boolean wrapping = false; 
 //		boolean wrapping = true;
 		
-//		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8, wrapping);
-//		// neighborsType can also be NeighborsType.SQUARE_4, or whatever we can define. 
-//		String cellShapeType = GridType.SQUARE;
+		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8, wrapping);
+		// neighborsType can also be NeighborsType.SQUARE_4, or whatever we can define. 
+		String cellShapeType = GridType.SQUARE;
 		
-		GridConfig gridConfig = new GridConfig(GridType.TRIANGLE_GRID, NeighborsType.TRIANGLE_12, wrapping);
-		String cellShapeType = GridType.TRIANGLE;
+//		GridConfig gridConfig = new GridConfig(GridType.TRIANGLE_GRID, NeighborsType.TRIANGLE_12, wrapping);
+//		String cellShapeType = GridType.TRIANGLE;
 		
 //		GridConfig gridConfig = new GridConfig(GridType.HEXAGON_GRID, NeighborsType.HEXAGON_6, wrapping);
 //		String cellShapeType = GridType.HEXAGON;
@@ -43,25 +47,64 @@ public class SocietyScreenExample extends Application {
 		
 		SizeConfig sizeConfig = new SizeConfig(5, 5, 200, 200);
 		
-		int[][] layout = new int[][] {
-			{0, 1, 0, 0, 1},
-			{1, 1, 0, 1, 1},
-			{1, 0, 1, 0, 0},
-			{1, 1, 0, 0, 1},
-			{0, 0, 1, 1, 1}
-		};
 		
 		// We initialize the specific game cells and put them into Society.
 		// These cells don't need positions or sizes to construct, only 
 		// state related information is needed.
-		SimpleCell[][] cells = new SimpleCell[layout.length][layout[0].length];
+//		int[][] layout = new int[][] {
+//			{0, 1, 0, 0, 1},
+//			{1, 1, 0, 1, 1},
+//			{1, 0, 1, 0, 0},
+//			{1, 1, 0, 0, 1},
+//			{0, 0, 1, 1, 1}
+//		};
+//		Color[] colors = new Color[] {Color.ALICEBLUE, Color.BLACK};
+//		GameOfLifeCell[][] cells = new GameOfLifeCell[layout.length][layout[0].length];
+//		List<Double> params = new ArrayList<Double>();
+//		for (int i = 0; i < layout.length; i++) {
+//			for (int j = 0 ; j < layout[0].length; j++) {
+//				cells[i][j] = new GameOfLifeCell(cellShapeType, colors, layout[i][j]);
+//			}
+//		}
+//		society = new Society<GameOfLifeCell>(gridConfig, sizeConfig, cells);
+
+		
+//		int[][] layout = new int[][] {
+//			{0, 1, 0, 0, 1},
+//			{1, 1, 0, 1, 1},
+//			{1, 2, 1, 1, 0},
+//			{1, 1, 0, 0, 1},
+//			{0, 0, 1, 1, 1}
+//		};
+//		Color[] colors = new Color[] {Color.DARKGREY, Color.GREEN, Color.RED};
+//		FireCell[][] cells = new FireCell[layout.length][layout[0].length];
+//		List<Double> params = new ArrayList<Double>();
+//		params.add(0.4);
+//		for (int i = 0; i < layout.length; i++) {
+//			for (int j = 0 ; j < layout[0].length; j++) {
+//				cells[i][j] = new FireCell(cellShapeType, colors, params, layout[i][j]);
+//			}
+//		}
+//		society = new Society<FireCell>(gridConfig, sizeConfig, cells);
+
+		int[][] layout = new int[][] {
+			{2, 1, 0, 0, 1},
+			{1, 1, 0, 1, 1},
+			{1, 2, 2, 2, 0},
+			{1, 1, 0, 0, 1},
+			{0, 0, 1, 1, 2}
+		};
+		Color[] colors = new Color[] {Color.LIGHTGREY, Color.RED, Color.BLUE};
+		SegregationCell[][] cells = new SegregationCell[layout.length][layout[0].length];
+		List<Double> params = new ArrayList<Double>();
+		params.add(0.4);
 		for (int i = 0; i < layout.length; i++) {
 			for (int j = 0 ; j < layout[0].length; j++) {
-				cells[i][j] = new SimpleCell(cellShapeType, layout[i][j]);
+				cells[i][j] = new SegregationCell(cellShapeType, colors, params, layout[i][j]);
 			}
 		}
+		society = new Society<SegregationCell>(gridConfig, sizeConfig, cells);
 		
-		society = new Society<SimpleCell>(gridConfig, sizeConfig, cells);
 		
 		root.getChildren().add(society);
 		

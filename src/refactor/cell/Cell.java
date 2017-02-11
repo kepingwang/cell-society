@@ -7,13 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import refactor.cell.games.SimpleCell;
+import refactor.cell.games.GameOfLifeCell;
 import refactor.grid.GridType;
 
 
 /**
  * <p>To add a new cellular automaton game, extend this class.
- * An example is {@link SimpleCell}, which is currently game of life. </p>
+ * An example is {@link GameOfLifeCell}, which is currently game of life. </p>
  * 
  * <p>A cell contains current state and next state. For SimpleCell,
  * state is just a integer, but they can consist of multiple classes 
