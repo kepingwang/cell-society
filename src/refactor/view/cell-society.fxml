@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You have to import packages manually in FXML!!! -->
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox layoutX="10.0" layoutY="10.0" prefHeight="250.0"
+	prefWidth="300.0" spacing="10" xmlns:fx="http://javafx.com/fxml/1"
+	xmlns="http://javafx.com/javafx/8" fx:controller="refactor.control.Controller">
+
+	<children>
+		<Button onAction="#printOutput" alignment="CENTER_RIGHT" contentDisplay="CENTER"
+			mnemonicParsing="false" text="OK" textAlignment="CENTER" />
+		<Label alignment="CENTER_LEFT" cache="true"
+			cacheHint="SCALE" prefHeight="30.0" prefWidth="200.0" text="Your Input:"
+			textAlignment="LEFT" />
+		<TextArea prefHeight="100.0" prefWidth="200.0"
+			wrapText="true" />
+	</children>
+</VBox>
