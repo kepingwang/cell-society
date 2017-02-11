@@ -1,11 +1,20 @@
 package refactor.cell.games;
 
+import java.util.List;
+
+import javafx.scene.paint.Color;
 import refactor.cell.Cell;
 
-public class WatorCell extends Cell {
+public class WatorCell extends SimpleCell {
+	private final static int WATER = 0;
+	private final static int FISH = 1;
+	private final static int SHARK = 2;
+	private int energy;
+	
 
-	public WatorCell() {
-		// TODO Auto-generated constructor stub
+	public WatorCell(String cellShapeType, Color[] colors, List<Double> params, int state) {
+		super(cellShapeType, colors, params, state);
+		
 	}
 
 	@Override
