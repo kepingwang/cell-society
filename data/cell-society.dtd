@@ -1,4 +1,4 @@
-<!ELEMENT config (name,id,color,width,height,rows,cols,layout)>
+<!ELEMENT config (name,id,color,width,height,rows,cols,layout?,probs?,params?)>
 <!ELEMENT name (#PCDATA)>
 <!ELEMENT id (#PCDATA)>
 <!ELEMENT color (val+)>
@@ -10,3 +10,5 @@
 <!ELEMENT layout (row+)>
 <!ELEMENT row (col+)>
 <!ELEMENT col (#PCDATA)>
+<!ELEMENT probs (val+)>
+<!ELEMENT params (val+)>

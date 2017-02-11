@@ -1,6 +1,7 @@
 package core.rules;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import core.Cell;
@@ -12,35 +13,31 @@ import javafx.scene.paint.Color;
  *
  */
 
-public class SegregationRule implements Rule{
-	private final int EMPTY = 0;
-	private final int SIDE_ONE = 1;
-	private final int SIDE_TWO = 2;
+public class SegregationRule extends Rule{
+	private final static Color[] SEG_COLORS = {Color.WHITE, Color.RED, Color.BLUE};
+	private final static int EMPTY = 0;
+	private final static int SIDE_ONE = 1;
+	private final static int SIDE_TWO = 2;
 	
 	private Random segRNG = new Random();
-	
-	private Color[] colors;
 	private double satisfaction;
-	private ArrayList<Cell> openCells;
+	private List<Cell> openCells;
 	
-/**
- * Requires 
- * @param colorIn
- * @param satisfactionIn
- * @param openCellsIn
- */
-	public SegregationRule(Color[] colorIn, double satisfactionIn, ArrayList<Cell> openCellsIn){
-		colors = colorIn;
-		satisfaction = satisfactionIn;
+	public SegregationRule(List<Double> parameters){
+		super(SEG_COLORS, parameters);
+		satisfaction = parameters.get(0);
+	}
+	
+	public SegregationRule(List<Double> parameters, List<Cell> openCellsIn){
+		super(SEG_COLORS, parameters);
+		satisfaction = parameters.get(0);
 		openCells = openCellsIn;
 	}
 	
-	public SegregationRule(){
-		this(new Color[] {Color.WHITE, Color.RED, Color.BLUE}, 50, null);
-	}
-	
-	public SegregationRule(double satisfactionIn, ArrayList<Cell> openCellsIn){
-		this(new Color[] {Color.WHITE, Color.RED, Color.BLUE}, satisfactionIn, openCellsIn);
+	public SegregationRule(List<Double> parameters, double satisfactionIn, List<Cell> openCellsIn){
+		super(SEG_COLORS, parameters);
+		satisfaction = satisfactionIn;
+		openCells = (ArrayList<Cell>) openCellsIn;
 	}
 	
 	/**
@@ -50,9 +47,9 @@ public class SegregationRule implements Rule{
 	 * otherwise remains the same
 	 */
 	@Override
-	public int update(Cell cell, Cell[] neighbors) {
+	public int update(Cell cell, List<Cell> neighbors) {
 		if(cell.getState() == EMPTY){
-			return cell.getState();
+			return cell.getNState();
 		}
 		double total = 0;
 		double same = 0;
@@ -83,13 +80,4 @@ public class SegregationRule implements Rule{
 		openCells.remove(target);
 		openCells.add(cell);
 	}
-
-	public Color[] getColor() {
-		return colors;
-	}
-
-	public Color updateColor(Cell cell) {
-		return colors[cell.getState()];
-	}
-
 }

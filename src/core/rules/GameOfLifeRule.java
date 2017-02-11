@@ -1,5 +1,10 @@
 package core.rules;
 
+<<<<<<< HEAD
+=======
+import java.util.List;
+
+>>>>>>> master
 import core.Cell;
 import javafx.scene.paint.Color;
 
@@ -8,22 +13,16 @@ import javafx.scene.paint.Color;
  * @author Gordon
  *
  */
-public class GameOfLifeRule implements Rule {
-	private final int UNDER_POP_LIMIT = 2;
-	private final int OVER_POP_LIMIT = 3;
-	private final int SPAWN_REQUIREMENT = 3;
+public class GameOfLifeRule extends Rule {
+	private final static Color[] GOL_COLORS = {Color.WHITE, Color.BLACK};
+	private final static int UNDER_POP_LIMIT = 2;
+	private final static int OVER_POP_LIMIT = 3;
+	private final static int SPAWN_REQUIREMENT = 3;
+	private final static int DEAD = 0;
+	private final static int ALIVE = 1;
 	
-	private final int DEAD = 0;
-	private final int ALIVE = 1;
-	
-	private Color[] colors;
-	
-	public GameOfLifeRule(Color[] colorIn){
-		colors = colorIn;
-	}
-	
-	public GameOfLifeRule(){
-		this(new Color[] {Color.WHITE, Color.BLACK});
+	public GameOfLifeRule(List<Double> parameters){
+		super(GOL_COLORS, parameters);
 	}
 
 	/**
@@ -33,12 +32,12 @@ public class GameOfLifeRule implements Rule {
 	 * Cells can be born if exactly 3 cells are nearby
 	 */
 	@Override
-	public int update(Cell cell, Cell[] neighbors) {
+	public int update(Cell cell, List<Cell> neighbors) {
 		int cellState = cell.getState();
 		int numLiving = 0;
-		for(int i = 0; i < neighbors.length; i++){
-			if (neighbors[i] != null) {
-				numLiving += neighbors[i].getState(); 
+		for(Cell c : neighbors){
+			if(c != null){
+				numLiving += c.getState();
 			}
 		}
 		if(cellState == ALIVE && (numLiving < UNDER_POP_LIMIT || numLiving > OVER_POP_LIMIT)){
@@ -49,14 +48,4 @@ public class GameOfLifeRule implements Rule {
 		}
 		return cellState;
 	}
-
-	public Color[] getColor() {
-		// TODO Auto-generated method stub
-		return colors;
-	}
-
-	public Color updateColor(Cell cell) {
-		return colors[cell.getState()];
-	}
-
 }

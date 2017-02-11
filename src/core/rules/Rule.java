@@ -1,10 +1,18 @@
 package core.rules;
 
-
+import java.util.List;
 
 import core.Cell;
+import javafx.scene.paint.Color;
 
-public interface Rule {
+public abstract class Rule {
+	private Color[] colors;
+	protected List<Double> parameters;
+	
+	public Rule(Color[] colorIn, List<Double> parametersIn){
+		parameters = parametersIn;
+		colors = colorIn;
+	}
 		
 	/**
 	 * Return the nextState of the cell.
@@ -20,6 +28,9 @@ public interface Rule {
 	 * @param neighbors
 	 * @return nextState
 	 */
-	public int update(Cell cell, Cell[] neighbors);
+	public abstract int update(Cell cell, List<Cell> neighbors);
 	
+	public Color[] getColor(){
+		return colors;
+	}
 }
