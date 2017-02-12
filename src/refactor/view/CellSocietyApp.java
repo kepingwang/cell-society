@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class CellSocietyApp extends Application {
-    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+    public static final String DEFAULT_RESOURCE_PACKAGE = "";
     public static final String LANGUAGE = "English";
     private static ResourceBundle resourceBundle;
     private static final double WIDTH = 800;
