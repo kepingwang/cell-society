@@ -1,11 +1,18 @@
 package refactor.society;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javafx.scene.Group;
+import javafx.scene.paint.Color;
 import refactor.cell.Cell;
 import refactor.cell.CellPane;
 import refactor.config.GridConfig;
 import refactor.config.SizeConfig;
 import refactor.grid.CellPaneGrid;
+import refactor.view.ColorStat;
 
 /**
  * <p>The specific subclass of game cell has to be passed as type for 
@@ -51,5 +58,26 @@ public class Society<T extends Cell> extends Group {
 		syncViews();
 	}
 
+	public List<ColorStat> getColorStats() {
+		Map<Color, Integer> cmap = new HashMap<>();
+		for (CellPane<T> cellPane : grid) {
+			Map<Color, Integer> map = cellPane.getColor();
+			for (Color color : map.keySet()) {
+				if (!cmap.containsKey(color)) {
+					cmap.put(color, map.get(color));
+				} else {
+					cmap.put(color, cmap.get(color) + map.get(color));
+				}
+			}
+
+		}
+		
+		List<ColorStat> res = new ArrayList<>();
+		int totalCount = grid.rows() * grid.cols();
+		for (Color color : cmap.keySet()) {
+			res.add(new ColorStat(color, cmap.get(color)/ (double) totalCount));
+		}
+		return res;
+	}
 	
 }

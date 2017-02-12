@@ -34,8 +34,7 @@ public class CellSocietyApp extends Application {
         stage.setTitle(resourceBundle.getString("Title"));
         stage.setScene(scene);
         stage.sizeToScene();
-        stage.show();
-		
+        stage.show();	
 	}
 	
 	public static ResourceBundle getResourceBundle() {

@@ -11,7 +11,7 @@ import refactor.grid.GridType;
 import refactor.grid.NeighborsType;
 
 public class SocietyFactory {
-	public static double SIZE = 360;
+	public static final double SIZE = 360;
 
 	public SocietyFactory() {
 	}

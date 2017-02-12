@@ -1,9 +1,11 @@
 package refactor.cell;
 
 import java.util.List;
+import java.util.Map;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -111,7 +113,10 @@ public abstract class Cell {
 	 * @param ch cell height
 	 */
 	public abstract void syncView(int i, int j, double cw, double ch);
-
+	/**
+	 * Return the current color of the cell, for showing in stat graph.
+	 */
+	public abstract Map<Color, Integer> getColor();
 
 	private Rectangle rectangle(double cw, double ch) {
 		return new Rectangle(0, 0, cw, ch);

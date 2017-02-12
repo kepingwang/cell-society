@@ -2,8 +2,10 @@ package refactor.cell;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import refactor.grid.CellPaneGrid;
 
 /**
@@ -58,7 +60,9 @@ public class CellPane<T extends Cell> extends Pane {
 	public T getCell() {
 		return cell;
 	}
-	
+	public Map<Color, Integer> getColor() {
+		return cell.getColor();
+	}
 	
 	public List<T> getNeighbors() {
 		List<CellPane<T>> paneList = grid.getNeighbors(i, j);
