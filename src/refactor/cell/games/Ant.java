@@ -19,6 +19,7 @@ public class Ant {
 	private static final double MAX_SCENT = 1000;
 	private ForagingAntCell currentCell;
 	private boolean hasFood;
+	private boolean hasMoved;
 	private int direction;
 	private Random antRNG = new Random();
 	private ArrayList<ForagingAntCell> neighbors;
@@ -41,6 +42,7 @@ public class Ant {
 	 * @return
 	 */
 	public int forage(List<ForagingAntCell> neighborsIn) {
+		hasMoved = true;
 		neighbors = (ArrayList<ForagingAntCell>) neighborsIn;
 		if (this.hasFood) {
 			return this.returnHome();
@@ -191,6 +193,14 @@ public class Ant {
 		} else
 			tempTree.add(neighbors.get(direction - 1));
 		return tempTree.pollFirst();
+	}
+	
+	public void resetMove(){
+		hasMoved = true;
+	}
+	
+	public boolean canMove(){
+		return hasMoved;
 	}
 }
 

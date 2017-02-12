@@ -66,7 +66,7 @@ public class ForagingAntCell extends SimpleCell{
 	private void moveAnts(){
 		ArrayList<Ant> antsToRemove = new ArrayList<Ant>();
 		for(Ant a : ants){
-			if(a.forage(neighbors) == 1){
+			if(a.canMove() && a.forage(neighbors) == 1){
 				antsToRemove.add(a);
 			}
 		}
@@ -83,6 +83,9 @@ public class ForagingAntCell extends SimpleCell{
 		currState = nextState;
 		nestCell = currState == NEST_CELL;
 		foodCell = currState == FOOD_CELL;
+		for(Ant a : ants){
+			a.resetMove();
+		}
 	}
 	
 	public boolean isFood(){
