@@ -25,6 +25,14 @@ public abstract class SimpleCell extends Cell {
 	}
 
 	@Override
+	public void onClick() {
+		debugFlag = true;
+		currState++;
+		if (currState == colors.length) { currState = 0; }
+		shape.setFill(colors[currState]);
+	}
+	
+	@Override
 	public abstract void updateNextState();
 
 	@Override
