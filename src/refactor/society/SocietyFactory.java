@@ -13,11 +13,13 @@ import refactor.grid.NeighborsType;
 public class SocietyFactory {
 	public static final double SIZE = 360;
 
-	public SocietyFactory() {
-	}
+	public SocietyFactory() { }
 
-	public Society<?> genSociety(String fileName) {
+	public Society<?> genSociety(String fileName) throws Exception {
 		// TODO: parse xml file and gen Society
+		if (fileName.length() < 4 || !fileName.substring(fileName.length()-4).equals(".xml")) {
+			throw new Exception("Cannot parse xml!");
+		} 		
 		return sampleGameOfLifeSociety();
 	}
 	
