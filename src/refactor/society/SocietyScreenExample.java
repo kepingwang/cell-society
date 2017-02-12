@@ -63,7 +63,7 @@ public class SocietyScreenExample extends Application {
 //		List<Double> params = new ArrayList<Double>();
 //		for (int i = 0; i < layout.length; i++) {
 //			for (int j = 0 ; j < layout[0].length; j++) {
-//				cells[i][j] = new GameOfLifeCell(cellShapeType, colors, layout[i][j]);
+//				cells[i][j] = new GameOfLifeCell(cellShapeType, colors, params, layout[i][j]);
 //			}
 //		}
 //		society = new Society<GameOfLifeCell>(gridConfig, sizeConfig, cells);

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- You have to import packages manually in FXML!!! -->
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/8"
+	fx:controller="refactor.control.SocietyController" styleClass="screen-container">
+	<children>
+		<Button fx:id="btnChooser" text="%LoadConfig" onAction="#chooseFile" />
+		<VBox fx:id="societyBox" styleClass="screen-region" prefHeight="500"
+			prefWidth="400">
+		</VBox>
+	</children>
+</VBox>

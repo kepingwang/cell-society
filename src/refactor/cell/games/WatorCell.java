@@ -3,6 +3,7 @@ package refactor.cell.games;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Map;
 
 import javafx.scene.paint.Color;
 
@@ -145,6 +146,12 @@ public class WatorCell extends SimpleCell {
 		fish.nextState = WATER;
 		fish.energy = 0;
 		this.energy += eatEnergy;
+	}
+
+	@Override
+	public Map<Color, Integer> getColor() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

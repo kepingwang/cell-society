@@ -1,6 +1,8 @@
 package refactor.cell.games;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
@@ -23,6 +25,14 @@ public abstract class SimpleCell extends Cell {
 	}
 
 	@Override
+	public void onClick() {
+		debugFlag = true;
+		currState++;
+		if (currState == colors.length) { currState = 0; }
+		shape.setFill(colors[currState]);
+	}
+	
+	@Override
 	public abstract void updateNextState();
 
 	@Override
@@ -41,6 +51,15 @@ public abstract class SimpleCell extends Cell {
 		}
 		shape.setFill(colors[currState]);
 		viewSynchronized = true;
+	}
+	@Override
+	public Map<Color, Integer> getColor() {
+		Map<Color, Integer> map = new HashMap<>();
+		for (int i = 0; i < colors.length; i++) {
+			if (i == currState) { map.put(colors[i], 1); }
+			else { map.put(colors[i], 0); }
+		}
+		return map;
 	}
 
 	@Override
