@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<config>
+	<name>game-of-life</name>
+	<cellShape>TRIANGLE</cellShape>
+	<gridType>SQUARE_GRID</gridType>
+	<neighborsType>SQUARE_8</neighborsType>
+	<wrapping>false</wrapping>
+	<colors>
+		<val>#FFFFFF</val>
+		<val>#000000</val>
+	</colors>
+	<width>200</width>
+	<height>200</height>
+	<rows>50</rows>
+	<cols>50</cols>
+	<probs>
+		<val>0.4</val>
+		<val>0.6</val>
+	</probs>
+	<params>
+	</params>
+</config>
