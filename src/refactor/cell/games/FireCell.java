@@ -12,6 +12,14 @@ public class FireCell extends SimpleCell {
 	private double chanceOfFire; 
 	private Random fireRNG = new Random();
 
+	/**
+	 * Params required:
+	 * chanceOfFire = chance to catch on fire (double 0-1)
+	 * @param cellShapeType
+	 * @param colors
+	 * @param params
+	 * @param state
+	 */
 	public FireCell(String cellShapeType, Color[] colors, List<Double> params, int state) {
 		super(cellShapeType, colors, params, state);
 		chanceOfFire = this.params.get(0);

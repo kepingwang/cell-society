@@ -104,7 +104,7 @@ public class WaTorRule extends Rule{
 					target = openNeighbors.get(watorRNG.nextInt(openSpaces));
 					giveBirth(watorCell, target);
 				}
-				return target.getNState();
+				return SHARK;
 			}
 			else if(openSpaces > 0){
 				WaTorCell target = openNeighbors.get(watorRNG.nextInt(openSpaces));

@@ -72,7 +72,9 @@ public class SocietyController {
 	@FXML
 	private void chooseFile() {
 		FileChooser fileChooser = new FileChooser();
+		fileChooser.setInitialDirectory(new File("."));
 		File selectedFile = fileChooser.showOpenDialog(null);
+
 		if (selectedFile == null) { return; }
 
 		try {
