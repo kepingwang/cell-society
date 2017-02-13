@@ -15,9 +15,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import refactor.cell.Cell;
-import refactor.config.GameConfig;
-import refactor.society.Society;
+import cell.Cell;
+import config.GameConfig;
+import society.Society;
 
 
 public class SocietyXMLParser {
