@@ -145,7 +145,6 @@ public class SocietyXMLParser {
 
 		}
 
-		handleExceptions();
 		if (configMap.containsKey("probs")) {
 			layout = LayoutGenerator.generateRandomLayout(Integer.parseInt(configMap.get("rows")),
 					Integer.parseInt(configMap.get("cols")), makeDoubleList(configMap.get("probs")));
@@ -229,45 +228,5 @@ public class SocietyXMLParser {
 	@Override
 	public String toString() {
 		return "configuration: " + configMap.get("id");
-	}
-
-	private void wrongCellShape() throws Exception {
-		// check for wrong cell shape
-		String cellShape = configMap.get("cellShape");
-		if (!(cellShape.equals("SQUARE") || cellShape.equals("HEXAGON") || cellShape.equals("TRIANGLE"))) {
-			throw new Exception("Incorrect cell shape provided.");
-		}
-	}
-
-	private void wrongGridType() throws Exception {
-		// check for wrong grid type
-		String gridType = configMap.get("gridType");
-		if (!(gridType.equals("SQUARE_GRID") || gridType.equals("HEXAGON_GRID") || gridType.equals("TRIANGLE_GRID"))) {
-			throw new Exception("Incorrect grid type provided.");
-		}
-	}
-
-	private void wrongNeighborsType() throws Exception {
-		// check for wrong neighbors type
-		String neighborsType = configMap.get("neighborsType");
-		if (!(neighborsType.equals("SQUARE_4") || neighborsType.equals("SQUARE_8") || neighborsType.equals("HEXAGON_6")
-				|| neighborsType.equals("TRIANGLE_12"))) {
-			throw new Exception("Incorrect neighbors type provided.");
-		}
-	}
-
-	private void wrongWrapping() throws Exception {
-		// check for wrong wrapping
-		String wrapping = configMap.get("wrapping");
-		if (!(wrapping.equals("true") || wrapping.equals("false"))) {
-			throw new Exception("Wrapping must be either 'true' or 'false'.");
-		}
-	}
-
-	private void handleExceptions() throws Exception {
-		wrongCellShape();
-		wrongGridType();
-		wrongNeighborsType();
-		wrongWrapping();
 	}
 }

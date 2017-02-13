@@ -60,8 +60,12 @@ public class SocietyFactory {
 		else if(configMap.get("gridType").equals("TRIANGLE_GRID")){
 			gridType = GridType.TRIANGLE_GRID;
 		}
-		else{
+		else if(configMap.get("gridType").equals("HEXAGON_GRID")){
 			gridType = GridType.HEXAGON_GRID;
+		}
+		else{
+			gridType=GridType.SQUARE_GRID;
+			wrongGridType();
 		}
 		
 		NeighborsType neighborsType;
@@ -74,22 +78,37 @@ public class SocietyFactory {
 		else if(configMap.get("neighborsType").equals("SQUARE_8")){
 			neighborsType = NeighborsType.SQUARE_8;
 		}
-		else{
+		else if(configMap.get("neighborsType").equals("TRIANGLE_12")){
 			neighborsType = NeighborsType.TRIANGLE_12;
 		}
+		else{
+			neighborsType = NeighborsType.SQUARE_4;
+			wrongNeighborsType();
+		}
 		
-		String cellShapeType;
+		String cellShapeType="";
 		if(configMap.get("cellShape").equals("SQUARE")){
 			cellShapeType = GridType.SQUARE;
 		}
 		else if(configMap.get("cellShape").equals("TRIANGLE")){
 			cellShapeType = GridType.TRIANGLE;
 		}
-		else{
+		else if(configMap.get("cellShape").equals("HEXAGON")){
 			cellShapeType = GridType.HEXAGON;
 		}
+		else{
+			wrongCellShape();
+		}
 		
-		GridConfig gridConfig = new GridConfig(gridType, neighborsType, Boolean.parseBoolean(configMap.get("wrapping")));
+		boolean wrapping;
+		if(configMap.get("wrapping").equals("true") || configMap.get("wrapping").equals("false")){
+			wrapping = Boolean.parseBoolean(configMap.get("wrapping"));
+		}
+		else{
+			wrapping=false;
+			wrongWrapping();
+		}
+		GridConfig gridConfig = new GridConfig(gridType, neighborsType, wrapping);
 		SizeConfig sizeConfig = new SizeConfig(Integer.parseInt(configMap.get("rows")), Integer.parseInt(configMap.get("cols")), 
 				Double.parseDouble(configMap.get("width")), Double.parseDouble(configMap.get("height")));
 		
@@ -135,5 +154,26 @@ public class SocietyFactory {
 				wrongColor();
 			}
 			return new Color(r/255.0, g/255.0, b/255.0, 1);
+		}
+		
+
+		private void wrongCellShape() throws Exception {
+			// check for wrong cell shape
+				throw new Exception("Incorrect cell shape provided.");
+		}
+
+		private void wrongGridType() throws Exception {
+			// check for wrong grid type
+				throw new Exception("Incorrect grid type provided.");
+		}
+
+		private void wrongNeighborsType() throws Exception {
+			// check for wrong neighbors type
+				throw new Exception("Incorrect neighbors type provided.");
+		}
+
+		private void wrongWrapping() throws Exception {
+			// check for wrong wrapping
+				throw new Exception("Wrapping must be either 'true' or 'false'.");
 		}
 }
