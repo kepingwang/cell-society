@@ -108,7 +108,7 @@ public class SocietyXMLParser {
 	 * @return the {@link Society}
 	 * @throws Exception
 	 */
-	public Society parse(String filename) throws Exception {
+	public Society parse(String filename) {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document doc = db.parse(new File(filename));

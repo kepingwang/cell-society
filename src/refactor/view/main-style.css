@@ -1,13 +1,26 @@
 HBox {
-	-fx-background: #D3FFFF;
+	-fx-background: #FFFFFF;
 	-fx-alignment: center;
 	-fx-font: 20.0px "Serif";
 	-fx-font-weight: 900;
-	-fx-spacing: 15px;
+	-fx-spacing: 10px;
+	-fx-padding: 10 0 10 0;
 }
 
 VBox {
+	-fx-background: #FFFFFF;
 	-fx-alignment: center;
+	-fx-spacing: 15px;
+}
+
+.splash-screen {
+	-fx-font: 75px "Serif";
+	-fx-font-weight: 700;
+	-fx-spacing: 50;
+	
+}
+.authors-box {
+	-fx-font: 30px "Serif";
 	-fx-spacing: 10px;
 }
 
@@ -19,21 +32,78 @@ VBox {
 	-fx-alignment: top-center;
 }
 
-
-
-.btn-toggle {
-
+.society-pane {
+	-fx-alignment: center;
+	-fx-border-width: 2;
+	-fx-border-color: #E3E3E3;
+}
+.stat-pane {
+	-fx-alignment: center;
+	-fx-border-width: 2;
+	-fx-border-color: #E3E3E3;
 }
 
-.btn-toggle-add {
-	-fx-text-fill: green;
-}
-
-.btn-toggle-remove {
-	-fx-text-fill: red;
-}
 
 #sliderHBox {
 	-fx-spacing: 0px;
 }
 
+.btn-primary {
+  -fx-text-fill: #ffffff;
+  -fx-background-color: #428bca;
+  -fx-border-color: #357ebd;
+}
+.btn-primary:hover {
+  -fx-text-fill: #ffffff;
+  -fx-background-color: #3276b1;
+  -fx-border-color: #285e8e;
+}
+.btn-primary:disabled {
+  -fx-background-color: #428bca;
+  -fx-border-color: #357ebd;
+}
+
+.btn-info {
+  -fx-text-fill: #ffffff;
+  -fx-background-color: #5bc0de;
+  -fx-border-color: #46b8da;
+}
+.btn-info:hover {
+  -fx-text-fill: #ffffff;
+  -fx-background-color: #39b3d7;
+  -fx-border-color: #269abc;
+}
+.btn-info:disabled {
+  -fx-background-color: #5bc0de;
+  -fx-border-color: #46b8da;
+}
+
+.btn-danger {
+  -fx-text-fill: #ffffff;
+  -fx-background-color: #d9534f;
+  -fx-border-color: #d43f3a;
+}
+.btn-danger:hover {
+  -fx-text-fill: #ffffff;
+  -fx-background-color: #d2322d;
+  -fx-border-color: #ac2925;
+}
+.btn-danger:disabled {
+  -fx-background-color: #d9534f;
+  -fx-border-color: #d43f3a;
+}
+
+.btn-success {
+  -fx-text-fill: #ffffff;
+  -fx-background-color: #5cb85c;
+  -fx-border-color: #4cae4c;
+}
+.btn-success:hover {
+  -fx-text-fill: #ffffff;
+  -fx-background-color: #47a447;
+  -fx-border-color: #398439;
+}
+.btn-success:disabled {
+  -fx-background-color: #5cb85c;
+  -fx-border-color: #4cae4c;
+}

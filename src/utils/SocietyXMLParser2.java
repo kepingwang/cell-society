@@ -24,12 +24,13 @@ import org.xml.sax.SAXException;
 
 import core.Cell;
 import core.Society;
+import refactor.config.GameConfig;
 
 public class SocietyXMLParser2 {
 	static final String outputEncoding = "UTF-8";
 	
-	private Map<String, String> societyMap = new HashMap<String, String>();
-	private Map<String, int[][]> layoutMap = new HashMap<String, int[][]>();
+	private Map<String, String> configMap = new HashMap<String, String>();
+	private int[][] layout;
 	
 	public SocietyXMLParser2() { }
 	
@@ -111,7 +112,7 @@ public class SocietyXMLParser2 {
 	 * @return the {@link Society}
 	 * @throws Exception
 	 */
-	public Map<String, String> parse(String filename) throws Exception {
+	public GameConfig parse(String filename) throws Exception {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document doc = db.parse(new File(filename));
@@ -122,24 +123,23 @@ public class SocietyXMLParser2 {
 				String nodeName = node.getNodeName();
 				if(!nodeName.equals("layout")){
 					if(nodeName.equals("probs") || nodeName.equals("params")){ 
-						societyMap.put(nodeName, getConcatenatedVals(node));
+						configMap.put(nodeName, getConcatenatedVals(node));
 					}
 					else{
-						societyMap.put(nodeName, val(node));
+						configMap.put(nodeName, val(node));
 					}
 				}
 				else{
 					//for layout
-					layoutMap.put(nodeName, getLayout(societyMap.get("rows"), societyMap.get("cols"), node));
+					layout = getLayout(configMap.get("rows"), configMap.get("cols"), node);
 				}
 				
 			}
 			
 		}
 		
-		return societyMap;
+		return new GameConfig(configMap, layout);
 	}
-
 	
 	// Save Cell[][] to XML
 	private void add(Document doc, Node parent, String elemName, String elemValue) {
@@ -150,14 +150,14 @@ public class SocietyXMLParser2 {
 	}	
 	private Element rowElem(Document doc, int i) {
 		Element rowElem = doc.createElement("row");
-		for (int j = 0; j < layoutMap.get("layout")[i].length; j++) {
-			add(doc, rowElem, "col", Integer.toString(layoutMap.get("layout")[i][j]));
+		for (int j = 0; j < layout[i].length; j++) {
+			add(doc, rowElem, "col", Integer.toString(layout[i][j]));
 		}
 		return rowElem;
 	}
 	private Element layoutElem(Document doc) {
 		Element layoutElem = doc.createElement("layout");
-		for (int i = 0; i < layoutMap.get("layout").length; i++) {
+		for (int i = 0; i < layout.length; i++) {
 			layoutElem.appendChild(rowElem(doc, i));
 		}
 		return layoutElem;
@@ -185,14 +185,14 @@ public class SocietyXMLParser2 {
 		Element root = doc.createElement("config");
 		doc.appendChild(root);
 		
-		add(doc, root, "name", societyMap.get("name"));
-		add(doc, root, "id", societyMap.get("id"));
-		add(doc, root, "width", societyMap.get("width"));
-		add(doc, root, "height", societyMap.get("height"));
-		add(doc, root, "rows", societyMap.get("rows"));
-		add(doc, root, "cols", societyMap.get("cols"));
+		add(doc, root, "name", configMap.get("name"));
+		add(doc, root, "id", configMap.get("id"));
+		add(doc, root, "width", configMap.get("width"));
+		add(doc, root, "height", configMap.get("height"));
+		add(doc, root, "rows", configMap.get("rows"));
+		add(doc, root, "cols", configMap.get("cols"));
 		root.appendChild(layoutElem(doc));
-		root.appendChild(elemList(doc, "params", "val", makeDoubleList(societyMap.get("params"))));
+		root.appendChild(elemList(doc, "params", "val", makeDoubleList(configMap.get("params"))));
 		
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -207,7 +207,7 @@ public class SocietyXMLParser2 {
 	
 	@Override
 	public String toString() {
-		return "configuration: " + societyMap.get("id");
+		return "configuration: " + configMap.get("id");
 	}
 	
 	/**
