@@ -78,11 +78,11 @@ public class SocietyController {
 		if (selectedFile == null) { return; }
 
 		try {
-			Society<?> society = new SocietyFactory().genSociety(selectedFile.getName());
+			Society<?> society = new SocietyFactory().genSociety(selectedFile.getAbsolutePath());
 			btnChooser.setText(selectedFile.getName());
 			addSociety(society);
 		} catch (Exception e) {
-//			e.printStackTrace(); // only for debugging
+			e.printStackTrace(); // only for debugging
 			showError(e.getMessage());
 		}
 		

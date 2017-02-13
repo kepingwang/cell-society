@@ -185,7 +185,7 @@ public class SocietyScreen extends Application {
 	private void loadConfig(String configFile) {
 		SocietyXMLParser parser = new SocietyXMLParser();
 		try {
-			setSociety(parser.parse("data/" + configFile));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
