@@ -35,11 +35,11 @@ Gordon: Responsible for back end for both sprints
 
 #### File(s) Used to Start
 
-* CellSocietyApp
+* view/CellSocietyApp
 
 #### File(s) Used to Test
 
-* SocietyFactory
+* data/*.xml
 
 #### Data and Resource File(s) Required
 
