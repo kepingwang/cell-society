@@ -13,22 +13,24 @@
 		<HBox fx:id="screens">
 
 		</HBox>
-<HBox fx:id="buttons">
-	<children>
-		<HBox id="sliderHBox" >
+		<HBox fx:id="buttons">
 			<children>
-				<Label text="%Slow" />
-				<Slider fx:id="speedSlider" />
-				<Label text="%Fast" />
+				<HBox id="sliderHBox">
+					<children>
+						<Label text="%Slow" />
+						<Slider fx:id="speedSlider" />
+						<Label text="%Fast" />
+					</children>
+				</HBox>
+				<Button fx:id="btnPlay" text="%Play" onAction="#startSimulation"
+					styleClass="btn-primary" />
+				<Button fx:id="btnPause" text="%Pause" onAction="#pauseSimulation"
+					styleClass="btn-primary" />
+				<Button fx:id="btnNextFrame" text="%NextFrame" onAction="#nextFrame"
+					styleClass="btn-primary" />
+				<Button fx:id="btnToggleScreen" text="%Compare" onAction="#toggleScreen"
+					styleClass="btn-success" />
 			</children>
 		</HBox>
-		<Button fx:id="btnPlay" text="%Play" onAction="#startSimulation" />
-		<Button fx:id="btnPause" text="%Pause" onAction="#pauseSimulation" />
-
-		<Button fx:id="btnNextFrame" text="%NextFrame" onAction="#nextFrame" />
-		<Button fx:id="btnToggleScreen" text="%Compare" onAction="#toggleScreen"
-			styleClass="btn-toggle, btn-toggle-add" />
-	</children>
-</HBox>
 	</children>
 </VBox>

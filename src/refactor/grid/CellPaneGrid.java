@@ -13,7 +13,7 @@ import refactor.config.SizeConfig;
  * @param <T> The specific Game Cell.
  */
 public class CellPaneGrid<T extends Cell> extends Grid<CellPane<T>> {
-
+	
 	public CellPaneGrid(GridConfig gridConfig, SizeConfig size, T[][] cells) {
 		super(gridConfig, size.rows(), size.cols());
 		initCellPaneGrid(size, cells);

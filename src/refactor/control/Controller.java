@@ -76,17 +76,18 @@ public class Controller {
 		screens.getChildren().remove(1);
 		societyControllers.remove(1);
 	}
+	
 	@FXML
 	private void toggleScreen() throws IOException {
 		ObservableList<String> styleClasses = btnToggleScreen.getStyleClass();
-		if (styleClasses.contains("btn-toggle-add")) {
+		if (styleClasses.contains("btn-success")) {
 			addSocietyScreen();
-			styleClasses.remove("btn-toggle-add");
-			styleClasses.add("btn-toggle-remove");
+			styleClasses.remove("btn-success");
+			styleClasses.add("btn-danger");
 		} else {
 			removeScreen();
-			styleClasses.remove("btn-toggle-remove");
-			styleClasses.add("btn-toggle-add");
+			styleClasses.remove("btn-danger");
+			styleClasses.add("btn-success");
 		}	
 	}
 	

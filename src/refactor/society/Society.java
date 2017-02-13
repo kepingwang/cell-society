@@ -27,6 +27,8 @@ import refactor.view.ColorStat;
  * @param <T> The specific Cell class, like WatorCell.
  */
 public class Society<T extends Cell> extends Group {
+	private double width;
+	private double height;
 	
 	private CellPaneGrid<T> grid;
 
@@ -35,6 +37,8 @@ public class Society<T extends Cell> extends Group {
 		for (CellPane<T> cellPane : grid) {
 			getChildren().add(cellPane);
 		}
+		width = sizeConfig.width();
+		height = sizeConfig.height();
 	}
 	
 	private void updateNextStates() {
@@ -57,6 +61,9 @@ public class Society<T extends Cell> extends Group {
 		syncStates();
 		syncViews();
 	}
+	
+	public double width() { return width; }
+	public double height() { return height; }
 
 	public List<ColorStat> getColorStats() {
 		Map<Color, Integer> cmap = new HashMap<>();
