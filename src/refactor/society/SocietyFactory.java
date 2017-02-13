@@ -2,12 +2,14 @@ package refactor.society;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javafx.scene.paint.Color;
 import refactor.cell.games.FireCell;
 import refactor.cell.games.ForagingAntCell;
 import refactor.cell.games.GameOfLifeCell;
 import refactor.cell.games.SegregationCell;
+import refactor.cell.games.SugarScapeCell;
 import refactor.cell.games.WatorCell;
 import refactor.config.GridConfig;
 import refactor.config.SizeConfig;
@@ -24,7 +26,7 @@ public class SocietyFactory {
 		if (fileName.length() < 4 || !fileName.substring(fileName.length()-4).equals(".xml")) {
 			throw new Exception("Cannot parse xml!");
 		} 		
-		return sampleWator();
+		return sampleSugarScape();
 	}
 	
 	public Society<GameOfLifeCell> sampleGameOfLifeSociety() {
@@ -51,7 +53,7 @@ public class SocietyFactory {
 		boolean wrapping = false;
 		double chanceOfFire = .5;
 
-		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8, wrapping);
+		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_4, wrapping);
 		String cellShapeType = GridType.SQUARE;
 		SizeConfig sizeConfig = new SizeConfig(5, 5, SIZE, SIZE);
 		int[][] layout = new int[][] { { 1, 1, 1, 1, 1 }, { 1, 2, 1, 1, 1 }, { 1, 1, 2, 1, 1 }, { 1, 1, 1, 2, 1 },
@@ -118,7 +120,7 @@ public class SocietyFactory {
 		double sharkDeath = -4;
 		double eatEnergy = 2;
 
-		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8, wrapping);
+		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_4, wrapping);
 		String cellShapeType = GridType.SQUARE;
 		SizeConfig sizeConfig = new SizeConfig(5, 5, SIZE, SIZE);
 		int[][] layout = new int[][] { { 1, 1, 1, 1, 1 }, { 0, 0, 0, 0, 0 }, { 0, 0, 2, 0, 0 }, { 0, 0, 0, 0, 0 },
@@ -137,5 +139,40 @@ public class SocietyFactory {
 			}
 		}
 		return new Society<WatorCell>(gridConfig, sizeConfig, cells);
+	}
+	
+	public Society<SugarScapeCell> sampleSugarScape() {
+		boolean wrapping = false;
+		double sugarGrow = 1;
+		double vision = 4;
+		double sugarMetabolism = 4;
+		double initSugar = 20;
+
+		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_4, wrapping);
+		String cellShapeType = GridType.SQUARE;
+		SizeConfig sizeConfig = new SizeConfig(5, 5, SIZE, SIZE);
+		int[][] layout = new int[][] { { 1, 1, 1, 1, 1 }, { 2, 2, 2, 2, 2 }, { 3, 3, 3, 3, 3 }, { 4, 4, 4, 4, 4},
+				{ 0, 0, 0, 1, 1 } };
+				
+		Color[] colors = new Color[] { Color.WHITE, Color.LIGHTGREY, Color.LIGHTBLUE, Color.BLUE, Color.PURPLE, Color.RED};
+		SugarScapeCell[][] cells = new SugarScapeCell[layout.length][layout[0].length];
+		List<Double> params = new ArrayList<Double>();
+		params.add(sugarGrow);
+		params.add(vision);
+		params.add(sugarMetabolism);
+		params.add(initSugar);
+		for (int i = 0; i < layout.length; i++) {
+			for (int j = 0; j < layout[0].length; j++) {
+				double temp = new Random().nextDouble();
+				if(temp < .1){
+					temp = 1;
+				}
+				else { temp = 0;}
+				params.add(temp);
+				cells[i][j] = new SugarScapeCell(cellShapeType, colors, params, layout[i][j]);
+				params.remove(4);
+			}
+		}
+		return new Society<SugarScapeCell>(gridConfig, sizeConfig, cells);
 	}
 }

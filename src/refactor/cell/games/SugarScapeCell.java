@@ -5,19 +5,22 @@ import java.util.List;
 import java.util.TreeMap;
 
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 
 public class SugarScapeCell extends SimpleCell {
+	private static final int AGENT_CELL = 5;
 
 	private final int sugarGrow;
 	private final int vision;
 	private final int sugarMetabolism;
 	private final int initSugar;
 	
-
 	private final int maxSugar;
 
 	private int sugar;
 	private SugarAgent agent;
+	private Shape agentShape;
 
 	/**
 	 * Params required:
@@ -40,6 +43,7 @@ public class SugarScapeCell extends SimpleCell {
 		if (params.get(4).intValue() == 1) {
 			agent = new SugarAgent(this, sugarMetabolism, initSugar);
 		}
+		sugar = state;
 		maxSugar = state;
 		this.nextState = state;
 	}
@@ -51,7 +55,7 @@ public class SugarScapeCell extends SimpleCell {
 		} else {
 			sugar += sugarGrow;
 		}
-		if (!agent.equals(null) && agent.canAct()) {
+		if (agent!=null && agent.canAct()) {
 			agent.act(getTargetCell());
 			agent = null;
 		}
@@ -70,20 +74,63 @@ public class SugarScapeCell extends SimpleCell {
 	@SuppressWarnings("unchecked")
 	private SugarScapeCell getTargetCell() {
 		TreeMap<Integer, SugarScapeCell> rTree = new TreeMap<Integer, SugarScapeCell>(Collections.reverseOrder());
-		SugarScapeCell[] adjCells = (SugarScapeCell[]) this.getNeighbors().toArray();
+		List<SugarScapeCell> temp = (List<SugarScapeCell>) this.getNeighbors();
+		SugarScapeCell[] adjCells = new SugarScapeCell[temp.size()];
+		for(int i = 0; i < temp.size(); i++){
+			adjCells[i] = temp.get(i);
+		}
 		for (int i = 0; i < vision; i++) {
 			for (SugarScapeCell c : adjCells) {
-				if (!c.equals(null) && c.agent.equals(null)) {
+				if (c!=null && c.agent==null) {
 					rTree.put(vision - i + c.sugar*vision, c);
 				}
 			}
 			for (int j = 0; j < adjCells.length; j++) {
-				if (!adjCells[j].equals(null)) {
+				if (adjCells[j]!=null) {
 					adjCells[j] = (SugarScapeCell) adjCells[j].getNeighbors().get(j);
 				}
 			}
 		}
 		return rTree.get(rTree.firstKey());
+	}
+	
+	@Override
+	public void syncView(int i, int j, double cw, double ch) {
+		if (viewSynchronized) {
+			return;
+		}
+		if (shape == null) {
+			shape = genPolygon(cellShapeType, i, j, cw, ch);
+			getPaneChildren().clear();
+			getPaneChildren().add(shape);
+		}
+		shape.setFill(colors[currState]);
+		if (agent != null) {
+			if (agentShape == null) {
+				double diameter = cw;
+				if (cw < ch) {
+					diameter = ch;
+				}
+				double radius = diameter / 2;
+				agentShape = new Circle(i + radius, j + radius, radius);
+			}
+			if (!getPaneChildren().contains(agentShape)) {
+				getPaneChildren().add(agentShape);
+				agentShape.setFill(colors[AGENT_CELL]);
+			}
+		}
+		else if(getPaneChildren().contains(agentShape)){
+			getPaneChildren().remove(agentShape);
+		}
+		viewSynchronized = true;
+	}
+	
+	public void syncState() {
+		viewSynchronized = false;
+		currState = nextState;
+		if(agent!=null){
+			agent.resetMove();
+		}
 	}
 	
 	public void setAgent(SugarAgent agentIn){

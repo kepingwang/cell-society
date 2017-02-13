@@ -25,11 +25,15 @@ public class SugarAgent {
 		if(sugar <= 0){
 			cell.removeAgent();
 		}
+		hasActed = true;
 	}
 	
 	public boolean canAct(){
 		return !hasActed;
 	}
 	
+	public void resetMove(){
+		hasActed = false;
+	}
 	
 }
