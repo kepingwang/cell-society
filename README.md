@@ -54,6 +54,8 @@ Gordon: Responsible for back end for both sprints
 
 * Slime Cell Society has several bugs that prevented it from being fully completed
 * The GUI has bugs with generating circles which doesn't affect the simulation directly, but is visually noticeable
+* Ants simulation has bug where food source doesn't go away
+* Ant simulation can't be too big or it will crash
 
 #### Impressions
 
