@@ -12,6 +12,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+/**
+ * The screen where users can select simulation.
+ *@author jacob
+ */
+
 public class MainMenu {
 	private static final int SIZE = 500;
 	private static final int BTNXLOC = 1;
@@ -36,15 +41,14 @@ public class MainMenu {
 		grid.setVgap(VGAP);
 		grid.setHgap(HGAP);
 		
-		Text welcome = new Text("Welcome to the Cell Society simulator,\n"
-				+ "please select a simulation.");
+		Text welcome = new Text(controller.getResource("welcome"));
 		welcome.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 		GridPane.setConstraints(welcome, 1, 1);
 		
-		button_list.add(makeButton("Game of Life", e -> playOptionsScreen("game-of-life")));
-		button_list.add(makeButton("Spreading of Fire", e -> playOptionsScreen("fire")));
-		button_list.add(makeButton("Segregation", e -> playOptionsScreen("segregation")));
-		button_list.add(makeButton("WaTor World", e -> playOptionsScreen("wator")));
+		button_list.add(makeButton("Game of Life", e -> playOptionsScreen(controller.getResource("game-of-life"))));
+		button_list.add(makeButton("Spreading of Fire", e -> playOptionsScreen(controller.getResource("fire"))));
+		button_list.add(makeButton("Segregation", e -> playOptionsScreen(controller.getResource("segregation"))));
+		button_list.add(makeButton("WaTor World", e -> playOptionsScreen(controller.getResource("wator"))));
 		
 		placeButtons();
 		
