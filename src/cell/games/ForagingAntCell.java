@@ -82,7 +82,7 @@ public class ForagingAntCell extends SimpleCell {
 					diameter = ch;
 				}
 				double radius = diameter / 2;
-				antShape = new Circle(i + radius, j + radius, radius);
+				antShape = new Circle(radius, radius, radius);
 			}
 			if (!getPaneChildren().contains(antShape)) {
 				getPaneChildren().add(antShape);
@@ -111,7 +111,6 @@ public class ForagingAntCell extends SimpleCell {
 
 	private void moveAnts() {
 		ArrayList<Ant> antsToRemove = new ArrayList<Ant>();
-		System.out.println(ants.size());
 		for (Ant a : ants) {
 			if (a.canMove() && a.forage(neighbors) == 1) {
 				antsToRemove.add(a);

@@ -3,12 +3,15 @@
 	<name>sugar</name>
 	<cellShape>SQUARE</cellShape>
 	<gridType>SQUARE_GRID</gridType>
-	<neighborsType>SQUARE_8</neighborsType>
+	<neighborsType>SQUARE_4</neighborsType>
 	<wrapping>false</wrapping>
 	<colors>
 		<val>#A9A9A9</val>
 		<val>#008000</val>
 		<val>#FF0000</val>
+		<val>#FF0010</val>
+		<val>#A63711</val>
+		<val>#F3F400</val>
 	</colors>
 	<width>300</width>
 	<height>300</height>
@@ -16,10 +19,16 @@
 	<cols>50</cols>
 	<probs>
 		<val>0.1</val>
-		<val>0.7</val>
+		<val>0.5</val>
+		<val>0.1</val>
 		<val>0.2</val>
+		<val>0.1</val>
 	</probs>
 	<params>
-		<val>0.4</val>
+		<val>1</val>
+		<val>4</val>
+		<val>3</val>
+		<val>20</val>
+		<val>0.1</val>
 	</params>
 </config>
