@@ -8,8 +8,20 @@ HBox {
 }
 
 VBox {
+	-fx-background: #FFFFFF;
 	-fx-alignment: center;
 	-fx-spacing: 15px;
+}
+
+.splash-screen {
+	-fx-font: 75px "Serif";
+	-fx-font-weight: 700;
+	-fx-spacing: 50;
+	
+}
+.authors-box {
+	-fx-font: 30px "Serif";
+	-fx-spacing: 10px;
 }
 
 .screen-container {
@@ -30,6 +42,7 @@ VBox {
 	-fx-border-width: 2;
 	-fx-border-color: #E3E3E3;
 }
+
 
 #sliderHBox {
 	-fx-spacing: 0px;
