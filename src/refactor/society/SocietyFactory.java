@@ -27,7 +27,7 @@ public class SocietyFactory {
 	
 	private <T extends Cell> T[][] genCells(String gameType, 
 			String cellShapeType, Color[] colors, 
-			List<Double> params, int[][] layout) {
+			List<Double> params, int[][] layout) throws Exception {
 		@SuppressWarnings("unchecked")
 		T[][] cells = (T[][]) new Cell[layout.length][layout[0].length];
 		CellFactory cellFactory = new CellFactory();
@@ -39,7 +39,7 @@ public class SocietyFactory {
 		return cells;
 	}
 	
-	public <T extends Cell> Society<T> genGameOfLifeSociety() {
+	public <T extends Cell> Society<T> genGameOfLifeSociety() throws Exception {
 		boolean wrapping = false;
 		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8, wrapping);
 		String cellShapeType = GridType.SQUARE;
