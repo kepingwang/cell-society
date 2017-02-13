@@ -82,7 +82,7 @@ public class SocietyController {
 			btnChooser.setText(selectedFile.getName());
 			addSociety(society);
 		} catch (Exception e) {
-			e.printStackTrace(); // only for debugging
+//			e.printStackTrace(); // only for debugging
 			showError(e.getMessage());
 		}
 		
