@@ -11,7 +11,7 @@ import refactor.cell.Cell;
 
 public abstract class SimpleCell extends Cell {
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
-    public static final String LANGUAGE = "Errors";
+    public static final String LANGUAGE = "English";
 	
 	protected Color[] colors;
 	protected String cellShapeType;
