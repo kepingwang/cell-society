@@ -18,9 +18,20 @@ public class GameOfLifeCell extends SimpleCell {
 	private final static int SPAWN_REQUIREMENT = 3;
 	private final static int DEAD = 0;
 	private final static int ALIVE = 1;
+	private final static int TOTAL_STATES = 2;
+	private final static int TOTAL_PARAMS = 0;
 
 	public GameOfLifeCell(String cellShapeType, Color[] colors, List<Double> params, int state) {
 		super(cellShapeType, colors, params, state);
+		if(colors.length != TOTAL_STATES){
+			throw new IllegalArgumentException(resourceBundle.getString("ColorError"));
+		}
+		if(params.size()!=TOTAL_PARAMS ){
+			throw new IllegalArgumentException(resourceBundle.getString("ParamError"));
+		}
+		if(state > TOTAL_STATES - 1 || state < 0){
+			throw new IllegalArgumentException(resourceBundle.getString("StateError"));
+		}
 	}
 	
 	@Override

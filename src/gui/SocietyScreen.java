@@ -185,14 +185,14 @@ public class SocietyScreen extends Application {
 	private void loadConfig(String configFile) {
 		SocietyXMLParser parser = new SocietyXMLParser();
 		try {
-			setSociety(parser.parse("data/" + configFile));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	private void saveConfig() {
 		try {
-			new SocietyXMLParser().saveAsXML(society, "data/"+saveField.getText(), "default-id");
+			// TODO
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

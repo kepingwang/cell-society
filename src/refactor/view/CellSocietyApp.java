@@ -13,6 +13,7 @@ public class CellSocietyApp extends Application {
 	public static final String MAIN_PAGE_RESOURCE = "/refactor/view/main-screen.fxml";
 	public static final String CSS_RESOURCE = "/refactor/view/main-style.css";
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+
     public static final String LANGUAGE = "English";
     private static ResourceBundle resourceBundle;
     public static final double WIDTH = 800;

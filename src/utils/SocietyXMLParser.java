@@ -10,23 +10,19 @@ import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import core.Cell;
-import core.Society;
+import refactor.cell.Cell;
 import refactor.config.GameConfig;
+import refactor.society.Society;
+
 
 public class SocietyXMLParser {
 	static final String outputEncoding = "UTF-8";
+
 
 	private Map<String, String> configMap = new HashMap<String, String>();
 	private int[][] layout;
@@ -153,36 +149,38 @@ public class SocietyXMLParser {
 	}
 
 	// Save Cell[][] to XML
-	private void add(Document doc, Node parent, String elemName, String elemValue) {
-		Element elem = doc.createElement(elemName);
-		elem.appendChild(doc.createTextNode(elemValue));
-		parent.appendChild(elem);
-		parent.appendChild(doc.createTextNode("\n"));
-	}
 
-	private Element rowElem(Document doc, int i) {
-		Element rowElem = doc.createElement("row");
-		for (int j = 0; j < layout[i].length; j++) {
-			add(doc, rowElem, "col", Integer.toString(layout[i][j]));
-		}
-		return rowElem;
-	}
-
-	private Element layoutElem(Document doc) {
-		Element layoutElem = doc.createElement("layout");
-		for (int i = 0; i < layout.length; i++) {
-			layoutElem.appendChild(rowElem(doc, i));
-		}
-		return layoutElem;
-	}
-
-	private <T> Element elemList(Document doc, String tag, String childTag, List<T> list) {
-		Element listElem = doc.createElement(tag);
-		for (Object child : list) {
-			add(doc, listElem, childTag, child.toString());
-		}
-		return listElem;
-	}
+//	private void add(Document doc, Node parent, String elemName, String elemValue) {
+//		Element elem = doc.createElement(elemName);
+//		elem.appendChild(doc.createTextNode(elemValue));
+//		parent.appendChild(elem);
+//		parent.appendChild(doc.createTextNode("\n"));
+//	}
+//
+//
+//	private Element rowElem(Document doc, int i) {
+//		Element rowElem = doc.createElement("row");
+//		for (int j = 0; j < layout[i].length; j++) {
+//			add(doc, rowElem, "col", Integer.toString(layout[i][j]));
+//		}
+//		return rowElem;
+//	}
+//
+//	private Element layoutElem(Document doc) {
+//		Element layoutElem = doc.createElement("layout");
+//		for (int i = 0; i < layout.length; i++) {
+//			layoutElem.appendChild(rowElem(doc, i));
+//		}
+//		return layoutElem;
+//	}
+//
+//	private <T> Element elemList(Document doc, String tag, String childTag, List<T> list) {
+//		Element listElem = doc.createElement(tag);
+//		for (Object child : list) {
+//			add(doc, listElem, childTag, child.toString());
+//		}
+//		return listElem;
+//	}
 
 	/**
 	 * Save {@link Cell}[][] to an xml file.
@@ -194,36 +192,37 @@ public class SocietyXMLParser {
 	 *            an identifier of the configuration.
 	 * @throws Exception
 	 */
-	public void saveAsXML(Society society, String filename, String id) throws Exception {
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		DocumentBuilder db = dbf.newDocumentBuilder();
-
-		Document doc = db.newDocument();
-		Element root = doc.createElement("config");
-		doc.appendChild(root);
-
-		add(doc, root, "name", configMap.get("name"));
-		add(doc, root, "cellShape", configMap.get("cellShape"));
-		add(doc, root, "gridType", configMap.get("gridType"));
-		add(doc, root, "neighborsType", configMap.get("neighborsType"));
-		add(doc, root, "wrapping", configMap.get("wrapping"));
-		add(doc, root, "colors", configMap.get("colors"));
-		add(doc, root, "width", configMap.get("width"));
-		add(doc, root, "height", configMap.get("height"));
-		add(doc, root, "rows", configMap.get("rows"));
-		add(doc, root, "cols", configMap.get("cols"));
-		root.appendChild(layoutElem(doc));
-		root.appendChild(elemList(doc, "params", "val", makeDoubleList(configMap.get("params"))));
-
-		// write the content into xml file
-		TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		Transformer transformer = transformerFactory.newTransformer();
-		DOMSource source = new DOMSource(doc);
-		StreamResult result = new StreamResult(new File(filename));
-		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "cell-society.dtd");
-		transformer.transform(source, result);
-		System.out.println("Society saved to XML: " + filename);
-	}
+	// TODO: write to file not done yet.
+//	public void saveAsXML(Society society, String filename, String id) throws Exception {
+//		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+//		DocumentBuilder db = dbf.newDocumentBuilder();
+//
+//		Document doc = db.newDocument();
+//		Element root = doc.createElement("config");
+//		doc.appendChild(root);
+//
+//		add(doc, root, "name", configMap.get("name"));
+//		add(doc, root, "cellShape", configMap.get("cellShape"));
+//		add(doc, root, "gridType", configMap.get("gridType"));
+//		add(doc, root, "neighborsType", configMap.get("neighborsType"));
+//		add(doc, root, "wrapping", configMap.get("wrapping"));
+//		add(doc, root, "colors", configMap.get("colors"));
+//		add(doc, root, "width", configMap.get("width"));
+//		add(doc, root, "height", configMap.get("height"));
+//		add(doc, root, "rows", configMap.get("rows"));
+//		add(doc, root, "cols", configMap.get("cols"));
+//		root.appendChild(layoutElem(doc));
+//		root.appendChild(elemList(doc, "params", "val", makeDoubleList(configMap.get("params"))));
+//
+//		// write the content into xml file
+//		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//		Transformer transformer = transformerFactory.newTransformer();
+//		DOMSource source = new DOMSource(doc);
+//		StreamResult result = new StreamResult(new File(filename));
+//		transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "cell-society.dtd");
+//		transformer.transform(source, result);
+//		System.out.println("Society saved to XML: " + filename);
+//	}
 
 	@Override
 	public String toString() {
