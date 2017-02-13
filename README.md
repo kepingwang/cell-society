@@ -45,7 +45,6 @@ Gordon: Responsible for back end for both sprints
 
 * view/main-style.css
 * resources/English.properties
-* resources/Erros.properties
 
 #### Additional Information
 
