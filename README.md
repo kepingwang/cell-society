@@ -1,33 +1,61 @@
-# cellsociety
+Cell Society
+============
+#### Team Members
 
-CompSci 308 Cell Society Project
+Jacob Weiss
 
-The MVC pattern is mainly for web applications. Since the web pages have to get data through html request and response, it is necessary to have a Controller to routes the requests and send back the data. JavaFX can adopt the pure MVC design pattern, but that requires using FXML (a pure view without controlling method, see this [JavaFX Best Practices](http://docs.oracle.com/javafx/2/best_practices/jfxpub-best_practices.htm)). I don't think we have to pay the extra learning cost to use FXML, since it will definitely not be used in the final project (most fun part of the class).
+Keping Wang
 
-Therefore, our JavaFX cell-society don't have to have an independent Controller class, but it is essential that we separate Model from View. We can put the controller sort of either in Model or in View. If we have a reference of Model in View, and call `model.getData()` in View, then renders data, then it equivalently is a Controller inside View. If we have a reference of View in Model, and call `view.showData()` in Model, then the Controller is inside Model.
+Gordon Huynh
 
-As for this JavaFX project, I suggest that we put Controller inside Model, which effectively means something like:
-```
-private Model model;
+#### Time Range
 
-button.setOnMouseClicked(e -> {
-    render(model.getData());
-});
+Started: February 3, 2017
 
-/** Receives data from the model and update the View.
- */
-public render(Data data) {
-    // TODO
-}
-```
+Finished: February 13, 2017
 
-That being said, I read some [articles online](http://gamedev.stackexchange.com/questions/3426/why-are-mvc-tdd-not-employed-more-in-game-architecture) and changed my mind. I think currently we are doing good by extending Society from Group and extending Cell from Rectangle.
+Total Estimated Time: 80 hours
+
+#### Roles
+
+Jacob: Responsible for front end for first sprint and configurations for second sprint
+
+Keping: Responsible for integrating front and back end for first sprint and front end for second sprint
+
+Gordon: Responsible for back end for both sprints
+
+#### Resources Used
 
 
 
-A better git log, add this to ~/.gitconfig, and then use `git lg`:
-```
-[alias]
-        lg  = log --branches --remotes --tags --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+#### File(s) Used to Start
 
-```
+* CellSocietyApp
+
+#### File(s) Used to Test
+
+* SocietyFactory
+
+#### Data and Resource File(s) Required
+
+* view/index.fxml
+* view/main-style.css
+* view/society-screen.fxml
+* resources/English.properties
+* resources/Erros.properties
+
+#### Additional Information
+
+* data/ Contains several test XML files for each automaton
+
+#### Bugs/Crashes/Problems
+
+
+
+#### Extra Features
+
+
+
+#### Impressions
+
+Gordon: It was an interesting and challenging project. I felt that it required us to implement concepts introduced in lecture. My main issue with project was the difference between the splits. The second split had way more implementations and far less time to complete. I would suggest to maybe move some implementations from the second sprint to the first sprint to better spread the workload.

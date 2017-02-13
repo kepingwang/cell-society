@@ -192,7 +192,7 @@ public class SocietyScreen extends Application {
 	}
 	private void saveConfig() {
 		try {
-			new SocietyXMLParser().saveAsXML(society, "data/"+saveField.getText(), "default-id");
+			// TODO
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
