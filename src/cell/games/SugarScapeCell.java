@@ -2,6 +2,7 @@ package cell.games;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.TreeMap;
 
 import javafx.scene.paint.Color;
@@ -23,6 +24,7 @@ public class SugarScapeCell extends SimpleCell {
 	private int sugar;
 	private SugarAgent agent;
 	private Shape agentShape;
+	private Random sugarRNG = new Random();
 
 	/**
 	 * Params required:
@@ -54,7 +56,7 @@ public class SugarScapeCell extends SimpleCell {
 		vision = params.get(1).intValue();
 		sugarMetabolism = params.get(2).intValue();
 		initSugar = params.get(3).intValue();
-		if (params.get(4).intValue() == 1) {
+		if (sugarRNG.nextDouble() < params.get(4)) {
 			agent = new SugarAgent(this, sugarMetabolism, initSugar);
 		}
 		sugar = state;
