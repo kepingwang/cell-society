@@ -3,9 +3,11 @@ package refactor.control;
 import java.io.File;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import refactor.society.Society;
@@ -35,13 +37,28 @@ public class SocietyController {
 		return society;
 	}
 
+	private StackPane makeStackPane(Node node, double w, double h, String style) {
+		StackPane pane = new StackPane();
+		pane.getChildren().add(node);
+		pane.setMaxSize(w, h);
+		pane.getStyleClass().add(style);
+		return pane;
+	}
 	private void addSociety(Society<?> society) {
 		if (society != null) {
 			societyBox.getChildren().clear();
 		}
 		this.society = society;
 		this.statGraph = new StatGraph(society);
-		societyBox.getChildren().addAll(society, statGraph);
+		StackPane societyPane = makeStackPane(
+				society, 
+				society.width(), society.height(), "society-pane"
+			);
+		StackPane statPane = makeStackPane(
+				statGraph, 
+				statGraph.getWidth(), statGraph.getHeight(), "stat-pane"
+			);
+		societyBox.getChildren().addAll(societyPane, statPane);
 		statGraph.update();
 	}
 

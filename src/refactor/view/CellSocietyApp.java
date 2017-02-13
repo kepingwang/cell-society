@@ -16,7 +16,7 @@ public class CellSocietyApp extends Application {
     public static final String LANGUAGE = "English";
     private static ResourceBundle resourceBundle;
     private static final double WIDTH = 800;
-    private static final double HEIGHT = 600;
+    private static final double HEIGHT = 650;
 
 	@Override
 	public void start(Stage stage) throws Exception {
