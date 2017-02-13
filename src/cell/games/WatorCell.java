@@ -64,11 +64,12 @@ public class WatorCell extends SimpleCell {
 		ArrayList<WatorCell> openNeighbors = new ArrayList<WatorCell>();
 		ArrayList<WatorCell> fishNeighbors = new ArrayList<WatorCell>();
 		for(WatorCell n : neighbors){
-			if(n.nextState == WATER){
-				openNeighbors.add(n);
-			}
-			else if(n.currState == FISH && n.nextState == FISH){
-				fishNeighbors.add(n);
+			if (n != null) {
+				if (n.nextState == WATER) {
+					openNeighbors.add(n);
+				} else if (n.currState == FISH && n.nextState == FISH) {
+					fishNeighbors.add(n);
+				}
 			}
 		}
 		openSpaces = openNeighbors;
