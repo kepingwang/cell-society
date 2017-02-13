@@ -128,7 +128,7 @@ public class SugarScapeCell extends SimpleCell {
 					diameter = ch;
 				}
 				double radius = diameter / 2;
-				agentShape = new Circle(i + radius, j + radius, radius);
+				agentShape = new Circle(radius, radius, radius);
 			}
 			if (!getPaneChildren().contains(agentShape)) {
 				getPaneChildren().add(agentShape);

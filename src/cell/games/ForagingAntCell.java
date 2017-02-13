@@ -82,7 +82,7 @@ public class ForagingAntCell extends SimpleCell {
 					diameter = ch;
 				}
 				double radius = diameter / 2;
-				antShape = new Circle(i + radius, j + radius, radius);
+				antShape = new Circle(radius, radius, radius);
 			}
 			if (!getPaneChildren().contains(antShape)) {
 				getPaneChildren().add(antShape);
