@@ -196,11 +196,11 @@ public class Ant {
 	}
 	
 	public void resetMove(){
-		hasMoved = true;
+		hasMoved = false;
 	}
 	
 	public boolean canMove(){
-		return hasMoved;
+		return !hasMoved;
 	}
 }
 
