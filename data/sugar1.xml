@@ -6,12 +6,12 @@
 	<neighborsType>SQUARE_4</neighborsType>
 	<wrapping>false</wrapping>
 	<colors>
-		<val>#A9A9A9</val>
-		<val>#008000</val>
+		<val>#FFFFFF</val>
+		<val>#D3D3D3</val>
+		<val>#ADD8F6</val>
+		<val>#0000FF</val>
+		<val>#800080</val>
 		<val>#FF0000</val>
-		<val>#FF0010</val>
-		<val>#A63711</val>
-		<val>#F3F400</val>
 	</colors>
 	<width>300</width>
 	<height>300</height>

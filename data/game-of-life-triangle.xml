@@ -2,15 +2,15 @@
 <config>
 	<name>game-of-life</name>
 	<cellShape>TRIANGLE</cellShape>
-	<gridType>SQUARE_GRID</gridType>
-	<neighborsType>SQUARE_8</neighborsType>
+	<gridType>TRIANGLE_GRID</gridType>
+	<neighborsType>TRIANGLE_12</neighborsType>
 	<wrapping>false</wrapping>
 	<colors>
 		<val>#FFFFFF</val>
 		<val>#000000</val>
 	</colors>
 	<width>200</width>
-	<height>200</height>
+	<height>344</height>
 	<rows>50</rows>
 	<cols>50</cols>
 	<probs>

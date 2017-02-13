@@ -2,8 +2,8 @@
 <config>
 	<name>game-of-life</name>
 	<cellShape>HEXAGON</cellShape>
-	<gridType>SQUARE_GRID</gridType>
-	<neighborsType>SQUARE_8</neighborsType>
+	<gridType>HEXAGON_GRID</gridType>
+	<neighborsType>HEXAGON_6</neighborsType>
 	<wrapping>false</wrapping>
 	<colors>
 		<val>#FFFFFF</val>

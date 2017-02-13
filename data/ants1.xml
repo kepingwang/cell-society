@@ -13,11 +13,11 @@
 	</colors>
 	<width>400</width>
 	<height>400</height>
-	<rows>200</rows>
-	<cols>200</cols>
+	<rows>50</rows>
+	<cols>50</cols>
 	<probs>
 		<val>0.68</val>
-		<val>0.02</val>
+		<val>0.004</val>
 		<val>0.3</val>
 	</probs>
 	<params>
