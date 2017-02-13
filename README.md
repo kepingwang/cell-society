@@ -38,9 +38,7 @@ Gordon: Responsible for back end for both sprints
 
 #### Data and Resource File(s) Required
 
-* view/index.fxml
 * view/main-style.css
-* view/society-screen.fxml
 * resources/English.properties
 * resources/Erros.properties
 

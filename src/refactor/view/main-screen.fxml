@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- You have to import packages manually in FXML!!! -->
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/8"
+	fx:controller="refactor.control.Controller">
+	<children>
+		<HBox fx:id="screens">
+
+		</HBox>
+		<HBox fx:id="buttons">
+			<children>
+				<HBox id="sliderHBox">
+					<children>
+						<Label text="%Slow" />
+						<Slider fx:id="speedSlider" />
+						<Label text="%Fast" />
+					</children>
+				</HBox>
+				<Button fx:id="btnPlay" text="%Play" onAction="#startSimulation"
+					styleClass="btn-primary" />
+				<Button fx:id="btnPause" text="%Pause" onAction="#pauseSimulation"
+					styleClass="btn-primary" />
+				<Button fx:id="btnNextFrame" text="%NextFrame" onAction="#nextFrame"
+					styleClass="btn-primary" />
+				<Button fx:id="btnToggleScreen" text="%Compare" onAction="#toggleScreen"
+					styleClass="btn-success" />
+			</children>
+		</HBox>
+	</children>
+</VBox>
