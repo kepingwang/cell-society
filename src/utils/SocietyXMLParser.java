@@ -101,7 +101,6 @@ public class SocietyXMLParser {
 	private List<Double> makeDoubleList(String concat) {
 		List<Double> res = new ArrayList<Double>();
 		String[] pList = concat.trim().split(",");
-		System.out.println(concat);
 		for (String s : pList) {
 			if (!s.equals("")) {
 				res.add(Double.parseDouble(s));
