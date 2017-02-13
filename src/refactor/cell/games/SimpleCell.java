@@ -3,20 +3,26 @@ package refactor.cell.games;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import refactor.cell.Cell;
 
 public abstract class SimpleCell extends Cell {
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+    public static final String LANGUAGE = "Errors";
+	
 	protected Color[] colors;
 	protected String cellShapeType;
 	protected List<Double> params;
 	protected int currState;
 	protected int nextState;
+	protected ResourceBundle resourceBundle;
 	Shape shape = null;
 
 	public SimpleCell(String cellShapeType, Color[] colors, List<Double> params, int state) {
+		resourceBundle = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + LANGUAGE);
 		this.cellShapeType = cellShapeType;
 		this.colors = colors;
 		this.params = params;
