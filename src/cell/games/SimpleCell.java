@@ -35,7 +35,8 @@ public abstract class SimpleCell extends Cell {
 		debugFlag = true;
 		nextState++;
 		if (nextState == colors.length) { nextState = 0; }
-		shape.setFill(colors[nextState]);
+		currState = nextState;
+		shape.setFill(colors[currState]);
 	}
 	
 	@Override
