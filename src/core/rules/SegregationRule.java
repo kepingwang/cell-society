@@ -16,8 +16,8 @@ import javafx.scene.paint.Color;
 public class SegregationRule extends Rule{
 	private final static Color[] SEG_COLORS = {Color.WHITE, Color.RED, Color.BLUE};
 	private final static int EMPTY = 0;
-	private final static int SIDE_ONE = 1;
-	private final static int SIDE_TWO = 2;
+//	private final static int SIDE_ONE = 1;
+//	private final static int SIDE_TWO = 2;
 	
 	private Random segRNG = new Random();
 	private double satisfaction;

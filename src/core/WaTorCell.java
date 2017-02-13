@@ -1,7 +1,5 @@
 package core;
 
-import core.rules.WaTorRule;
-
 /**
  * Cell for Wa-Tor simulation
  * @author gordon

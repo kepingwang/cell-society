@@ -4,14 +4,15 @@ import java.util.List;
 
 import core.rules.Rule;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+
+
 
 /**
  * A Cell, also a JavaFX node. Can be visualized when added to JavaFX Group
  * ({@link Society}).
  * @author keping
  */
-public class Cell extends Rectangle {
+public class Cell {
 	/**
 	 * states are integers starting from 0.
 	 */
@@ -27,7 +28,7 @@ public class Cell extends Rectangle {
 	 * @param state
 	 */
 	public Cell(double x, double y, double w, double h, int state) {
-		super(x, y, w, h);
+		// TODO
 		this.state = state;
 		this.nextState = state;
 	}
@@ -40,18 +41,22 @@ public class Cell extends Rectangle {
 		return state; 
 	}
 	
+	/**
+	 * Set Next State
+	 * @param i
+	 */
 	public void setNState(int i){
 		nextState = i;
 	}
 	
+	/**
+	 * Get Next State
+	 * @return
+	 */
 	public int getNState(){
 		return nextState;
 	}
 	
-
-	public void syncColor(Color[] colors) {
-		setFill(colors[state]);
-	}
 	public void syncState() {
 		if (state != nextState) {
 			state = nextState;
@@ -72,10 +77,20 @@ public class Cell extends Rectangle {
 	public void updateNextState(Rule rule, List<Cell> neighbors) {
 		nextState = rule.update(this, neighbors);
 	}
-	
-	@Override
-	public String toString() {
-		return String.format("Cell(%.1f, %.1f)%d", getX(), getY(), state);
+
+	public void syncColor(Color[] color) {
+		// TODO Auto-generated method stub
+		
 	}
-	
+
+	public int width() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int height() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
