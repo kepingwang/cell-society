@@ -60,4 +60,5 @@ Gordon: Responsible for back end for both sprints
 #### Impressions
 
 Gordon: It was an interesting and challenging project. I felt that it required us to implement concepts introduced in lecture. My main issue with project was the difference between the splits. The second split had way more implementations and far less time to complete. I would suggest to maybe move some implementations from the second sprint to the first sprint to better spread the workload.
+
 Jacob: This project was certainly challenging, but also helped me learn a lot in many ways. Naturally, concepts taught in lecture were a big part of this project. For me, cell society made me very comfortable with git, which I definitely appreciated. I am also beginning to learn the importance of planning out your projects so you know which features you should alot time/effort towards at the start, and which you can address if you have time to spare.
