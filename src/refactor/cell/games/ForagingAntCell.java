@@ -28,7 +28,6 @@ public class ForagingAntCell extends SimpleCell {
 
 	private ArrayList<ForagingAntCell> neighbors;
 
-	@SuppressWarnings("unchecked")
 	public ForagingAntCell(String cellShapeType, Color[] colors, List<Double> params, int state) {
 		super(cellShapeType, colors, params, state);
 		if(colors.length != TOTAL_STATES){
@@ -49,6 +48,7 @@ public class ForagingAntCell extends SimpleCell {
 		ants = new ArrayList<Ant>();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void updateNextState() {
 		neighbors = (ArrayList<ForagingAntCell>) this.getNeighbors();
