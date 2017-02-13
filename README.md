@@ -35,17 +35,16 @@ Gordon: Responsible for back end for both sprints
 
 #### File(s) Used to Start
 
-* CellSocietyApp
+* view/CellSocietyApp
 
 #### File(s) Used to Test
 
-* SocietyFactory
+* data/*.xml
 
 #### Data and Resource File(s) Required
 
 * view/main-style.css
 * resources/English.properties
-* resources/Erros.properties
 
 #### Additional Information
 
@@ -53,11 +52,8 @@ Gordon: Responsible for back end for both sprints
 
 #### Bugs/Crashes/Problems
 
-
-
-#### Extra Features
-
-
+* Slime Cell Society has several bugs that prevented it from being fully completed
+* The GUI has bugs with generating circles which doesn't affect the simulation directly, but is visually noticeable
 
 #### Impressions
 
