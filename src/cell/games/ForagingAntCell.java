@@ -111,7 +111,6 @@ public class ForagingAntCell extends SimpleCell {
 
 	private void moveAnts() {
 		ArrayList<Ant> antsToRemove = new ArrayList<Ant>();
-		System.out.println(ants.size());
 		for (Ant a : ants) {
 			if (a.canMove() && a.forage(neighbors) == 1) {
 				antsToRemove.add(a);
