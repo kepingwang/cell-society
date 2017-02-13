@@ -54,11 +54,51 @@ public class SocietyFactory {
 	}
 
 	public <T extends Cell> Society<T> genSociety() throws Exception {
+		GridType gridType;
+		if (configMap.get("gridType").equals("SQUARE_GRID")) {
+			gridType = GridType.SQUARE_GRID;
+		} else if (configMap.get("gridType").equals("TRIANGLE_GRID")) {
+			gridType = GridType.TRIANGLE_GRID;
+		} else if (configMap.get("gridType").equals("HEXAGON_GRID")) {
+			gridType = GridType.HEXAGON_GRID;
+		} else {
+			gridType = GridType.SQUARE_GRID;
+			wrongGridType();
+		}
 
-		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8,
-				Boolean.parseBoolean(configMap.get("wrapping")));
+		NeighborsType neighborsType;
+		if (configMap.get("neighborsType").equals("HEXAGON_6")) {
+			neighborsType = NeighborsType.HEXAGON_6;
+		} else if (configMap.get("neighborsType").equals("SQUARE_4")) {
+			neighborsType = NeighborsType.SQUARE_4;
+		} else if (configMap.get("neighborsType").equals("SQUARE_8")) {
+			neighborsType = NeighborsType.SQUARE_8;
+		} else if (configMap.get("neighborsType").equals("TRIANGLE_12")) {
+			neighborsType = NeighborsType.TRIANGLE_12;
+		} else {
+			neighborsType = NeighborsType.SQUARE_4;
+			wrongNeighborsType();
+		}
 
-		String cellShapeType = GridType.SQUARE;
+		String cellShapeType = "";
+		if (configMap.get("cellShape").equals("SQUARE")) {
+			cellShapeType = GridType.SQUARE;
+		} else if (configMap.get("cellShape").equals("TRIANGLE")) {
+			cellShapeType = GridType.TRIANGLE;
+		} else if (configMap.get("cellShape").equals("HEXAGON")) {
+			cellShapeType = GridType.HEXAGON;
+		} else {
+			wrongCellShape();
+		}
+
+		boolean wrapping;
+		if (configMap.get("wrapping").equals("true") || configMap.get("wrapping").equals("false")) {
+			wrapping = Boolean.parseBoolean(configMap.get("wrapping"));
+		} else {
+			wrapping = false;
+			wrongWrapping();
+		}
+		GridConfig gridConfig = new GridConfig(gridType, neighborsType, wrapping);
 		SizeConfig sizeConfig = new SizeConfig(Integer.parseInt(configMap.get("rows")),
 				Integer.parseInt(configMap.get("cols")), Double.parseDouble(configMap.get("width")),
 				Double.parseDouble(configMap.get("height")));
@@ -233,40 +273,26 @@ public class SocietyFactory {
 		}
 		return new Color(r / 255.0, g / 255.0, b / 255.0, 1);
 	}
-	
-	public Society<SugarScapeCell> sampleSugarScape() {
-		boolean wrapping = false;
-		double sugarGrow = 1;
-		double vision = 4;
-		double sugarMetabolism = 4;
-		double initSugar = -20;
 
-		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_4, wrapping);
-		String cellShapeType = GridType.SQUARE;
-		SizeConfig sizeConfig = new SizeConfig(5, 5, SIZE, SIZE);
-		int[][] layout = new int[][] { { 1, 1, 1, 1, 1 }, { 2, 2, 2, 2, 2 }, { 3, 3, 3, 3, 3 }, { 4, 4, 4, 4, 4},
-				{ 0, 0, 0, 1, 1 } };
-				
-		Color[] colors = new Color[] { Color.WHITE, Color.LIGHTGREY, Color.LIGHTBLUE, Color.BLUE, Color.PURPLE, Color.RED};
-		SugarScapeCell[][] cells = new SugarScapeCell[layout.length][layout[0].length];
-		List<Double> params = new ArrayList<Double>();
-		params.add(sugarGrow);
-		params.add(vision);
-		params.add(sugarMetabolism);
-		params.add(initSugar);
-		for (int i = 0; i < layout.length; i++) {
-			for (int j = 0; j < layout[0].length; j++) {
-				double temp = new Random().nextDouble();
-				if(temp < .1){
-					temp = 1;
-				}
-				else { temp = 0;}
-				params.add(temp);
-				cells[i][j] = new SugarScapeCell(cellShapeType, colors, params, layout[i][j]);
-				params.remove(4);
-			}
-		}
-		return new Society<SugarScapeCell>(gridConfig, sizeConfig, cells);
+
+	private void wrongCellShape() throws Exception {
+		// check for wrong cell shape
+		throw new Exception("Incorrect cell shape provided.");
 	}
-	
+
+	private void wrongGridType() throws Exception {
+		// check for wrong grid type
+		throw new Exception("Incorrect grid type provided.");
+	}
+
+	private void wrongNeighborsType() throws Exception {
+		// check for wrong neighbors type
+		throw new Exception("Incorrect neighbors type provided.");
+	}
+
+	private void wrongWrapping() throws Exception {
+		// check for wrong wrapping
+		throw new Exception("Wrapping must be either 'true' or 'false'.");
+	}
+
 }
