@@ -54,7 +54,10 @@ Gordon: Responsible for back end for both sprints
 
 * Slime Cell Society has several bugs that prevented it from being fully completed
 * The GUI has bugs with generating circles which doesn't affect the simulation directly, but is visually noticeable
+* Ants simulation has bug where food source doesn't go away
+* Ant simulation can't be too big or it will crash
 
 #### Impressions
 
 Gordon: It was an interesting and challenging project. I felt that it required us to implement concepts introduced in lecture. My main issue with project was the difference between the splits. The second split had way more implementations and far less time to complete. I would suggest to maybe move some implementations from the second sprint to the first sprint to better spread the workload.
+Jacob: This project was certainly challenging, but also helped me learn a lot in many ways. Naturally, concepts taught in lecture were a big part of this project. For me, cell society made me very comfortable with git, which I definitely appreciated. I am also beginning to learn the importance of planning out your projects so you know which features you should alot time/effort towards at the start, and which you can address if you have time to spare.
