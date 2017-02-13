@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.paint.Color;
+import refactor.cell.games.FireCell;
+import refactor.cell.games.ForagingAntCell;
 import refactor.cell.games.GameOfLifeCell;
 import refactor.config.GridConfig;
 import refactor.config.SizeConfig;
@@ -20,7 +22,7 @@ public class SocietyFactory {
 		if (fileName.length() < 4 || !fileName.substring(fileName.length()-4).equals(".xml")) {
 			throw new Exception("Cannot parse xml!");
 		} 		
-		return sampleGameOfLifeSociety();
+		return sampleForagingAnt();
 	}
 	
 	public Society<GameOfLifeCell> sampleGameOfLifeSociety() {
@@ -43,4 +45,45 @@ public class SocietyFactory {
 		return new Society<GameOfLifeCell>(gridConfig, sizeConfig, cells);
 	}
 
+	public Society<FireCell> sampleFire() {
+		boolean wrapping = false;
+		double chanceOfFire = .5;
+
+		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8, wrapping);
+		String cellShapeType = GridType.SQUARE;
+		SizeConfig sizeConfig = new SizeConfig(5, 5, SIZE, SIZE);
+		int[][] layout = new int[][] { { 1, 1, 1, 1, 1 }, { 1, 2, 1, 1, 1 }, { 1, 1, 2, 1, 1 }, { 1, 1, 1, 2, 1 },
+				{ 1, 1, 1, 1, 1 } };
+				
+		Color[] colors = new Color[] { Color.GOLD, Color.GREEN, Color.RED };
+		FireCell[][] cells = new FireCell[layout.length][layout[0].length];
+		List<Double> params = new ArrayList<Double>();
+		params.add(chanceOfFire);
+		for (int i = 0; i < layout.length; i++) {
+			for (int j = 0; j < layout[0].length; j++) {
+				cells[i][j] = new FireCell(cellShapeType, colors, params, layout[i][j]);
+			}
+		}
+		return new Society<FireCell>(gridConfig, sizeConfig, cells);
+	}
+	
+	public Society<ForagingAntCell> sampleForagingAnt() {
+		boolean wrapping = false;
+
+		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8, wrapping);
+		String cellShapeType = GridType.SQUARE;
+		SizeConfig sizeConfig = new SizeConfig(5, 5, SIZE, SIZE);
+		int[][] layout = new int[][] { { 1, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 },
+				{ 0, 0, 0, 0, 2 } };
+				
+		Color[] colors = new Color[] { Color.WHITE, Color.BROWN, Color.GOLD, Color.RED };
+		ForagingAntCell[][] cells = new ForagingAntCell[layout.length][layout[0].length];
+		List<Double> params = new ArrayList<Double>();
+		for (int i = 0; i < layout.length; i++) {
+			for (int j = 0; j < layout[0].length; j++) {
+				cells[i][j] = new ForagingAntCell(cellShapeType, colors, params, layout[i][j]);
+			}
+		}
+		return new Society<ForagingAntCell>(gridConfig, sizeConfig, cells);
+	}
 }

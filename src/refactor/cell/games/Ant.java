@@ -1,6 +1,7 @@
 package refactor.cell.games;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
@@ -85,7 +86,10 @@ public class Ant {
 			direction = neighbors.indexOf(optimalMove(FOOD_STRING));
 		}
 		ForagingAntCell target = optimalForwardMove(FOOD_STRING);
-		if(target.equals(null)){
+		if(target == null){
+			target = optimalMove(FOOD_STRING);
+		}
+		if(!target.equals(null)){
 			placeScent(HOME_STRING);
 			direction = neighbors.indexOf(target);
 			if(moveTo(target) == 0){
@@ -96,7 +100,6 @@ public class Ant {
 				hasFood = true;
 			}
 		}
-
 		return 1;
 	}
 
@@ -113,7 +116,7 @@ public class Ant {
 			return 0;
 		}
 		currentCell = next;
-		next.getAnts().add(this);
+		next.addAnt(this);
 		return 1;
 	}
 
@@ -157,15 +160,25 @@ public class Ant {
 		TreeSet<ForagingAntCell> tempTree;
 		if (type.equals(HOME_STRING)) {
 			tempTree = new TreeSet<ForagingAntCell>(new HomeScentComp());
-			tempTree.addAll(neighbors);
+			for(ForagingAntCell c : neighbors){
+				if(c!=null){
+					tempTree.add(c);
+				}
+			}
 			if(tempTree.first().getHomeScent() == tempTree.last().getHomeScent()){
-				return neighbors.get(antRNG.nextInt(neighbors.size()));
+				ArrayList<ForagingAntCell> tempArr = new ArrayList<ForagingAntCell>(tempTree);
+				return tempArr.get(antRNG.nextInt(tempArr.size()));
 			}
 		} else{
 			tempTree = new TreeSet<ForagingAntCell>(new FoodScentComp());
-			tempTree.addAll(neighbors);
+			for(ForagingAntCell c : neighbors){
+				if(c!=null){
+					tempTree.add(c);
+				}
+			}
 			if(tempTree.first().getFoodScent() == tempTree.last().getFoodScent()){
-				return neighbors.get(antRNG.nextInt(neighbors.size()));
+				ArrayList<ForagingAntCell> tempArr = new ArrayList<ForagingAntCell>(tempTree);
+				return tempArr.get(antRNG.nextInt(tempArr.size()));
 			}
 		}
 		return tempTree.pollFirst();
@@ -213,10 +226,12 @@ class FoodScentComp implements Comparator<ForagingAntCell> {
 
 	@Override
 	public int compare(ForagingAntCell cell1, ForagingAntCell cell2) {
+		if(cell1==null){ return 1;}
+		if(cell2==null){ return -1;}
 		if (cell1.getFoodScent() >= cell2.getFoodScent()) {
-			return 1;
+			return -1;
 		}
-		return -1;
+		return 1;
 	}
 }
 
@@ -229,11 +244,12 @@ class HomeScentComp implements Comparator<ForagingAntCell> {
 
 	@Override
 	public int compare(ForagingAntCell cell1, ForagingAntCell cell2) {
-		// TODO Auto-generated method stub
+		if(cell1==null){ return 1;}
+		if(cell2==null){ return -1;}
 		if (cell1.getHomeScent() >= cell2.getHomeScent()) {
-			return 1;
+			return -1;
 		}
-		return -1;
+		return 1;
 	}
 
 }

@@ -9,8 +9,8 @@ import javafx.scene.shape.Shape;
 import refactor.cell.Cell;
 
 public abstract class SimpleCell extends Cell {
-	private Color[] colors;
-	private String cellShapeType;
+	protected Color[] colors;
+	protected String cellShapeType;
 	protected List<Double> params;
 	protected int currState;
 	protected int nextState;
