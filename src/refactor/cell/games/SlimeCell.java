@@ -16,6 +16,7 @@ public class SlimeCell extends SimpleCell {
 	private final static int EMPTY = 0;
 	private final static int SPORE = 1;
 	private final static int cAMP = 2;
+	private final static int NUM_STATES = 3;
 
 	private double wiggleBias;
 	private double wiggleAngle;
@@ -27,6 +28,9 @@ public class SlimeCell extends SimpleCell {
 
 	public SlimeCell(String cellShapeType, Color[] colors, List<Double> params, int state) {
 		super(cellShapeType, colors, params, state);
+		if (colors.length != NUM_STATES || params.size() != 5 || state < 0 || state > 2) {
+			throw new IllegalArgumentException("Illegal configuration for SlimeCell.");
+		}
 		wiggleBias = params.get(0);
 		wiggleAngle = params.get(1);
 		sniffThreshold = params.get(2);
