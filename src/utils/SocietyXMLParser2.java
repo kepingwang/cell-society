@@ -27,16 +27,6 @@ import core.Society;
 
 public class SocietyXMLParser2 {
 	static final String outputEncoding = "UTF-8";
-
-	private String name = null;
-	private String id = null;
-	private double width = -1;
-	private double height = -1;
-	private int rows = -1;
-	private int cols = -1;
-	private int[][] layout = null;
-	private List<Double> probs;
-	private List<Double> params;
 	
 	private Map<String, String> societyMap = new HashMap<String, String>();
 	private Map<String, int[][]> layoutMap = new HashMap<String, int[][]>();
@@ -87,13 +77,6 @@ public class SocietyXMLParser2 {
 	private static String val(Node node) {
 		return node.getFirstChild().getNodeValue();
 	}
-	private int[][] getLayout() {
-		if (layout != null) {
-			return layout;
-		} else {
-			return LayoutGenerator.generateRandomLayout(rows, cols, probs);
-		}
-	}
 	private List<String> getDoubleValues(Node node) {
 		List<String> res = new ArrayList<>();
 		NodeList list = node.getChildNodes();
@@ -105,13 +88,30 @@ public class SocietyXMLParser2 {
 		}
 		return res;
 	}
+	private String getConcatenatedVals(Node node){
+		List<String> vals = getDoubleValues(node);
+		String concatenatedVals = "";
+		for(String v: vals){
+			concatenatedVals=concatenatedVals + v;
+		}
+		return concatenatedVals;
+	}
+	
+	private List<Double> makeDoubleList(String concat){
+		List<Double> res = null;
+		String[] pList = concat.split(",");
+		for(String s: pList){
+			res.add(Double.parseDouble(s));
+		}
+		return res;
+	}
 	/**
 	 * Parse a given xml file to {@link Cell}[][]
 	 * @param filename
 	 * @return the {@link Society}
 	 * @throws Exception
 	 */
-	public Society parse(String filename) throws Exception {
+	public Map<String, String> parse(String filename) throws Exception {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document doc = db.parse(new File(filename));
@@ -121,13 +121,8 @@ public class SocietyXMLParser2 {
 			if(node.getNodeType()==Node.ELEMENT_NODE){
 				String nodeName = node.getNodeName();
 				if(!nodeName.equals("layout")){
-					if(nodeName.equals("probs") || nodeName.equals("params")){
-						List<String> vals = getDoubleValues(node);
-						String concatenatedVals = "";
-						for(String v: vals){
-							concatenatedVals=concatenatedVals + v;
-						}
-					societyMap.put(nodeName, concatenatedVals);
+					if(nodeName.equals("probs") || nodeName.equals("params")){ 
+						societyMap.put(nodeName, getConcatenatedVals(node));
 					}
 					else{
 						societyMap.put(nodeName, val(node));
@@ -139,63 +134,14 @@ public class SocietyXMLParser2 {
 				}
 				
 			}
-			/*if (node.getNodeType() == Node.ELEMENT_NODE) {
-				if (node.getNodeName().equals("name")) {
-					name = val(node);
-				} else if (node.getNodeName().equals("id")) {
-					id = val(node);
-				} else if (node.getNodeName().equals("width")) {
-					width = Double.parseDouble(val(node));
-				} else if (node.getNodeName().equals("height")) {
-					height = Double.parseDouble(val(node));
-				} else if (node.getNodeName().equals("rows")) {
-					rows = Integer.parseInt(val(node));
-				} else if (node.getNodeName().equals("cols")) {
-					cols = Integer.parseInt(val(node));
-				} else if (node.getNodeName().equals("layout")) {
-					layout = getLayout(rows, cols, node);
-					probs = null;
-				} else if (node.getNodeName().equals("probs")) {
-					probs = getDoubleValues(node);
-					layout = null;
-				} else if (node.getNodeName().equals("params")) {
-					params = getDoubleValues(node);
-				} else { }
-			}*/
-			name = societyMap.get("name");
-			id = societyMap.get("id");
-			width = Double.parseDouble(societyMap.get("width"));
-			height = Double.parseDouble(societyMap.get("height"));
-			rows = Integer.parseInt(societyMap.get("rows"));
-			cols = Integer.parseInt(societyMap.get("cols"));
 			
 		}
-		String paramsConcatenated = societyMap.get("params");
-		String probsConcatenated = societyMap.get("probs");
-		String[] paramsList = paramsConcatenated.split(",");
-		String[] probsList = probsConcatenated.split(",");
 		
-		for(String s: paramsList){
-			params.add(Double.parseDouble(s));
-		}
-		for(String s: probsList){
-			probs.add(Double.parseDouble(s));
-		}
-		
-		return new Society(name, width, height, params, getLayout());
+		return societyMap;
 	}
-	
+
 	
 	// Save Cell[][] to XML
-	private void readSociety(Society society) {
-		name = society.getGameName();
-		width = society.getWidth();
-		height = society.getHeight();
-		rows = society.getRows();
-		cols = society.getCols();
-		layout = society.getLayout();
-		params = society.getParams();
-	}
 	private void add(Document doc, Node parent, String elemName, String elemValue) {
 		Element elem = doc.createElement(elemName);
 		elem.appendChild(doc.createTextNode(elemValue));
@@ -204,14 +150,14 @@ public class SocietyXMLParser2 {
 	}	
 	private Element rowElem(Document doc, int i) {
 		Element rowElem = doc.createElement("row");
-		for (int j = 0; j < layout[i].length; j++) {
-			add(doc, rowElem, "col", Integer.toString(layout[i][j]));
+		for (int j = 0; j < layoutMap.get("layout")[i].length; j++) {
+			add(doc, rowElem, "col", Integer.toString(layoutMap.get("layout")[i][j]));
 		}
 		return rowElem;
 	}
 	private Element layoutElem(Document doc) {
 		Element layoutElem = doc.createElement("layout");
-		for (int i = 0; i < layout.length; i++) {
+		for (int i = 0; i < layoutMap.get("layout").length; i++) {
 			layoutElem.appendChild(rowElem(doc, i));
 		}
 		return layoutElem;
@@ -234,20 +180,19 @@ public class SocietyXMLParser2 {
 	public void saveAsXML(Society society, String filename, String id) throws Exception {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = dbf.newDocumentBuilder();
-		readSociety(society);
 		
 		Document doc = db.newDocument();
 		Element root = doc.createElement("config");
 		doc.appendChild(root);
 		
-		add(doc, root, "name", name);
-		add(doc, root, "id", id);
-		add(doc, root, "width", Double.toString(width));
-		add(doc, root, "height", Double.toString(height));
-		add(doc, root, "rows", Integer.toString(rows));
-		add(doc, root, "cols", Integer.toString(cols));
+		add(doc, root, "name", societyMap.get("name"));
+		add(doc, root, "id", societyMap.get("id"));
+		add(doc, root, "width", societyMap.get("width"));
+		add(doc, root, "height", societyMap.get("height"));
+		add(doc, root, "rows", societyMap.get("rows"));
+		add(doc, root, "cols", societyMap.get("cols"));
 		root.appendChild(layoutElem(doc));
-		root.appendChild(elemList(doc, "params", "val", params));
+		root.appendChild(elemList(doc, "params", "val", makeDoubleList(societyMap.get("params"))));
 		
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -262,7 +207,7 @@ public class SocietyXMLParser2 {
 	
 	@Override
 	public String toString() {
-		return "configuration: " + id;
+		return "configuration: " + societyMap.get("id");
 	}
 	
 	/**
@@ -276,6 +221,5 @@ public class SocietyXMLParser2 {
 		parser.saveAsXML(society, "data/saved-from-society.xml", "saved-file");
 		
 	}
-
 	
 }
