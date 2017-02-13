@@ -17,6 +17,7 @@ public class GameConfig {
 	}
 	
 	public int[][] getLayout(){
+		System.out.print(layout[0][0]);
 		return layout;
 	}
 }

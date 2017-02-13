@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE config SYSTEM "cell-society.dtd">
 <config>
 	<name>fire</name>
-	<id>keping001</id>
+	<cellShape>SQUARE</cellShape>
+	<gridType>SQUARE_GRID</gridType>
+	<neighborsType>SQUARE_8</neighborsType>
+	<wrapping>false</wrapping>
+	<colors>
+		<val>#A9A9A9</val>
+		<val>#008000</val>
+		<val>#FF0000</val>
+	</colors>
 	<width>300</width>
 	<height>300</height>
 	<rows>50</rows>
