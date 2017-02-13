@@ -7,6 +7,8 @@ import javafx.scene.paint.Color;
 import refactor.cell.games.FireCell;
 import refactor.cell.games.ForagingAntCell;
 import refactor.cell.games.GameOfLifeCell;
+import refactor.cell.games.SegregationCell;
+import refactor.cell.games.WatorCell;
 import refactor.config.GridConfig;
 import refactor.config.SizeConfig;
 import refactor.grid.GridType;
@@ -22,7 +24,7 @@ public class SocietyFactory {
 		if (fileName.length() < 4 || !fileName.substring(fileName.length()-4).equals(".xml")) {
 			throw new Exception("Cannot parse xml!");
 		} 		
-		return sampleForagingAnt();
+		return sampleWator();
 	}
 	
 	public Society<GameOfLifeCell> sampleGameOfLifeSociety() {
@@ -85,5 +87,55 @@ public class SocietyFactory {
 			}
 		}
 		return new Society<ForagingAntCell>(gridConfig, sizeConfig, cells);
+	}
+	
+	public Society<SegregationCell> sampleSegregation() {
+		boolean wrapping = false;
+		double satisfaction = .5;
+
+		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8, wrapping);
+		String cellShapeType = GridType.SQUARE;
+		SizeConfig sizeConfig = new SizeConfig(5, 5, SIZE, SIZE);
+		int[][] layout = new int[][] { { 1, 2, 2, 2, 1 }, { 0, 0, 0, 0, 0 }, { 2, 1, 1, 1, 2 }, { 0, 0, 0, 0, 0 },
+				{ 1, 2, 2, 2, 1 } };
+				
+		Color[] colors = new Color[] { Color.WHITE, Color.RED, Color.BLUE};
+		SegregationCell[][] cells = new SegregationCell[layout.length][layout[0].length];
+		List<Double> params = new ArrayList<Double>();
+		params.add(satisfaction);
+		for (int i = 0; i < layout.length; i++) {
+			for (int j = 0; j < layout[0].length; j++) {
+				cells[i][j] = new SegregationCell(cellShapeType, colors, params, layout[i][j]);
+			}
+		}
+		return new Society<SegregationCell>(gridConfig, sizeConfig, cells);
+	}
+	
+	public Society<WatorCell> sampleWator() {
+		boolean wrapping = true;
+		double fishBirth = 4;
+		double sharkBirth = 6;
+		double sharkDeath = -4;
+		double eatEnergy = 2;
+
+		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8, wrapping);
+		String cellShapeType = GridType.SQUARE;
+		SizeConfig sizeConfig = new SizeConfig(5, 5, SIZE, SIZE);
+		int[][] layout = new int[][] { { 1, 1, 1, 1, 1 }, { 0, 0, 0, 0, 0 }, { 0, 0, 2, 0, 0 }, { 0, 0, 0, 0, 0 },
+				{ 1, 1, 1, 1, 1 } };
+				
+		Color[] colors = new Color[] { Color.BLUE, Color.GREEN, Color.GOLD};
+		WatorCell[][] cells = new WatorCell[layout.length][layout[0].length];
+		List<Double> params = new ArrayList<Double>();
+		params.add(fishBirth);
+		params.add(sharkBirth);
+		params.add(sharkDeath);
+		params.add(eatEnergy);
+		for (int i = 0; i < layout.length; i++) {
+			for (int j = 0; j < layout[0].length; j++) {
+				cells[i][j] = new WatorCell(cellShapeType, colors, params, layout[i][j]);
+			}
+		}
+		return new Society<WatorCell>(gridConfig, sizeConfig, cells);
 	}
 }

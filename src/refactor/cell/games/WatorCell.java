@@ -61,10 +61,10 @@ public class WatorCell extends SimpleCell {
 		openSpaces = openNeighbors;
 		
 		if(this.currState == this.nextState){
-			if(this.currState == FISH){
+			if(this.currState == FISH && this.nextState == FISH){
 				updateFish();
 			}
-			else if(this.currState == SHARK){
+			else if(this.currState == SHARK && this.nextState == SHARK){
 				updateShark(fishNeighbors);
 			}
 		}
@@ -95,6 +95,7 @@ public class WatorCell extends SimpleCell {
 		if(fishSpaces.size() > 0){
 			WatorCell target = fishSpaces.get(watorRNG.nextInt(fishSpaces.size()));
 			this.eat(target);
+			openSpaces.add(target);
 			if(this.energy >= sharkBirth && openSpaces.size() > 0){
 				target = openSpaces.get(watorRNG.nextInt(openSpaces.size()));
 				giveBirth(target);
@@ -142,16 +143,9 @@ public class WatorCell extends SimpleCell {
 	 * @param fish
 	 */
 	private void eat(WatorCell fish){
-		fish.currState = WATER;
 		fish.nextState = WATER;
 		fish.energy = 0;
 		this.energy += eatEnergy;
-	}
-
-	@Override
-	public Map<Color, Integer> getColor() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
