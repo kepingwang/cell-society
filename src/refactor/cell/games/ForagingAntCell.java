@@ -15,6 +15,8 @@ public class ForagingAntCell extends SimpleCell {
 	private static final int INIT_FOOD_AMOUNT = 50;
 	private static final double DECAY_RATE = .99;
 	private static final int ANT_SPAWN_RATE = 2;
+	private static final int TOTAL_STATES = 4;
+	private static final int TOTAL_PARAMS = 0;
 
 	private List<Ant> ants;
 	private boolean nestCell;
@@ -29,6 +31,15 @@ public class ForagingAntCell extends SimpleCell {
 	@SuppressWarnings("unchecked")
 	public ForagingAntCell(String cellShapeType, Color[] colors, List<Double> params, int state) {
 		super(cellShapeType, colors, params, state);
+		if(colors.length != TOTAL_STATES){
+			throw new IllegalArgumentException(resourceBundle.getString("ColorError"));
+		}
+		if(params.size()!=TOTAL_PARAMS ){
+			throw new IllegalArgumentException(resourceBundle.getString("ParamError"));
+		}
+		if(state > TOTAL_STATES - 1 || state < 0){
+			throw new IllegalArgumentException(resourceBundle.getString("StateError"));
+		}
 		this.nextState = state;
 		nestCell = state == NEST_CELL;
 		foodCell = state == FOOD_CELL;

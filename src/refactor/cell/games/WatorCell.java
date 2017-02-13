@@ -11,6 +11,8 @@ public class WatorCell extends SimpleCell {
 	private final static int WATER = 0;
 	private final static int FISH = 1;
 	private final static int SHARK = 2;
+	private final static int TOTAL_STATES = 3;
+	private final static int TOTAL_PARAMS = 4;
 	
 	private final int fishBirth;
 	private final int sharkBirth;
@@ -34,6 +36,18 @@ public class WatorCell extends SimpleCell {
 	 */
 	public WatorCell(String cellShapeType, Color[] colors, List<Double> params, int state) {
 		super(cellShapeType, colors, params, state);
+		if(colors.length != TOTAL_STATES){
+			throw new IllegalArgumentException(resourceBundle.getString("ColorError"));
+		}
+		if(params.size()!=TOTAL_PARAMS ){
+			throw new IllegalArgumentException(resourceBundle.getString("ParamError"));
+		}
+		if(params.get(0) < 0 || params.get(1) < 0 || params.get(2) > 0 || params.get(3) < 0){
+			throw new IllegalArgumentException(resourceBundle.getString("WatorParamError"));
+		}
+		if(state > TOTAL_STATES - 1 || state < 0){
+			throw new IllegalArgumentException(resourceBundle.getString("StateError"));
+		}
 		this.nextState = state;
 		fishBirth = params.get(0).intValue();
 		sharkBirth = params.get(1).intValue();

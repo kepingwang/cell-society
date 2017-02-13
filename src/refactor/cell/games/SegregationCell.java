@@ -7,11 +7,25 @@ import javafx.scene.paint.Color;
 
 public class SegregationCell extends SimpleCell {
 	private final static int EMPTY = 0;
+	private final static int TOTAL_STATES = 3;
+	private final static int TOTAL_PARAMS = 1;
 	private boolean settled = false; // true if next state already determined
 	private double satisfaction;
 	
 	public SegregationCell(String cellShapeType, Color[] colors, List<Double> params, int state) {
 		super(cellShapeType, colors, params, state);
+		if(colors.length != TOTAL_STATES){
+			throw new IllegalArgumentException(resourceBundle.getString("ColorError"));
+		}
+		if(params.size()!=TOTAL_PARAMS ){
+			throw new IllegalArgumentException(resourceBundle.getString("ParamError"));
+		}
+		if(params.get(0) > 1 || params.get(0) < 0){
+			throw new IllegalArgumentException(resourceBundle.getString("SegregationParamError"));
+		}
+		if(state > TOTAL_STATES - 1 || state < 0){
+			throw new IllegalArgumentException(resourceBundle.getString("StateError"));
+		}
 		satisfaction = params.get(0);
 	}
 	

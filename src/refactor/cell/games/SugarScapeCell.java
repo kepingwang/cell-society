@@ -10,6 +10,8 @@ import javafx.scene.shape.Shape;
 
 public class SugarScapeCell extends SimpleCell {
 	private static final int AGENT_CELL = 5;
+	private static final int TOTAL_STATES = 6;
+	private static final int TOTAL_PARAMS = 5;
 
 	private final int sugarGrow;
 	private final int vision;
@@ -36,6 +38,18 @@ public class SugarScapeCell extends SimpleCell {
 	 */
 	public SugarScapeCell(String cellShapeType, Color[] colors, List<Double> params, int state) {
 		super(cellShapeType, colors, params, state);
+		if(colors.length != TOTAL_STATES){
+			throw new IllegalArgumentException(resourceBundle.getString("ColorError"));
+		}
+		if(params.size()!=TOTAL_PARAMS ){
+			throw new IllegalArgumentException(resourceBundle.getString("ParamError"));
+		}
+		if(params.get(0) < 0 || params.get(1) < 0 || params.get(2) < 0 || params.get(3) < 0 || params.get(4) < 0 || params.get(4) > 1){
+			throw new IllegalArgumentException(resourceBundle.getString("SugarParamError"));
+		}
+		if(state > TOTAL_STATES - 1 || state < 0){
+			throw new IllegalArgumentException(resourceBundle.getString("StateError"));
+		}
 		sugarGrow = params.get(0).intValue();
 		vision = params.get(1).intValue();
 		sugarMetabolism = params.get(2).intValue();

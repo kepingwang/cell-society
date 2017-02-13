@@ -51,7 +51,7 @@ public class SocietyFactory {
 
 	public Society<FireCell> sampleFire() {
 		boolean wrapping = false;
-		double chanceOfFire = .5;
+		double chanceOfFire = 2.5;
 
 		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_4, wrapping);
 		String cellShapeType = GridType.SQUARE;
@@ -146,7 +146,7 @@ public class SocietyFactory {
 		double sugarGrow = 1;
 		double vision = 4;
 		double sugarMetabolism = 4;
-		double initSugar = 20;
+		double initSugar = -20;
 
 		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_4, wrapping);
 		String cellShapeType = GridType.SQUARE;
