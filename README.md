@@ -26,7 +26,12 @@ Gordon: Responsible for back end for both sprints
 
 #### Resources Used
 
-
+* http://nifty.stanford.edu/2014/mccown-schelling-model-segregation/
+* http://nifty.stanford.edu/2011/scott-wator-world/
+* http://nifty.stanford.edu/2007/shiflet-fire/
+* https://en.wikipedia.org/wiki/Conway's_Game_of_Life
+* http://cs.gmu.edu/~eclab/projects/mason/publications/alife04ant.pdf
+* http://www2.le.ac.uk/departments/interdisciplinary-science/research/the-sugarscape
 
 #### File(s) Used to Start
 
