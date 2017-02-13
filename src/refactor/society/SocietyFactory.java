@@ -53,9 +53,43 @@ public class SocietyFactory {
 	}
 	
 	public <T extends Cell> Society<T> genSociety() throws Exception {
+		GridType gridType;
+		if(configMap.get("gridType").equals("SQUARE_GRID")){
+			gridType = GridType.SQUARE_GRID;
+		}
+		else if(configMap.get("gridType").equals("TRIANGLE_GRID")){
+			gridType = GridType.TRIANGLE_GRID;
+		}
+		else{
+			gridType = GridType.HEXAGON_GRID;
+		}
 		
-		GridConfig gridConfig = new GridConfig(GridType.SQUARE_GRID, NeighborsType.SQUARE_8, Boolean.parseBoolean(configMap.get("wrapping")));
-		String cellShapeType = GridType.SQUARE;
+		NeighborsType neighborsType;
+		if(configMap.get("neighborsType").equals("HEXAGON_6")){
+			neighborsType = NeighborsType.HEXAGON_6;
+		}
+		else if(configMap.get("neighborsType").equals("SQUARE_4")){
+			neighborsType = NeighborsType.SQUARE_4;
+		}
+		else if(configMap.get("neighborsType").equals("SQUARE_8")){
+			neighborsType = NeighborsType.SQUARE_8;
+		}
+		else{
+			neighborsType = NeighborsType.TRIANGLE_12;
+		}
+		
+		String cellShapeType;
+		if(configMap.get("cellShape").equals("SQUARE")){
+			cellShapeType = GridType.SQUARE;
+		}
+		else if(configMap.get("cellShape").equals("TRIANGLE")){
+			cellShapeType = GridType.TRIANGLE;
+		}
+		else{
+			cellShapeType = GridType.HEXAGON;
+		}
+		
+		GridConfig gridConfig = new GridConfig(gridType, neighborsType, Boolean.parseBoolean(configMap.get("wrapping")));
 		SizeConfig sizeConfig = new SizeConfig(Integer.parseInt(configMap.get("rows")), Integer.parseInt(configMap.get("cols")), 
 				Double.parseDouble(configMap.get("width")), Double.parseDouble(configMap.get("height")));
 		
